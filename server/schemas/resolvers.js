@@ -1,12 +1,13 @@
+const { industries, industry, addIndustry, deleteIndustry } = require('./resolvers/industryResolvers');
+
 const resolvers = {
     Query: {
-        hello: async function(_, args){
-            let value;
-            if(args.name) value = args.name;
-            else value = "hello world";
-
-            return {value};
-        }
+        industry,
+        industries 
+    },
+    Mutation:{
+        addIndustry,
+        deleteIndustry
     }
 }
 
