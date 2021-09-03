@@ -1,4 +1,4 @@
-const Industry = require('../../models/Industry');
+const {Industry} = require('../../models');
 
 const industryResolvers = {
     //queries***************************
@@ -8,7 +8,7 @@ const industryResolvers = {
     industry: async function(_, {_id}){
         return Industry.findById(_id);
     },
-    
+
     //mutations***************************
     addIndustry: async function(_, args){
         return Industry.create(args)
