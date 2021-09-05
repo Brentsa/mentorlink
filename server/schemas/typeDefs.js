@@ -83,7 +83,7 @@ const typeDefs = gql`
         updateMember(_id: ID!, member: minMemberContent!): Member
         deleteMember(_id: ID!): Member
         addContactInfo(_id: ID!, contactInfo: contactInfoContent!): Member
-        updateContactInfo(_id: ID!, contactInfo: contactInfoContent!): Member
+        deleteContactInfo(_id: ID!): Member
     }
 `
 module.exports = typeDefs;

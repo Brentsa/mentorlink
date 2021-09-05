@@ -27,17 +27,14 @@ const memberResolvers = {
 
         return member
     },
-    updateContactInfo: async function(_, {_id, contactInfo}){
+    deleteContactInfo: async function(_, {_id}){
         const member = await Member.findByIdAndUpdate(
             _id,
-            {contactInfo},
-            {new: true, runValidators: true}
-        )
+            {contactInfo: null},
+            {new: true}
+        );
 
         return member
-    },
-    deleteContactInfo: async function(_, {_id}){
-
     },
 };
 
