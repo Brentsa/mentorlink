@@ -18,6 +18,27 @@ const memberResolvers = {
     deleteMember: async function(_, {_id}){
         return await Member.findByIdAndRemove(_id);
     },
+    addContactInfo: async function(_, {_id, contactInfo}){
+        const member = await Member.findByIdAndUpdate(
+            _id,
+            {contactInfo},
+            {new: true, runValidators: true}
+        );
+
+        return member
+    },
+    updateContactInfo: async function(_, {_id, contactInfo}){
+        const member = await Member.findByIdAndUpdate(
+            _id,
+            {contactInfo},
+            {new: true, runValidators: true}
+        )
+
+        return member
+    },
+    deleteContactInfo: async function(_, {_id}){
+
+    },
 };
 
 module.exports = memberResolvers;

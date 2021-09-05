@@ -57,6 +57,18 @@ const typeDefs = gql`
         profilePicture: String
     }
 
+    input contactInfoContent{
+        phoneNumber: String
+        email: String
+        streetNumber: String
+        streetName: String
+        suiteNumber: String
+        city: String
+        province: String
+        country: String
+        postalCode: String
+    }
+
     type Query{
         industries: [Industry]
         industry(_id: ID!): Industry
@@ -70,6 +82,8 @@ const typeDefs = gql`
         addMember(member: minMemberContent!): Member
         updateMember(_id: ID!, member: minMemberContent!): Member
         deleteMember(_id: ID!): Member
+        addContactInfo(_id: ID!, contactInfo: contactInfoContent!): Member
+        updateContactInfo(_id: ID!, contactInfo: contactInfoContent!): Member
     }
 `
 module.exports = typeDefs;

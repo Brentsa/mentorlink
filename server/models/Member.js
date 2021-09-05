@@ -1,50 +1,52 @@
 const mongoose = require('mongoose');
 
 //Schema for member address and contact info
-const contactInfoSchema = new mongoose.Schema({
-    phoneNumber:{
-        type: String,
-        maxlength: 10,
-        minlength: 9,
-        trim: true
-    }, 
-    email: {
-        type: String,
-        trim: true,
-        match: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
-    },
-    streetNumber:{
-        type: String,
-        trim: true
-    },
-    streetName: {
-        type: String,
-        trim: true
-    }, 
-    suiteNumber: {
-        type: String,
-        trim: true
-    },
-    city: {
-        type: String,
-        trim: true,
-    },
-    province: {
-        type: String,
-        trim: true,
-    },
-    country: {
-        type: String,
-        trim: true,
-        enum: ['Canada', 'USA']
-    },
-    postalCode: {
-        type: String,
-        trim: true,
-        minlength: 5,
-        maxlength: 6
+const contactInfoSchema = new mongoose.Schema(
+    {
+        phoneNumber:{
+            type: String,
+            maxlength: 10,
+            minlength: 9,
+            trim: true
+        }, 
+        email: {
+            type: String,
+            trim: true,
+            match: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+        },
+        streetNumber:{
+            type: String,
+            trim: true
+        },
+        streetName: {
+            type: String,
+            trim: true
+        }, 
+        suiteNumber: {
+            type: String,
+            trim: true
+        },
+        city: {
+            type: String,
+            trim: true,
+        },
+        province: {
+            type: String,
+            trim: true,
+        },
+        country: {
+            type: String,
+            trim: true,
+            enum: ['Canada', 'USA']
+        },
+        postalCode: {
+            type: String,
+            trim: true,
+            minlength: 5,
+            maxlength: 6
+        }
     }
-});
+);
 
 const memberSchema = new mongoose.Schema({
     firstName: {
