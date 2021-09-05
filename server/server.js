@@ -7,7 +7,7 @@ const {typeDefs, resolvers} = require('./schemas');
 
 async function runApolloServer(typeDefs, resolvers){
     const app = express();
-    const PORT = process.env.PORT || 3000;
+    const PORT = process.env.PORT || 3001;
     const httpServer = http.createServer(app);
     const server = new ApolloServer({typeDefs, resolvers, plugins: [ApolloServerPluginDrainHttpServer({httpServer})]})
 
@@ -17,9 +17,9 @@ async function runApolloServer(typeDefs, resolvers){
     app.use(express.json());
     app.use(express.urlencoded({extended: true}));
 
-    await db.on('connected', () => httpServer.listen(PORT, ()=> {
-             console.log(`Server is conncected to the DB and is running on http://localhost:${PORT}`)
-             console.log(`Access graphQL playground at http://localhost:${PORT}${server.graphqlPath}`);
+    db.once('open', () => httpServer.listen(PORT, ()=> {
+        console.log(`Server is conncected to the DB and is running on http://localhost:${PORT}`)
+        console.log(`Access graphQL playground at http://localhost:${PORT}${server.graphqlPath}`);
     }))
 }
 

@@ -1,13 +1,19 @@
 const { industries, industry, addIndustry, deleteIndustry } = require('./resolvers/industryResolvers');
+const { members, member, addMember, updateMember, deleteMember} = require('./resolvers/memberResolvers');
 
 const resolvers = {
     Query: {
         industry,
-        industries 
+        industries, 
+        members,
+        member
     },
     Mutation:{
         addIndustry,
-        deleteIndustry
+        deleteIndustry,
+        addMember,
+        updateMember,
+        deleteMember
     }
 }
 

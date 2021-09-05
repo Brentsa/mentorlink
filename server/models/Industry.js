@@ -6,6 +6,7 @@ const industrySchema = new mongoose.Schema({
         type: String,
         required: 'Industry name is required.',
         maxlength: 24,
+        unique: true,
         trim: true
     }
 });
