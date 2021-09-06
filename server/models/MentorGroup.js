@@ -41,12 +41,12 @@ const mentorGroupSchema = new mongoose.Schema({
             type: mongoose.Types.ObjectId,
             ref: 'Member'
         }],
-        validate: {
-            validator: () => {
-                return this.mentees.length <= this.numMentees;
-            },
-            message: 'Mentee list cannot be greater than number of mentees'
-        }
+        // validate: {
+        //     validator: () => {
+        //         return this.mentees.length <= this.numMentees;
+        //     },
+        //     message: 'Mentee list cannot be greater than number of mentees'
+        // }
     },
     industry: {
         type: mongoose.Types.ObjectId,

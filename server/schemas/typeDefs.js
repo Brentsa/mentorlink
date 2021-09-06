@@ -3,19 +3,20 @@ const {gql} = require('apollo-server-express');
 const typeDefs = gql`
     type Industry{
         _id: ID
-        name: String!
+        name: String
     }
 
     type Message{
         _id: ID
-        creator: Member!
-        text: String!
+        creator: Member
+        text: String
         createdAt: String
         read: Boolean
     }
 
     type MentorGroup{
         _id: ID
+        mentor: Member
         numMentees: Int
         mentees: [Member]
         industry: Industry
@@ -37,15 +38,20 @@ const typeDefs = gql`
 
     type Member{
         _id: ID
-        firstName: String!
-        lastName: String!
-        username: String!
-        password: String!
+        firstName: String
+        lastName: String
+        username: String
+        password: String
         description: String
         profilePicture: String
         industry: Industry
         mentorGroup: MentorGroup
         contactInfo: ContactInfo
+    }
+
+    type MemberAndMentorGroup{
+        mentor: Member
+        group: MentorGroup
     }
 
     input minMemberContent{
@@ -74,6 +80,8 @@ const typeDefs = gql`
         industry(_id: ID!): Industry
         members: [Member]
         member(_id: ID!): Member
+        mentorGroups: [MentorGroup]
+        mentorGroup(_id: ID!): MentorGroup
     }
 
     type Mutation{
@@ -84,6 +92,7 @@ const typeDefs = gql`
         deleteMember(_id: ID!): Member
         addContactInfo(_id: ID!, contactInfo: contactInfoContent!): Member
         deleteContactInfo(_id: ID!): Member
+        addMentorGroup(mentorId: ID!, numMentees: Int!, industryId: String!): MemberAndMentorGroup
     }
 `
 module.exports = typeDefs;

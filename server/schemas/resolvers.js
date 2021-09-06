@@ -1,12 +1,15 @@
 const { industries, industry, addIndustry, deleteIndustry } = require('./resolvers/industryResolvers');
 const { members, member, addMember, updateMember, deleteMember, addContactInfo, deleteContactInfo} = require('./resolvers/memberResolvers');
+const { mentorGroups, mentorGroup, addMentorGroup } = require('./resolvers/mentorGroupResolvers')
 
 const resolvers = {
     Query: {
         industry,
         industries, 
         members,
-        member
+        member,
+        mentorGroup,
+        mentorGroups
     },
     Mutation:{
         addIndustry,
@@ -15,7 +18,8 @@ const resolvers = {
         updateMember,
         deleteMember,
         addContactInfo,
-        deleteContactInfo
+        deleteContactInfo,
+        addMentorGroup
     }
 }
 
