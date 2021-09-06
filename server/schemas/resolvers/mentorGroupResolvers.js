@@ -14,6 +14,12 @@ const mentorGroupResolvers = {
         const mentor = await Member.findByIdAndUpdate(mentorId, {mentorGroup: group._id}, {new: true});
 
         return {group, mentor};
+    },
+    deleteMentorGroup: async function(_, {mentorId, groupId}){
+        const mentor = await Member.findByIdAndUpdate(mentorId, {mentorGroup: null});
+        const group = await MentorGroup.findByIdAndDelete(groupId);
+
+        return {group, mentor}
     }
 };
 

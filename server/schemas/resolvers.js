@@ -1,6 +1,6 @@
 const { industries, industry, addIndustry, deleteIndustry } = require('./resolvers/industryResolvers');
 const { members, member, addMember, updateMember, deleteMember, addContactInfo, deleteContactInfo} = require('./resolvers/memberResolvers');
-const { mentorGroups, mentorGroup, addMentorGroup } = require('./resolvers/mentorGroupResolvers')
+const { mentorGroups, mentorGroup, addMentorGroup, deleteMentorGroup } = require('./resolvers/mentorGroupResolvers')
 
 const resolvers = {
     Query: {
@@ -19,7 +19,8 @@ const resolvers = {
         deleteMember,
         addContactInfo,
         deleteContactInfo,
-        addMentorGroup
+        addMentorGroup,
+        deleteMentorGroup
     }
 }
 

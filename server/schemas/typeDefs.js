@@ -93,6 +93,7 @@ const typeDefs = gql`
         addContactInfo(_id: ID!, contactInfo: contactInfoContent!): Member
         deleteContactInfo(_id: ID!): Member
         addMentorGroup(mentorId: ID!, numMentees: Int!, industryId: String!): MemberAndMentorGroup
+        deleteMentorGroup(mentorId: ID!, groupId: ID!): MemberAndMentorGroup
     }
 `
 module.exports = typeDefs;
