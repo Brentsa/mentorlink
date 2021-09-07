@@ -1,3 +1,4 @@
+const { valueFromAST } = require('graphql');
 const mongoose = require('mongoose');
 
 const messageSchema = new mongoose.Schema({
@@ -40,13 +41,7 @@ const mentorGroupSchema = new mongoose.Schema({
         type: [{
             type: mongoose.Types.ObjectId,
             ref: 'Member'
-        }],
-        // validate: {
-        //     validator: () => {
-        //         return this.mentees.length <= this.numMentees;
-        //     },
-        //     message: 'Mentee list cannot be greater than number of mentees'
-        // }
+        }]
     },
     industry: {
         type: mongoose.Types.ObjectId,
@@ -54,6 +49,7 @@ const mentorGroupSchema = new mongoose.Schema({
     },
     conversation: [messageSchema]
 });
+
 
 const MentorGroup = mongoose.model('MentorGroup', mentorGroupSchema);
 

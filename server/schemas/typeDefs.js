@@ -94,6 +94,8 @@ const typeDefs = gql`
         deleteContactInfo(_id: ID!): Member
         addMentorGroup(mentorId: ID!, numMentees: Int!, industryId: String!): MemberAndMentorGroup
         deleteMentorGroup(mentorId: ID!, groupId: ID!): MemberAndMentorGroup
+        addMenteeToGroup(groupId: ID!, menteeId: ID!): MentorGroup
+        removeMenteeFromGroup(groupId: ID!, menteeId: ID!): MentorGroup
     }
 `
 module.exports = typeDefs;
