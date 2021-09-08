@@ -28,29 +28,27 @@ const mentorGroupResolvers = {
         return {group, mentor}
     },
     addMenteeToGroup: async function(_, {groupId, menteeId}){
-        //find the group and check the mentor, if the menteeId being added is the mentor
+        //find the group and check the mentor, 
+        const group = await MentorGroup.findById(groupId);
+        const groupMentorId = group.mentor._id.toString()
+
+        //if the menteeId being added is the mentor or the next mentee will surpass the max group size 
         //then do not add and just return the group
-        const findGroup = await MentorGroup.findById(groupId);
-        const groupMentorId = findGroup.mentor._id.toString()
-        if(groupMentorId === menteeId) return findGroup;
+        if(groupMentorId === menteeId || group.mentees.length >= group.numMentees) return group;
         
         //if adding a correct mentee, add them to the mentee set
-        const group = await MentorGroup.findByIdAndUpdate(
+        return await MentorGroup.findByIdAndUpdate(
             groupId,
             {$addToSet: {mentees: menteeId}},
             {new: true, runValidators: true}
         )
-
-        return group
     },
     removeMenteeFromGroup: async function(_, {groupId, menteeId}){
-        const group = await MentorGroup.findByIdAndUpdate(
+        return await MentorGroup.findByIdAndUpdate(
             groupId,
             {$pull: {mentees: menteeId}},
             {new: true, runValidators: true}
         )
-
-        return group;
     }
 };
 
