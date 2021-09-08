@@ -28,11 +28,13 @@ const mentorGroupResolvers = {
         return {group, mentor}
     },
     addMenteeToGroup: async function(_, {groupId, menteeId}){
-
-        // const group = await MentorGroup.findById(groupId);
-        // if(group.mentor._id === menteeId) return group
-
-        // return await group.update({$addToSet: {mentees: menteeId}}, {new:true, runValidators: true});
+        //find the group and check the mentor, if the menteeId being added is the mentor
+        //then do not add and just return the group
+        const findGroup = await MentorGroup.findById(groupId);
+        const groupMentorId = findGroup.mentor._id.toString()
+        if(groupMentorId === menteeId) return findGroup;
+        
+        //if adding a correct mentee, add them to the mentee set
         const group = await MentorGroup.findByIdAndUpdate(
             groupId,
             {$addToSet: {mentees: menteeId}},
@@ -47,6 +49,7 @@ const mentorGroupResolvers = {
             {$pull: {mentees: menteeId}},
             {new: true, runValidators: true}
         )
+
         return group;
     }
 };

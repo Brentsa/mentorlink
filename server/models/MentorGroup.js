@@ -50,7 +50,6 @@ const mentorGroupSchema = new mongoose.Schema({
     conversation: [messageSchema]
 });
 
-
 const MentorGroup = mongoose.model('MentorGroup', mentorGroupSchema);
 
 module.exports = MentorGroup;
