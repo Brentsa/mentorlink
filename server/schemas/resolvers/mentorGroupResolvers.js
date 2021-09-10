@@ -24,7 +24,6 @@ const mentorGroupResolvers = {
     deleteMentorGroup: async function(_, {mentorId, groupId}){
         const mentor = await Member.findByIdAndUpdate(mentorId, {mentorGroup: null});
         const group = await MentorGroup.findByIdAndDelete(groupId);
-
         return {group, mentor}
     },
     addMenteeToGroup: async function(_, {groupId, menteeId}){
@@ -36,12 +35,9 @@ const mentorGroupResolvers = {
         //then do not add and just return the group
         if(groupMentorId === menteeId || group.mentees.length >= group.numMentees) return group;
         
-        //if adding a correct mentee, add them to the mentee set
-        return await MentorGroup.findByIdAndUpdate(
-            groupId,
-            {$addToSet: {mentees: menteeId}},
-            {new: true, runValidators: true}
-        )
+        // //if adding a correct mentee, add them to the mentee set
+        group.mentees.addToSet(menteeId);
+        return await group.save();
     },
     removeMenteeFromGroup: async function(_, {groupId, menteeId}){
         return await MentorGroup.findByIdAndUpdate(
@@ -49,6 +45,18 @@ const mentorGroupResolvers = {
             {$pull: {mentees: menteeId}},
             {new: true, runValidators: true}
         )
+    },
+    updateNumberOfMentees: async function(_, {groupId, numMentees}){
+        //look for the group based on the given Id
+        const group = await MentorGroup.findById(groupId);
+
+        //if the array of mentees is greater than the proposed number of mentees then return the group
+        //can't lower the number of mentees below the mentees who are already in the group
+        if(numMentees < group.mentees.length) return group;
+
+        //change the number of mentees tied to the group and save the document
+        group.numMentees = numMentees;
+        return await group.save();
     }
 };
 

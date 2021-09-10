@@ -96,6 +96,7 @@ const typeDefs = gql`
         deleteMentorGroup(mentorId: ID!, groupId: ID!): MemberAndMentorGroup
         addMenteeToGroup(groupId: ID!, menteeId: ID!): MentorGroup
         removeMenteeFromGroup(groupId: ID!, menteeId: ID!): MentorGroup
+        updateNumberOfMentees(groupId: ID!, numMentees: Int!): MentorGroup
     }
 `
 module.exports = typeDefs;
