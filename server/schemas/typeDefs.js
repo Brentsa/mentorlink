@@ -75,6 +75,13 @@ const typeDefs = gql`
         postalCode: String
     }
 
+    input messageContent{
+        creator: ID!
+        text: String!
+        createdAt: String
+        read: Boolean
+    }
+
     type Query{
         industries: [Industry]
         industry(_id: ID!): Industry
@@ -97,6 +104,8 @@ const typeDefs = gql`
         addMenteeToGroup(groupId: ID!, menteeId: ID!): MentorGroup
         removeMenteeFromGroup(groupId: ID!, menteeId: ID!): MentorGroup
         updateNumberOfMentees(groupId: ID!, numMentees: Int!): MentorGroup
+        addMessage(groupId: ID!, content: messageContent!): MentorGroup
+        deleteMessage(groupId: ID!, messageId: ID!): MentorGroup
     }
 `
 module.exports = typeDefs;

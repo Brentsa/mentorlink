@@ -22,7 +22,9 @@ const {
     deleteMentorGroup,
     addMenteeToGroup,
     removeMenteeFromGroup,
-    updateNumberOfMentees
+    updateNumberOfMentees,
+    addMessage,
+    deleteMessage
 } = require('./resolvers/mentorGroupResolvers')
 
 const resolvers = {
@@ -46,7 +48,9 @@ const resolvers = {
         deleteMentorGroup,
         addMenteeToGroup,
         removeMenteeFromGroup,
-        updateNumberOfMentees
+        updateNumberOfMentees,
+        addMessage,
+        deleteMessage
     }
 }
 

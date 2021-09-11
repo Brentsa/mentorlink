@@ -7,7 +7,7 @@ const mentorGroupResolvers = {
         return await MentorGroup.find({})
             .populate('mentor')
             .populate('industry')
-            .populate('mentees');
+            .populate('mentees')
     },
     mentorGroup: async function(_, {_id}){
         return await MentorGroup.findById(_id)
@@ -57,7 +57,18 @@ const mentorGroupResolvers = {
         //change the number of mentees tied to the group and save the document
         group.numMentees = numMentees;
         return await group.save();
+    },
+    addMessage: async function(_, {groupId, content}){
+        return await MentorGroup.findByIdAndUpdate(
+            groupId,
+            {$push: {conversation: {creator: content.creator, text: content.text}}},
+            {new: true, runValidators: true}
+        )
+    },
+    deleteMessage: async function(_, {groupId, messageId}){
+        
     }
+
 };
 
 module.exports = mentorGroupResolvers;
