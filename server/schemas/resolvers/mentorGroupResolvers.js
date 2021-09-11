@@ -66,7 +66,9 @@ const mentorGroupResolvers = {
         )
     },
     deleteMessage: async function(_, {groupId, messageId}){
-        
+        const group = await MentorGroup.findById(groupId);
+        group.conversation.pull(messageId);
+        return await group.save();
     }
 
 };
