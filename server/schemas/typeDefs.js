@@ -95,6 +95,7 @@ const typeDefs = gql`
         addIndustry(name: String!): Industry
         deleteIndustry(_id: ID!): Industry
         addMember(member: minMemberContent!): Member
+        loginMember(username: String!, password: String!): Member
         updateMember(_id: ID!, member: minMemberContent!): Member
         deleteMember(_id: ID!): Member
         addContactInfo(_id: ID!, contactInfo: contactInfoContent!): Member

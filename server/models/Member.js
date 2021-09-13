@@ -101,9 +101,8 @@ memberSchema.pre('save', async function(next){
 })
 
 //checks a supplied password against the documents password and returns true if a match
-memberSchema.methods.validatePassword = function(password){
-    const validated = await bcrypt.compare(password, this.password);
-    return validated;
+memberSchema.methods.validatePassword = async function(password){
+    return await bcrypt.compare(password, this.password);
 }
 
 const Member = mongoose.model('Member', memberSchema);

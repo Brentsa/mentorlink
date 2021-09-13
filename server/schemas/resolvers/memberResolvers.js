@@ -1,4 +1,5 @@
 const {Member} = require('../../models');
+const {AuthenticationError} = require('apollo-server-express');
 
 const memberResolvers = {
     //queries***************************
@@ -11,6 +12,18 @@ const memberResolvers = {
     //mutations***************************
     addMember: async function(_, {member}){
         return await Member.create(member);
+    },
+    loginMember: async function(_, {username, password}){
+        //check the database for a member with the given username
+        const member = await Member.findOne({username});
+        if(!member) throw new AuthenticationError("Credentinals not authenticated.");
+
+        //run the members validated password bool check to see if the supplied password matches
+        const bIsAuthenticated = await member.validatePassword(password);
+        if(!bIsAuthenticated) throw new AuthenticationError("Credentinals not authenticated.");
+
+        //return the member since they are in the database and password is correct
+        return member;
     },
     updateMember: async function(_, {_id, member}){
         return await Member.findByIdAndUpdate(_id, {...member}, {new: true});
