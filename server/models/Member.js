@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 //Schema for member address and contact info
 const contactInfoSchema = new mongoose.Schema(
@@ -92,6 +93,18 @@ const memberSchema = new mongoose.Schema({
     },
     contactInfo: contactInfoSchema
 });
+
+//before saving the document to the database, hash the password async
+memberSchema.pre('save', async function(next){
+    this.password = await bcrypt.hash(this.password, 10);
+    next();
+})
+
+//checks a supplied password against the documents password and returns true if a match
+memberSchema.methods.validatePassword = function(password){
+    const validated = await bcrypt.compare(password, this.password);
+    return validated;
+}
 
 const Member = mongoose.model('Member', memberSchema);
 
