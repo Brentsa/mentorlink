@@ -49,6 +49,11 @@ const typeDefs = gql`
         contactInfo: ContactInfo
     }
 
+    type AuthMember{
+        token: ID!
+        member: Member
+    }
+
     type MemberAndMentorGroup{
         mentor: Member
         group: MentorGroup
@@ -94,8 +99,8 @@ const typeDefs = gql`
     type Mutation{
         addIndustry(name: String!): Industry
         deleteIndustry(_id: ID!): Industry
-        addMember(member: minMemberContent!): Member
-        loginMember(username: String!, password: String!): Member
+        addMember(member: minMemberContent!): AuthMember
+        loginMember(username: String!, password: String!): AuthMember
         updateMember(_id: ID!, member: minMemberContent!): Member
         deleteMember(_id: ID!): Member
         addContactInfo(_id: ID!, contactInfo: contactInfoContent!): Member
