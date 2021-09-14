@@ -34,7 +34,8 @@ const memberResolvers = {
         //return the member since they are in the database and password is correct
         return {token, member};
     },
-    updateMember: async function(_, {_id, member}){
+    updateMember: async function(_, {_id, member}, context){
+        console.log(context);
         return await Member.findByIdAndUpdate(_id, {...member}, {new: true});
     },
     deleteMember: async function(_, {_id}){

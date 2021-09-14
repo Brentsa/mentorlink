@@ -4,12 +4,13 @@ const {ApolloServer} = require('apollo-server-express');
 const {ApolloServerPluginDrainHttpServer} = require('apollo-server-core');
 const http = require('http');
 const {typeDefs, resolvers} = require('./schemas');
+const { authMiddleware } = require('./utils/auth');
 
 async function runApolloServer(typeDefs, resolvers){
     const app = express();
     const PORT = process.env.PORT || 3001;
     const httpServer = http.createServer(app);
-    const server = new ApolloServer({typeDefs, resolvers, plugins: [ApolloServerPluginDrainHttpServer({httpServer})]})
+    const server = new ApolloServer({typeDefs, resolvers, context: authMiddleware, plugins: [ApolloServerPluginDrainHttpServer({httpServer})]})
 
     await server.start();
     server.applyMiddleware({app});
