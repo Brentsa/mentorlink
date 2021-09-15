@@ -1,5 +1,5 @@
 const {MentorGroup, Member} = require('../../models');
-const { findById } = require('../../models/Industry');
+const {AuthenticationError} = require('apollo-server-express');
 
 const mentorGroupResolvers = {
     //queries***************************
@@ -9,23 +9,43 @@ const mentorGroupResolvers = {
             .populate('industry')
             .populate('mentees')
     },
+
     mentorGroup: async function(_, {_id}){
         return await MentorGroup.findById(_id)
             .populate('mentor')
             .populate('industry')
             .populate('mentees');
     },
+
     //mutations***************************
     addMentorGroup: async function(_, {mentorId, numMentees, industryId}){
+        //create a new group
         const group = await MentorGroup.create({mentor: mentorId, numMentees: numMentees, industry: industryId});
+
+        //add the mentor group to the mentor
         const mentor = await Member.findByIdAndUpdate(mentorId, {mentorGroup: group._id}, {new: true});
+
         return {group, mentor};
     },
-    deleteMentorGroup: async function(_, {mentorId, groupId}){
+
+    deleteMentorGroup: async function(_, {mentorId, groupId}, context){
+        //The member must have auth to delete the group
+        if(!context.member) return new AuthenticationError('You must be logged in to perform this action.');
+
+        //The member with auth must be the mentor of the group to delete it
+        if(mentorId != context.member._id) return new AuthenticationError('Only the mentor can delete their group.');
+
+        //TODO only query group and remove the mentorId argument
+
+        //remove the group from the mentor 
         const mentor = await Member.findByIdAndUpdate(mentorId, {mentorGroup: null});
+
+        //delete the group
         const group = await MentorGroup.findByIdAndDelete(groupId);
+
         return {group, mentor}
     },
+    
     addMenteeToGroup: async function(_, {groupId, menteeId}){
         //find the group and check the mentor, 
         const group = await MentorGroup.findById(groupId);
@@ -35,17 +55,15 @@ const mentorGroupResolvers = {
         //then do not add and just return the group
         if(groupMentorId === menteeId || group.mentees.length >= group.numMentees) return group;
         
-        // //if adding a correct mentee, add them to the mentee set
+        //if adding a correct mentee, add them to the mentee set
         group.mentees.addToSet(menteeId);
         return await group.save();
     },
+
     removeMenteeFromGroup: async function(_, {groupId, menteeId}){
-        return await MentorGroup.findByIdAndUpdate(
-            groupId,
-            {$pull: {mentees: menteeId}},
-            {new: true, runValidators: true}
-        )
+        return await MentorGroup.findByIdAndUpdate(groupId, {$pull: {mentees: menteeId}}, {new: true, runValidators: true})
     },
+
     updateNumberOfMentees: async function(_, {groupId, numMentees}){
         //look for the group based on the given Id
         const group = await MentorGroup.findById(groupId);
@@ -58,14 +76,18 @@ const mentorGroupResolvers = {
         group.numMentees = numMentees;
         return await group.save();
     },
-    addMessage: async function(_, {groupId, content}){
-        return await MentorGroup.findByIdAndUpdate(
-            groupId,
-            {$push: {conversation: {creator: content.creator, text: content.text}}},
-            {new: true, runValidators: true}
-        )
+
+    addMessage: async function(_, {groupId, content}, context){
+        if(!context.member) return new AuthenticationError('You must be logged in to perform this action.')
+
+        return await MentorGroup.findByIdAndUpdate( groupId, {$push: {conversation: {creator: content.creator, text: content.text}}}, {new: true, runValidators: true})
     },
-    deleteMessage: async function(_, {groupId, messageId}){
+
+    //readMessage - TODO
+
+    deleteMessage: async function(_, {groupId, messageId}, context){
+        if(!context.member) return new AuthenticationError('You must be logged in to perform this action.')
+
         const group = await MentorGroup.findById(groupId);
         group.conversation.pull(messageId);
         return await group.save();

@@ -6,9 +6,9 @@ const {AuthenticationError} = require('apollo-server-express');
 const expiration = 60 * 10;
 
 function signJWT(member){
-    //Destructure firstName and username from the given member
-    const {firstName, username} = member;
-    const payload = {firstName, username};
+    //Destructure _id, firstName and username from the given member
+    const {_id, firstName, username} = member;
+    const payload = {_id, firstName, username};
 
     //return the signed jwt token
     return jwt.sign(payload, process.env.JWT_SECRET, {expiresIn: expiration});
@@ -27,12 +27,14 @@ function authMiddleware({req}){
     try{
         //try to verify the token in the header if it is available and return the member info
         const memberInfo = jwt.verify(token, process.env.JWT_SECRET, {expiresIn: expiration});
-        return {member: memberInfo};
+        req.member = memberInfo
     }
     catch{
         //note the invalid credentials on the middleware and return the request as normal
         console.log('invalid credentials');
     }
+
+    return req
 }
 
 module.exports = {signJWT, authMiddleware};

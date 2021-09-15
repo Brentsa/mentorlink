@@ -7,9 +7,11 @@ const memberResolvers = {
     members: async function(){
         return await Member.find({});
     },
+
     member: async function(_, {_id}){
         return await Member.findById(_id);
     },
+
     //mutations***************************
     addMember: async function(_, {member}){
         const newMember = await Member.create(member);
@@ -19,6 +21,7 @@ const memberResolvers = {
 
         return {token, member: newMember};
     },
+
     loginMember: async function(_, {username, password}){
         //check the database for a member with the given username
         const member = await Member.findOne({username});
@@ -34,30 +37,30 @@ const memberResolvers = {
         //return the member since they are in the database and password is correct
         return {token, member};
     },
+
+    //remaining resolvers below require authorization and will throw an error if the proper auth header is not provided
     updateMember: async function(_, {_id, member}, context){
-        console.log(context);
+        if(!context.member) throw new AuthenticationError('You must be logged in to perform this action.');
+
         return await Member.findByIdAndUpdate(_id, {...member}, {new: true});
     },
-    deleteMember: async function(_, {_id}){
+
+    deleteMember: async function(_, {_id}, context){
+        if(!context.member) throw new AuthenticationError('You must be logged in to perform this action.');
+
         return await Member.findByIdAndRemove(_id);
     },
-    addContactInfo: async function(_, {_id, contactInfo}){
-        const member = await Member.findByIdAndUpdate(
-            _id,
-            {contactInfo},
-            {new: true, runValidators: true}
-        );
 
-        return member
+    addContactInfo: async function(_, {_id, contactInfo}, context){
+        if(!context.member) throw new AuthenticationError('You must be logged in to perform this action.');
+        
+        return await Member.findByIdAndUpdate( _id, {contactInfo}, {new: true, runValidators: true});  
     },
-    deleteContactInfo: async function(_, {_id}){
-        const member = await Member.findByIdAndUpdate(
-            _id,
-            {contactInfo: null},
-            {new: true}
-        );
-
-        return member
+    
+    deleteContactInfo: async function(_, {_id}, context){
+        if(!context.member) throw new AuthenticationError('You must be logged in to perform this action.');
+            
+        return await Member.findByIdAndUpdate(_id, {contactInfo: null}, {new: true});   
     },
 };
 
