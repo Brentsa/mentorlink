@@ -106,11 +106,12 @@ const typeDefs = gql`
         addContactInfo(_id: ID!, contactInfo: contactInfoContent!): Member
         deleteContactInfo(_id: ID!): Member
         addMentorGroup(mentorId: ID!, numMentees: Int!, industryId: String!): MemberAndMentorGroup
-        deleteMentorGroup(mentorId: ID!, groupId: ID!): MemberAndMentorGroup
+        deleteMentorGroup(groupId: ID!): MemberAndMentorGroup
         addMenteeToGroup(groupId: ID!, menteeId: ID!): MentorGroup
         removeMenteeFromGroup(groupId: ID!, menteeId: ID!): MentorGroup
         updateNumberOfMentees(groupId: ID!, numMentees: Int!): MentorGroup
         addMessage(groupId: ID!, content: messageContent!): MentorGroup
+        readMessage(groupId: ID!, messageId: ID!): MentorGroup
         deleteMessage(groupId: ID!, messageId: ID!): MentorGroup
     }
 `

@@ -28,22 +28,20 @@ const mentorGroupResolvers = {
         return {group, mentor};
     },
 
-    deleteMentorGroup: async function(_, {mentorId, groupId}, context){
-        //The member must have auth to delete the group
-        if(!context.member) return new AuthenticationError('You must be logged in to perform this action.');
+    deleteMentorGroup: async function(_, {groupId}, context){
+        //query group and remove the mentorId argument
+        const group = await MentorGroup.findById(groupId);
 
         //The member with auth must be the mentor of the group to delete it
-        if(mentorId != context.member._id) return new AuthenticationError('Only the mentor can delete their group.');
-
-        //TODO only query group and remove the mentorId argument
+        if(!context.member || group.mentor._id != context.member._id) return new AuthenticationError('You must be logged in and only the mentor can delete their group.');
 
         //remove the group from the mentor 
-        const mentor = await Member.findByIdAndUpdate(mentorId, {mentorGroup: null});
+        const mentor = await Member.findByIdAndUpdate(group.mentor._id, {mentorGroup: null});
 
         //delete the group
-        const group = await MentorGroup.findByIdAndDelete(groupId);
+        const deletedGroup = await MentorGroup.findByIdAndDelete(groupId);
 
-        return {group, mentor}
+        return {group: deletedGroup, mentor}
     },
     
     addMenteeToGroup: async function(_, {groupId, menteeId}){
@@ -83,7 +81,19 @@ const mentorGroupResolvers = {
         return await MentorGroup.findByIdAndUpdate( groupId, {$push: {conversation: {creator: content.creator, text: content.text}}}, {new: true, runValidators: true})
     },
 
-    //readMessage - TODO
+    readMessage: async function(_, {groupId, messageId}, context){
+        // if(!context.member) return new AuthenticationError('You must be logged in to perform this action.')
+
+        // const group = await MentorGroup.findById(groupId);
+        // group.update(
+        //     {'conversation': messageId},
+        //     {'conversation.$.read': true}
+        // )
+
+        // console.log(group);
+
+        // return group;
+    },
 
     deleteMessage: async function(_, {groupId, messageId}, context){
         if(!context.member) return new AuthenticationError('You must be logged in to perform this action.')
