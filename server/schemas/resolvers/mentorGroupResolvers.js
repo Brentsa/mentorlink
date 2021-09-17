@@ -82,17 +82,23 @@ const mentorGroupResolvers = {
     },
 
     readMessage: async function(_, {groupId, messageId}, context){
-        // if(!context.member) return new AuthenticationError('You must be logged in to perform this action.')
+        if(!context.member) return new AuthenticationError('You must be logged in to perform this action.')
 
-        // const group = await MentorGroup.findById(groupId);
-        // group.update(
-        //     {'conversation': messageId},
-        //     {'conversation.$.read': true}
-        // )
+        //find the group that contains the messages to update
+        const group = await MentorGroup.findById(groupId);
 
-        // console.log(group);
-
-        // return group;
+        try{
+           //iterate through the conversation and change the message that matches the supplied ID to read
+            for(var i = 0; group.conversation.length; i++){
+                if(group.conversation[i]._id.toString() === messageId){
+                    group.conversation[i].read = true
+                    return await group.save();
+                }
+            } 
+        }
+        catch{
+            return group;
+        }
     },
 
     deleteMessage: async function(_, {groupId, messageId}, context){

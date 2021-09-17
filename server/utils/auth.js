@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const {AuthenticationError} = require('apollo-server-express');
 
 //expiration is 10 mins
-const expiration = 60 * 10;
+const expiration = 60 * 30;
 
 function signJWT(member){
     //Destructure _id, firstName and username from the given member
