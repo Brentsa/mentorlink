@@ -50,6 +50,14 @@ const mentorGroupSchema = new mongoose.Schema({
     conversation: [messageSchema]
 });
 
+mentorGroupSchema.virtual('menteeCount').get(function(){
+    return this.mentees.length;
+})
+
+mentorGroupSchema.virtual('convoLength').get(function(){
+    return this.conversation.length;
+})
+
 const MentorGroup = mongoose.model('MentorGroup', mentorGroupSchema);
 
 module.exports = MentorGroup;
