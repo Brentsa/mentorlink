@@ -44,7 +44,9 @@ const mentorGroupResolvers = {
         return {group: deletedGroup, mentor}
     },
     
-    addMenteeToGroup: async function(_, {groupId, menteeId}){
+    addMenteeToGroup: async function(_, {groupId, menteeId}, context){
+        if(!context.member) return new AuthenticationError('You must be logged in to perform this action.')
+
         //find the group and check the mentor, 
         const group = await MentorGroup.findById(groupId);
         const groupMentorId = group.mentor._id.toString()
@@ -58,13 +60,18 @@ const mentorGroupResolvers = {
         return await group.save();
     },
 
-    removeMenteeFromGroup: async function(_, {groupId, menteeId}){
+    removeMenteeFromGroup: async function(_, {groupId, menteeId}, context){
+        if(!context.member) return new AuthenticationError('You must be logged in to perform this action.')
+
         return await MentorGroup.findByIdAndUpdate(groupId, {$pull: {mentees: menteeId}}, {new: true, runValidators: true})
     },
 
-    updateNumberOfMentees: async function(_, {groupId, numMentees}){
+    updateNumberOfMentees: async function(_, {groupId, numMentees}, context){
         //look for the group based on the given Id
         const group = await MentorGroup.findById(groupId);
+
+        //The member with auth must be the mentor of the group to delete it
+        if(!context.member || group.mentor._id != context.member._id) return new AuthenticationError('You must be logged in and only the mentor can update their group.');
 
         //if the array of mentees is greater than the proposed number of mentees then return the group
         //can't lower the number of mentees below the mentees who are already in the group
@@ -96,8 +103,8 @@ const mentorGroupResolvers = {
                 }
             } 
         }
-        catch{
-            return group;
+        catch{ 
+            return group; 
         }
     },
 
@@ -108,7 +115,6 @@ const mentorGroupResolvers = {
         group.conversation.pull(messageId);
         return await group.save();
     }
-
 };
 
 module.exports = mentorGroupResolvers;
