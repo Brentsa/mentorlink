@@ -2,6 +2,8 @@ import './App.css';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Home from './pages/Home';
+import Header from './components/Header';
+import Footer from './components/Footer';
 
 const theme = createTheme({
   palette: {
@@ -24,9 +26,13 @@ function App(){
   return (
     <ThemeProvider theme={theme}>
       <Router>
+        <Header/>
+
         <Switch>
           <Route exact path="/"><Home/></Route>
         </Switch>
+
+        <Footer/>
       </Router>
     </ThemeProvider>
   );

@@ -8,7 +8,6 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 
 export default function Header() {
- 
   const [value, setValue] = React.useState('one');
 
   const handleChange = (event, newValue) => {
@@ -19,7 +18,9 @@ export default function Header() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>MentorLink</Typography>
+
+          <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>MentorLink</Typography>
+
           <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
             <Tabs
               value={value}
@@ -35,7 +36,9 @@ export default function Header() {
               <Tab value="five" label="Discussion"/>
             </Tabs>
           </Box>
+
           <Button color="inherit">Login</Button>
+
         </Toolbar>
       </AppBar>
     </Box>
