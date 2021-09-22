@@ -4,6 +4,8 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Home from './pages/Home';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import Login from './pages/Login';
+import Register from './pages/Register';
 
 const theme = createTheme({
   palette: {
@@ -29,7 +31,9 @@ function App(){
         <Header/>
 
         <Switch>
-          <Route exact path="/"><Home/></Route>
+          <Route exact path="/" component={Home}></Route>
+          <Route exact path="/login" component={Login}></Route>
+          <Route exact path="/register"component={Register}></Route>
         </Switch>
 
         <Footer/>
