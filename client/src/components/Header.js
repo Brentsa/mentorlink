@@ -6,6 +6,8 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from 'react-router-dom';
 
 export default function Header() {
@@ -20,9 +22,9 @@ export default function Header() {
       <AppBar position="static">
         <Toolbar>
 
-          <Typography variant="h4" color="inherit" component={Link} to={'/'} sx={{ flexGrow: 1, textDecoration: 'none'}}>MentorLink</Typography>
+          <Typography variant="h4" color="inherit" component={Link} to={'/'} sx={{textDecoration: 'none'}}>MentorLink</Typography>
 
-          <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+          <Box sx={{ width: '100%', display: {xs: 'none', lg: 'flex'}, justifyContent: 'center' }}>
             <Tabs
               value={value}
               onChange={handleChange}
@@ -36,6 +38,18 @@ export default function Header() {
               <Tab value="four" label="Search"/>
               <Tab value="five" label="Discussion"/>
             </Tabs>
+          </Box>
+
+          <Box sx={{ width: '100%', display: {xs: 'flex', lg: 'none'}, justifyContent: 'center', alignItems: 'center' }}>
+            <IconButton
+              size="large"
+              edge="start"
+              color="secondary"
+              aria-label="menu"
+              sx={{ mx: 1 }}
+            >
+              <MenuIcon />
+            </IconButton>
           </Box>
 
           <Button color="inherit" component={Link} to={'/login'}>Login</Button>
