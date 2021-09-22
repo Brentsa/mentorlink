@@ -9,18 +9,12 @@ import Register from './pages/Register';
 
 const theme = createTheme({
   palette: {
-    primary: {
-      light: '#A8DADC',
-      main: '#457B9D',
-      dark: '#1D3557'
-    },
-    secondary: {
-      main: '#E63946'
-    },
-    tertiary: {
-      main: '#F1FAEE'
-    },
-    contrastThreshold: 3
+    primary: {main:'#457B9D'},
+    secondary: {main:'#E63946'},
+    tertiary: {main:'#F1FAEE'},
+    lightBlue: {main:'#A8DADC'},
+    darkBlue: {main:'#1D3557'},
+    contrastThreshold: 1
   }
 });
 
