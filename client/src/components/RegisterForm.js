@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
-export default function LoginForm(){
+export default function RegisterForm(){
     return (
         <Box 
             component="form" 
@@ -22,12 +22,28 @@ export default function LoginForm(){
             noValidate
             autoComplete="off"
         >
-            <Typography variant="h6">Log in to your account</Typography>
+            <Typography variant="h6">Register an account</Typography>
             
             <TextField
                 required
                 id="filled-required"
                 label="Username"
+                variant="filled"
+                color="secondary"
+            />
+
+            <TextField
+                required
+                id="filled-required"
+                label="First Name"
+                variant="filled"
+                color="secondary"
+            />
+
+            <TextField
+                required
+                id="filled-required"
+                label="Last Name"
                 variant="filled"
                 color="secondary"
             />
@@ -45,7 +61,7 @@ export default function LoginForm(){
                 variant="contained"
                 color="secondary"
             >
-                Login
+                Register
             </Button>
         </Box>
     )
