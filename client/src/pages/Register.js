@@ -1,7 +1,11 @@
+import LogRegSwitch from "../components/LogRegSwitch";
 import RegisterForm from "../components/RegisterForm";
 
 export default function Register(){
     return (
-        <RegisterForm/>
+        <div>
+            <RegisterForm/>  
+            <LogRegSwitch/>  
+        </div>  
     )
 }

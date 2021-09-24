@@ -1,7 +1,11 @@
 import LoginForm from "../components/LoginForm";
+import LogRegSwitch from "../components/LogRegSwitch";
 
 export default function Login(){
     return (
-        <LoginForm/>
+        <div>
+            <LoginForm/>
+            <LogRegSwitch/>    
+        </div>
     )
 }

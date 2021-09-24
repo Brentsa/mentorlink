@@ -14,8 +14,8 @@ const theme = createTheme({
     tertiary: {main:'#F1FAEE'},
     lightBlue: {main:'#A8DADC'},
     darkBlue: {main:'#1D3557'},
-    contrastThreshold: 1,
-    onalOffset: 0.2
+    contrastThreshold: 3,
+    tonalOffset: 0.2
   }
 });
 

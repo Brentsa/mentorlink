@@ -8,10 +8,11 @@ export default function LoginForm(){
         <Box 
             component="form" 
             sx={{
-                m: 1,
+                m: 2,
                 p: 2,
                 '& .MuiTextField-root': { m: 2, width: '40ch' },
                 width: '20%',
+                minWidth: 340,
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
@@ -22,11 +23,10 @@ export default function LoginForm(){
             noValidate
             autoComplete="off"
         >
-            <Typography variant="h6">Log in to your account</Typography>
+            <Typography variant="h5">Login to your account</Typography>
             
             <TextField
                 required
-                id="filled-required"
                 label="Username"
                 variant="filled"
                 color="secondary"
@@ -34,7 +34,6 @@ export default function LoginForm(){
 
             <TextField
                 required
-                id="filled-required"
                 label="Password"
                 variant="filled"
                 color="secondary"
