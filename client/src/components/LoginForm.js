@@ -18,7 +18,6 @@ export default function LoginForm(){
                 alignItems: 'center',
                 borderRadius: 2,
                 boxShadow: 3,
-                backgroundColor: 'lightBlue.main'
             }}
             noValidate
             autoComplete="off"
