@@ -6,6 +6,8 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import { Container } from '@mui/material';
+import { Box } from '@mui/system';
 
 const theme = createTheme({
   palette: {
@@ -24,13 +26,15 @@ function App(){
     <ThemeProvider theme={theme}>
       <Router>
         <Header/>
-
-        <Switch>
-          <Route exact path="/" component={Home}></Route>
-          <Route exact path="/login" component={Login}></Route>
-          <Route exact path="/register"component={Register}></Route>
-        </Switch>
-
+        <Container maxWidth="xl">
+          <Box sx={{width: "100%", display: 'flex', flexWrap: 'wrap', justifyContent: 'center'}}>
+            <Switch>
+              <Route exact path="/" component={Home}></Route>
+              <Route exact path="/login" component={Login}></Route>
+              <Route exact path="/register"component={Register}></Route>
+            </Switch>
+          </Box>
+        </Container>
         <Footer/>
       </Router>
     </ThemeProvider>
