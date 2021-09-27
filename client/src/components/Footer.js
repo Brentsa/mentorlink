@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 
 export default function Footer(){
     return (
-        <AppBar position="fixed" sx={{ top: 'auto', bottom: 0, backgroundColor: 'primary.dark'}}>
+        <AppBar position="fixed" color="tertiary" sx={{ top: 'auto', bottom: 0}}>
             <Toolbar>
                 <Box sx={{width: '100%', display: 'flex', justifyContent: 'center' }}>
                     <Typography variant="h6" component="div">&reg; MentorLink</Typography>

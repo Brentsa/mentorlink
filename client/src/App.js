@@ -6,6 +6,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Dashboard from './pages/Dashboard';
 import { Container } from '@mui/material';
 import { Box } from '@mui/system';
 
@@ -32,6 +33,7 @@ function App(){
               <Route exact path="/" component={Home}></Route>
               <Route exact path="/login" component={Login}></Route>
               <Route exact path="/register"component={Register}></Route>
+              <Route exact path="/dashboard" component={Dashboard}></Route>
             </Switch>
           </Box>
         </Container>
