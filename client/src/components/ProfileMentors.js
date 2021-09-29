@@ -7,12 +7,12 @@ export default function ProfileMentor(){
     return (
         <Box sx={{display: 'flex', flexWrap: 'wrap', flexDirection: 'column', alignItems: 'center'}}>
             <Box sx={{m:3}}>
-                <Typography variant="h5">Mentor</Typography>
+                <Typography variant="h5">Your Mentor:</Typography>
                 <MemberCard/> 
             </Box>
             
             <Box sx={{m:3}}>
-                <Typography variant="h5">Mentees</Typography>
+                <Typography variant="h5">Current Mentees:</Typography>
                 <MemberGroup/>    
             </Box>
             

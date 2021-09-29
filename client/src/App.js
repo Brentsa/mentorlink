@@ -26,18 +26,20 @@ function App(){
   return (
     <ThemeProvider theme={theme}>
       <Router>
-        <Header/>
-        <Container maxWidth="xl">
-          <Box sx={{width: "100%", display: 'flex', flexWrap: 'wrap', justifyContent: 'center'}}>
-            <Switch>
-              <Route exact path="/" component={Home}></Route>
-              <Route exact path="/login" component={Login}></Route>
-              <Route exact path="/register"component={Register}></Route>
-              <Route exact path="/dashboard" component={Dashboard}></Route>
-            </Switch>
-          </Box>
-        </Container>
-        <Footer/>
+        <Box sx={{display: 'flex', flexDirection: 'column', height: '100vh'}}>
+          <Header/>
+          <Container maxWidth="xl" sx={{flex: '1 1 auto'}}>
+            <Box sx={{width: "100%", display: 'flex', flexWrap: 'wrap', justifyContent: 'center'}}>
+              <Switch>
+                <Route exact path="/" component={Home}></Route>
+                <Route exact path="/login" component={Login}></Route>
+                <Route exact path="/register"component={Register}></Route>
+                <Route exact path="/dashboard" component={Dashboard}></Route>
+              </Switch>
+            </Box>
+          </Container>
+          <Footer/>
+        </Box>
       </Router>
     </ThemeProvider>
   );
