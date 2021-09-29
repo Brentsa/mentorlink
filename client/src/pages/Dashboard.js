@@ -4,7 +4,7 @@ import ProfileMentor from '../components/ProfileMentors';
 
 export default function Dashboard(){
     return (
-        <Grid container spacing={2}>
+        <Grid container spacing={4}>
             <Grid item xs={12} md={6}>
                 <ProfileMember/>
             </Grid>

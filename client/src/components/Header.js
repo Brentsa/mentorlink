@@ -32,7 +32,7 @@ export default function Header() {
               indicatorColor="secondary"
               aria-label="app bar icons"
             >
-              <Tab value="one" label="Your Profile"/>
+              <Tab value="one" label="Your Profile" component={Link} to={'/dashboard'}/>
               <Tab value="two" label="Your Mentor"/>
               <Tab value="three" label="Your Mentees"/>
               <Tab value="four" label="Search"/>

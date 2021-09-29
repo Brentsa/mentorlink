@@ -19,9 +19,6 @@ export default function MemberGroup(){
                 <Grid item xs={12} md={6}>
                     <MiniMemberCard/>
                 </Grid>
-                <Grid item xs={12} md={6}>
-                    <MiniMemberCard/>
-                </Grid>
             </Grid>
         </Box>
 
