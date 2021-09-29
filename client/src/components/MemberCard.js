@@ -9,7 +9,17 @@ import Typography from '@mui/material/Typography';
 
 export default function MemberCard() {
   return (
-    <Card raised sx={{ maxWidth: 345, padding: 2, display: 'flex', flexWrap: 'wrap', justifyContent: 'center', backgroundColor: 'lightBlue.main'}}>
+    <Card sx={{ 
+      maxWidth: 345, 
+      padding: 2, 
+      display: 'flex', 
+      flexWrap: 'wrap', 
+      justifyContent: 'center', 
+      backgroundColor: 'lightBlue.main',
+      '&:hover': {
+        boxShadow: 6
+      }
+    }}>
 
       <CardMedia
         component="img"

@@ -1,17 +1,15 @@
 import Grid from '@mui/material/Grid';
-import Box  from "@mui/system/Box";
 import ProfileMember from '../components/ProfileMember';
+import ProfileMentor from '../components/ProfileMentors';
 
 export default function Dashboard(){
     return (
         <Grid container spacing={2}>
-            <Grid item xs={12} md={8}>
+            <Grid item xs={12} md={6}>
                 <ProfileMember/>
             </Grid>
-            <Grid item xs={12} md={4}>
-                <Box sx={{width: '100%', bgcolor: 'secondary.main'}}>
-                    box
-                </Box>
+            <Grid item xs={12} md={6}>
+                <ProfileMentor/>
             </Grid>
         </Grid>
     )
