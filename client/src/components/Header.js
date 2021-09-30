@@ -16,13 +16,20 @@ export default function Header() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  const resetValue = (event) => {
+    setValue('');
+  }
   
   return (
     <Box sx={{ flex: '0 1 auto', marginBottom: 3 }}>
       <AppBar position="static">
         <Toolbar>
-
-          <Typography variant="h4" color="inherit" component={Link} to={'/'} sx={{textDecoration: 'none'}}>MentorLink</Typography>
+          
+          <Box onClick={resetValue}>
+            <Typography variant="h4" color="inherit" component={Link} to={'/'} sx={{textDecoration: 'none'}}>MentorLink</Typography>  
+          </Box>
+          
 
           <Box sx={{ width: '100%', display: {xs: 'none', lg: 'flex'}, justifyContent: 'center' }}>
             <Tabs
@@ -52,8 +59,8 @@ export default function Header() {
             </IconButton>
           </Box>
 
-          <Button color="inherit" component={Link} to={'/login'}>Login</Button>
-          <Button color="inherit" component={Link} to={'/register'}>Register</Button>
+          <Button color="inherit" component={Link} to={'/login'} onClick={resetValue}>Login</Button>
+          <Button color="inherit" component={Link} to={'/register'} onClick={resetValue}>Register</Button>
 
         </Toolbar>
       </AppBar>
