@@ -7,8 +7,10 @@ import Footer from './components/Footer';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
+import Conversation from './pages/Conversation';
 import { Container } from '@mui/material';
 import { Box } from '@mui/system';
+
 
 const theme = createTheme({
   palette: {
@@ -17,6 +19,7 @@ const theme = createTheme({
     tertiary: {main:'#F1FAEE'},
     lightBlue: {main:'#A8DADC'},
     darkBlue: {main:'#1D3557'},
+    contrastText: {main: '#FFF'},
     contrastThreshold: 3,
     tonalOffset: 0.2
   }
@@ -35,6 +38,7 @@ function App(){
                 <Route exact path="/login" component={Login}></Route>
                 <Route exact path="/register"component={Register}></Route>
                 <Route exact path="/dashboard" component={Dashboard}></Route>
+                <Route exact path="/conversation" component={Conversation}></Route>
               </Switch>
             </Box>
           </Container>

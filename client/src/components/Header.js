@@ -43,7 +43,7 @@ export default function Header() {
               <Tab value="two" label="Your Mentor"/>
               <Tab value="three" label="Your Mentees"/>
               <Tab value="four" label="Search"/>
-              <Tab value="five" label="Discussion"/>
+              <Tab value="five" label="Discussion" component={Link} to={'/conversation'}/>
             </Tabs>
           </Box>
 
