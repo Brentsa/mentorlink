@@ -6,15 +6,12 @@ export default function EnterMessageBox(){
     const [message, setMessage] = useState('');
 
     const handleTextChange = (event) => {
-        console.log(event.target.value);
-        setMessage(event.target.value);
-        return;
+        return setMessage(event.target.value);
     }
 
     function sumbitMessage(event){
         event.preventDefault();
-        console.log(message);
-        return;
+        return console.log(message);
     }
 
     return (
