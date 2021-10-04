@@ -9,7 +9,7 @@ export default function Message({bIsUserMessage}){
                 <>
                     <Grid item xs></Grid>
                     <Grid item xs='auto' maxWidth='45%'>
-                        <Box sx={{bgcolor: 'darkBlue.main', p:2, borderRadius: 2}}>
+                        <Box sx={{bgcolor: 'primary.main', p:2, borderRadius: 2}}>
                             <Typography color='contrastText.main'>Welcome to MentorLink!</Typography>
                         </Box>
                     </Grid>
@@ -18,8 +18,8 @@ export default function Message({bIsUserMessage}){
             ) : (
                 <>
                     <Grid item xs='auto' maxWidth='45%'>
-                        <Box sx={{bgcolor: 'tertiary.main', p:2, borderRadius: 2}}>
-                            <Typography>Welcome to MentorLink! Why thank you so much! What can we do here then? Oh wow this is huge. what the fuck bro....</Typography>
+                        <Box sx={{bgcolor: 'primary.dark', p:2, borderRadius: 2}}>
+                            <Typography color='contrastText.main'>Welcome to MentorLink! Why thank you so much! What can we do here then? Oh wow this is huge. what the fuck bro....</Typography>
                         </Box>
                     </Grid>
                     <Grid item xs></Grid>

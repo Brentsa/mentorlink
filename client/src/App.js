@@ -31,7 +31,7 @@ function App(){
       <Router>
         <Box sx={{display: 'flex', flexDirection: 'column', height: '100vh'}}>
           <Header/>
-          <Container maxWidth="xl" sx={{flex: '1 1 auto'}}>
+          <Container maxWidth="xl" sx={{flex: '1 1 auto', mb: 4}}>
             <Box sx={{width: "100%", display: 'flex', flexWrap: 'wrap', justifyContent: 'center'}}>
               <Switch>
                 <Route exact path="/" component={Home}></Route>
