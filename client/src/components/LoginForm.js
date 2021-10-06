@@ -3,10 +3,38 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
+import { useState } from 'react';
+import { useMutation } from '@apollo/client';
+import {LOGIN} from '../utils/mutations';
+
+
 export default function LoginForm(){
+
+    const [credentials, setCredentials] = useState({username: '', password: ''});
+
+    function textFieldOnChange(event){
+        switch(event.target.id){
+            case "username":
+                setCredentials({...credentials, username: event.target.value});
+                break;
+            case "password":
+                setCredentials({...credentials, password: event.target.value});
+                break;
+            default:
+                break;
+        }
+        return;
+    }
+
+    function submitLoginForm(event){
+        event.preventDefault();
+        return console.log(credentials);
+    }
+
     return (
         <Box 
-            component="form" 
+            component="form"
+            onSubmit={submitLoginForm}
             sx={{
                 m: 2,
                 p: 2,
@@ -25,22 +53,29 @@ export default function LoginForm(){
             
             <TextField
                 required
+                id="username"
                 label="Username"
                 variant="filled"
                 color="secondary"
+                value={credentials.username}
+                onChange={textFieldOnChange}
             />
 
             <TextField
                 required
+                id="password"
                 label="Password"
                 variant="filled"
                 color="secondary"
                 type="password"
+                value={credentials.password}
+                onChange={textFieldOnChange}
             />
 
             <Button 
                 variant="contained"
                 color="secondary"
+                type="submit"
             >
                 Login
             </Button>
