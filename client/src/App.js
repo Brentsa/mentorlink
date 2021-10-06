@@ -29,9 +29,11 @@ const theme = createTheme({
 });
 
 function App(){
-  
+
   const httpLink = createHttpLink({ uri: '/graphql' })
 
+  //The server can use the authorization header and attach it to GraphQL context
+  //This allows resolvers to validate and modify behaviour based on a member's roles and permissions
   const authLink = setContext((_, {headers}) => {
     //get the auth tokenfrom local storage
     const token = localStorage.getItem('token');
