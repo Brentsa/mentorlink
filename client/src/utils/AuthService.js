@@ -9,7 +9,7 @@ class AuthService{
         const decodedToken = this.getProfile();
 
         //return true if the token is valid and not expired
-        return decodedToken && !this.isTokenExpired(decodedToken);
+        return !!decodedToken && !this.isTokenExpired(decodedToken);
     }
 
     //provide a boolean determined by the token expiry
