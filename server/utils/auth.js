@@ -1,6 +1,5 @@
 require('dotenv').config()
 const jwt = require('jsonwebtoken');
-const {AuthenticationError} = require('apollo-server-express');
 
 //expiration is 10 mins
 const expiration = 60 * 30;
@@ -18,11 +17,13 @@ function authMiddleware({req}){
     //assign the token from the request header
     let token = req.headers.authorization;
 
-    //if there is no token throw an auth error
-    if(!token) throw new AuthenticationError("You must be logged in.");
+    // //since the token is valid at this point, remove the bearer string
+    // ["Bearer", "<tokenvalue>"]
+    if (req.headers.authorization) {
+        token = token.split(' ')[1];
+    }
 
-    //since the token is valid at this point, remove the bearer string
-    token = token.split(' ')[1];
+    if (!token) return req;
 
     try{
         //try to verify the token in the header if it is available and return the member info

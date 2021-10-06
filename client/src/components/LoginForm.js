@@ -11,6 +11,7 @@ import {LOGIN} from '../utils/mutations';
 export default function LoginForm(){
 
     const [credentials, setCredentials] = useState({username: '', password: ''});
+    const [loginMutation, {loading, error}] = useMutation(LOGIN);
 
     function textFieldOnChange(event){
         switch(event.target.id){
@@ -26,10 +27,20 @@ export default function LoginForm(){
         return;
     }
 
-    function submitLoginForm(event){
+    async function submitLoginForm(event){
         event.preventDefault();
-        return console.log(credentials);
+        console.log(credentials);
+        try{
+            const loginResponse = await loginMutation({variables: {username: credentials.username, password: credentials.password}});
+            console.log(loginResponse.data);
+        }
+        catch(error){
+            console.log(error);
+        }
     }
+
+    if(loading) return "Loading..."
+    if(error) return "Error..."
 
     return (
         <Box 

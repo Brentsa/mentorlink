@@ -13,8 +13,6 @@ import { Box } from '@mui/system';
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context';
 
-
-
 const theme = createTheme({
   palette: {
     primary: {main:'#457B9D'},
@@ -30,7 +28,7 @@ const theme = createTheme({
 
 function App(){
 
-  const httpLink = createHttpLink({ uri: '/graphql' })
+  const httpLink = createHttpLink({ uri: 'http://localhost:3001/graphql'});
 
   //The server can use the authorization header and attach it to GraphQL context
   //This allows resolvers to validate and modify behaviour based on a member's roles and permissions
@@ -43,8 +41,8 @@ function App(){
         ...headers,
         authorization: token ? `Bearer ${token}` : ''
       }
-    }
-  })
+    };
+  });
 
   const client = new ApolloClient({
     link: authLink.concat(httpLink),
