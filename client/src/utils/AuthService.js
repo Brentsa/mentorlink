@@ -7,8 +7,6 @@ class AuthService{
     UserLoggedIn(){
         //get the user profile from the token
         const decodedToken = this.getProfile();
-        console.log(!!decodedToken);
-        console.log(!this.isTokenExpired(decodedToken))
         
         //return true if the token is valid and not expired
         return !!decodedToken && !this.isTokenExpired(decodedToken);
@@ -17,13 +15,8 @@ class AuthService{
     //provide a boolean determined by the token expiry
     isTokenExpired(decodedToken){
         //compare the expiry on the token with the current date and return boolean
-        try{
-            const bIsExpired = decodedToken.exp < Date.now()/1000 ? true : false; 
-            return bIsExpired;
-        }
-        catch{
-            return true;
-        }
+        const bIsExpired = decodedToken?.exp < Date.now()/1000 ? true : false; 
+        return bIsExpired;
     }
 
     //returns the decoded profile of the user

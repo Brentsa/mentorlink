@@ -30,12 +30,14 @@ export default function LoginForm(){
 
     async function submitLoginForm(event){
         event.preventDefault();
-        
+
         try{
             //try calling the login mutation in the backend with the credentials entered by the user
             const loginResponse = await loginMutation({variables: {username: credentials.username, password: credentials.password}});
+
             //if there is success then peel the token off of the response
             const {token} = loginResponse.data.loginMember;
+            
             //Call the login function from auth service to store the token in localStorage and redirect the user
             Auth.login(token);
         }
