@@ -6,27 +6,29 @@ class AuthService{
     //return a bool value contingent on the user's logged in status
     UserLoggedIn(){
         //get the user profile from the token
-        const decodedToken = this.getProfile();
+        const token = this.getToken()
         
         //return true if the token is valid and not expired
-        return !!decodedToken && !this.isTokenExpired(decodedToken);
+        return !!token && !this.isTokenExpired(token);
     }
 
     //provide a boolean determined by the token expiry
-    isTokenExpired(decodedToken){
-        //compare the expiry on the token with the current date and return boolean
-        const bIsExpired = decodedToken?.exp < Date.now()/1000 ? true : false; 
-        return bIsExpired;
+    isTokenExpired(token){
+        try{
+            const decoded = jwt_decode(token);
+
+            //compare the expiry on the token with the current date and return boolean
+            const expired = decoded.exp < Date.now()/1000 ? true : false;
+            return expired;
+        }
+        catch{
+            return true;
+        }
     }
 
     //returns the decoded profile of the user
     getProfile(){
-        try{
-            return jwt_decode(this.getToken());
-        }
-        catch{
-            return undefined;
-        }
+        return jwt_decode(this.getToken());
     }
 
     //return the token in local storage
