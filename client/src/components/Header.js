@@ -10,16 +10,22 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import {Link} from 'react-router-dom';
 
+import Auth from '../utils/AuthService';
+
 
 export default function Header() {
   const [value, setValue] = React.useState('');
 
   const handleChange = (event, newValue) => {
-    setValue(newValue);
+    return setValue(newValue);
   };
 
   const resetValue = (event) => {
-    setValue('');
+    return setValue('');
+  }
+
+  const logout = () => {
+    return Auth.logout();
   }
   
   return (
@@ -61,9 +67,15 @@ export default function Header() {
             </IconButton>
           </Box>
 
-          <Button color="inherit" component={Link} to={'/login'} onClick={resetValue}>Login</Button>
-          <Button color="inherit" component={Link} to={'/register'} onClick={resetValue}>Register</Button>
-
+          {!Auth.UserLoggedIn() ? (
+            <>
+              <Button color="inherit" component={Link} to={'/login'} onClick={resetValue}>Login</Button>
+              <Button color="inherit" component={Link} to={'/register'} onClick={resetValue}>Register</Button>
+            </>
+          ) : (
+            <Button color="inherit" onClick={logout}>Logout</Button>
+          )}
+          
         </Toolbar>
       </AppBar>
     </Box>

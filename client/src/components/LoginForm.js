@@ -6,12 +6,13 @@ import Button from '@mui/material/Button';
 import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import {LOGIN} from '../utils/mutations';
+import Auth from '../utils/AuthService';
 
 
 export default function LoginForm(){
 
     const [credentials, setCredentials] = useState({username: '', password: ''});
-    const [loginMutation, {loading, error}] = useMutation(LOGIN);
+    const [loginMutation, {error}] = useMutation(LOGIN);
 
     function textFieldOnChange(event){
         switch(event.target.id){
@@ -29,18 +30,19 @@ export default function LoginForm(){
 
     async function submitLoginForm(event){
         event.preventDefault();
-        console.log(credentials);
+        
         try{
+            //try calling the login mutation in the backend with the credentials entered by the user
             const loginResponse = await loginMutation({variables: {username: credentials.username, password: credentials.password}});
-            console.log(loginResponse.data);
+            //if there is success then peel the token off of the response
+            const {token} = loginResponse.data.loginMember;
+            //Call the login function from auth service to store the token in localStorage and redirect the user
+            Auth.login(token);
         }
         catch(error){
-            console.log(error);
+            console.log('Member login failed.');
         }
     }
-
-    if(loading) return "Loading..."
-    if(error) return "Error..."
 
     return (
         <Box 
@@ -82,6 +84,8 @@ export default function LoginForm(){
                 value={credentials.password}
                 onChange={textFieldOnChange}
             />
+
+            {error && <Typography color="secondary" sx={{mb: 1}}>{error.message}</Typography>}
 
             <Button 
                 variant="contained"

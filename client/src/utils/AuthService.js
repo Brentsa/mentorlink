@@ -7,16 +7,19 @@ class AuthService{
     UserLoggedIn(){
         //get the user profile from the token
         const decodedToken = this.getProfile();
-
+        console.log(!!decodedToken);
+        console.log(!this.isTokenExpired(decodedToken))
+        
         //return true if the token is valid and not expired
         return !!decodedToken && !this.isTokenExpired(decodedToken);
     }
 
     //provide a boolean determined by the token expiry
     isTokenExpired(decodedToken){
+        //compare the expiry on the token with the current date and return boolean
         try{
-            //compare the expiry on the token with the current date and return boolean
-            decodedToken.exp < Date.now()/1000 ? true : false;
+            const bIsExpired = decodedToken.exp < Date.now()/1000 ? true : false; 
+            return bIsExpired;
         }
         catch{
             return true;
@@ -25,7 +28,12 @@ class AuthService{
 
     //returns the decoded profile of the user
     getProfile(){
-        return jwt_decode(this.getToken());
+        try{
+            return jwt_decode(this.getToken());
+        }
+        catch{
+            return undefined;
+        }
     }
 
     //return the token in local storage

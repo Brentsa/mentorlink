@@ -25,11 +25,11 @@ const memberResolvers = {
     loginMember: async function(_, {username, password}){
         //check the database for a member with the given username
         const member = await Member.findOne({username});
-        if(!member) throw new AuthenticationError("Credentinals not authenticated.");
+        if(!member) throw new AuthenticationError("Incorrect username and/or password.");
 
         //run the members validated password bool check to see if the supplied password matches
         const bIsAuthenticated = await member.validatePassword(password);
-        if(!bIsAuthenticated) throw new AuthenticationError("Credentinals not authenticated.");
+        if(!bIsAuthenticated) throw new AuthenticationError("Incorrect username and/or password.");
 
         //at this point, the member has been authenticated, now we can give them authorization
         const token = signJWT(member);
