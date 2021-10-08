@@ -14,3 +14,17 @@ export const LOGIN = gql`
         }
     }
 `;
+
+export const ADD_USER = gql`
+    mutation addMember($member: minMemberContent!) {
+        addMember(member: $member) {
+            token
+            member {
+                _id
+                firstName
+                lastName
+                username
+            }
+        }
+    }
+`;

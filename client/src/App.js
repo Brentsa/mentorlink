@@ -35,6 +35,7 @@ function App(){
   const authLink = setContext((_, {headers}) => {
     //get the auth tokenfrom local storage
     const token = localStorage.getItem('token');
+    
     //return the headers to the context so httpLink can read them
     return{
       headers:{
