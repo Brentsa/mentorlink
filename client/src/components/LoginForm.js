@@ -71,7 +71,7 @@ export default function LoginForm(){
                 id="username"
                 label="Username"
                 variant="filled"
-                color="secondary"
+                color="primary"
                 value={credentials.username}
                 onChange={textFieldOnChange}
             />
@@ -81,7 +81,7 @@ export default function LoginForm(){
                 id="password"
                 label="Password"
                 variant="filled"
-                color="secondary"
+                color="primary"
                 type="password"
                 value={credentials.password}
                 onChange={textFieldOnChange}

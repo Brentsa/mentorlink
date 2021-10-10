@@ -66,44 +66,48 @@ export default function RegisterForm(){
                         id='username'
                         label="Username"
                         variant="filled"
-                        color="secondary"
+                        color="primary"
                         type="text"
                         {...formik.getFieldProps('username')}
+                        error={formik.touched.username && formik.errors.username}
+                        helperText={formik.touched.username && formik.errors.username}
                     />
-                    {formik.touched.username && formik.errors.username ? (<Box>{formik.errors.username}</Box>) : null}
 
                     <TextField
                         required
                         id='firstName'
                         label="First Name"
                         variant="filled"
-                        color="secondary"
+                        color="primary"
                         type="text"
                         {...formik.getFieldProps('firstName')}
+                        error={formik.touched.firstName && formik.errors.firstName}
+                        helperText={formik.touched.firstName && formik.errors.firstName}
                     />
-                    {formik.touched.firstName && formik.errors.firstName ? (<Box>{formik.errors.firstName}</Box>) : null}
 
                     <TextField
                         required
                         id='lastName'
                         label="Last Name"
                         variant="filled"
-                        color="secondary"
+                        color="primary"
                         type="text"
                         {...formik.getFieldProps('lastName')}
+                        error={formik.touched.lastName && formik.errors.lastName}
+                        helperText={formik.touched.lastName && formik.errors.lastName}
                     />
-                    {formik.touched.lastName && formik.errors.lastName ? (<Box>{formik.errors.lastName}</Box>) : null}
 
                     <TextField
                         required
                         id='password'
                         label="Password"
                         variant="filled"
-                        color="secondary"
+                        color="primary"
                         type="password"
                         {...formik.getFieldProps('password')}
+                        error={formik.touched.password && formik.errors.password}
+                        helperText={formik.touched.password && formik.errors.password}
                     />
-                    {formik.touched.password && formik.errors.password ? (<Box>{formik.errors.password}</Box>) : null}
 
                     <Button 
                         variant="contained"
