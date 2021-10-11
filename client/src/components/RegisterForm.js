@@ -15,12 +15,9 @@ export default function RegisterForm(){
     //define a mutation that creates a new user in the back end
     const [addUser] = useMutation(ADD_USER);
 
-    async function formSubmit(values, setSubmitting){
+    async function formSubmit(values){
         //peel the member credentials off of the values object
         const {username, firstName, lastName, password} = values;
-
-        //set the submission status to false
-        setSubmitting(false);
 
         try{
             //try adding the user via muation, save the token, and then call the front end login function to save token to localstorage
@@ -42,7 +39,7 @@ export default function RegisterForm(){
                 lastName: Yup.string().required("last name required").max(20, "cannot be more than 20 characters").trim(),
                 password: Yup.string().required('password required').min(8, "password must be at least 8 characters").trim()
             })}
-            onSubmit={(values, {setSubmitting}) => formSubmit(values, setSubmitting)}
+            onSubmit={formSubmit}
         >
             {formik => (
                 <Box
