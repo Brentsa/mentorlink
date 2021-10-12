@@ -42,7 +42,7 @@ class AuthService{
         localStorage.setItem('token', tokenId);
 
         //Redirect user to dashboard
-        window.location.assign('/dashboard');
+        window.location.assign(`/dashboard/${this.getProfile().username}`);
     }
 
     //called then the user logs out, removes the token from local storage

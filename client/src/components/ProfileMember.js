@@ -3,7 +3,7 @@ import Box from "@mui/system/Box";
 import MemberDescription from "./MemberDescription";
 import MemberContactInfo from "./MemberContactInfo";
 
-export default function ProfileMember(){
+export default function ProfileMember({member}){
     return (
         <Box sx={{display: 'flex', flexWrap: 'wrap', flexDirection: 'column'}}>
             <Box sx={{ width: '200px', height: '200px', borderRadius: '50%', border: 1, overflow: 'hidden', m: 2}}>
@@ -11,7 +11,7 @@ export default function ProfileMember(){
             </Box>
 
             <Box sx={{m:2}}>
-                <Typography variant="h4">Welcome, firstName lastName</Typography>
+                <Typography variant="h4">Welcome, {member.firstName} {member.lastName}</Typography>
             </Box>
 
             <Box sx={{m:2}}>
@@ -20,7 +20,7 @@ export default function ProfileMember(){
 
             <MemberContactInfo/>
 
-            <MemberDescription/>
+            <MemberDescription description={member.description}/>
         </Box>
     )
 }

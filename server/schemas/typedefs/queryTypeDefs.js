@@ -3,7 +3,7 @@ const typeDef = `
         industries: [Industry]
         industry(_id: ID!): Industry
         members: [Member]
-        member(_id: ID!): Member
+        member(username: String!): Member
         mentorGroups: [MentorGroup]
         mentorGroup(_id: ID!): MentorGroup
     }

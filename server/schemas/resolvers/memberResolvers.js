@@ -8,8 +8,8 @@ const memberResolvers = {
         return await Member.find({});
     },
 
-    member: async function(_, {_id}){
-        return await Member.findById(_id);
+    member: async function(_, {username}){
+        return await Member.findOne({username});
     },
 
     //mutations***************************
