@@ -42,9 +42,15 @@ export default function MemberIndustry({industry, bIsUserProfile}){
             }
         }
         
-        //call the mustation to add industry to member with the authed username and found industry id
-        const {data} = await addIndustryToMember({variables: {memberId: Auth.getProfile()._id, industryId: id}});
-        return console.log(data);
+        try{
+            //call the mustation to add industry to member with the authed username and found industry id
+            const {data} = await addIndustryToMember({variables: {memberId: Auth.getProfile()._id, industryId: id}});
+            return console.log(data);
+        }
+        catch(err){
+            //if the mutation doesnt work for whatever reason, notify the user of the error
+            return alert(err.message);
+        }
     }
 
     if(loading) return <Box sx={{m:2}}><Typography variant="h4">Loading...</Typography></Box>
