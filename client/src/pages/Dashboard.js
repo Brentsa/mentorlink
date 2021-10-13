@@ -5,10 +5,16 @@ import ProfileMentor from '../components/ProfileMentors';
 import { useQuery } from '@apollo/client';
 import { QUERY_MEMBER } from '../utils/queries';
 import { Box } from '@mui/system';
+import Auth from '../utils/AuthService';
+import { useState } from 'react';
 
 export default function Dashboard(){
     //peel the username off of the URL using useParams and set it to userParam
     const {username: userParam} = useParams();
+
+    //compare the profile to the current logged in user and set the state for later use
+    const [bIsUserProfile] = useState(userParam === Auth.getProfile().username);
+    console.log(bIsUserProfile);
 
     //query the member given by the params
     const {data, loading} = useQuery(QUERY_MEMBER, {variables: {username: userParam}});
@@ -24,7 +30,7 @@ export default function Dashboard(){
     return (
         <Grid container spacing={4}>
             <Grid item xs={12} md={6}>
-                <ProfileMember member={member}/>
+                <ProfileMember member={member} bIsUserProfile={bIsUserProfile}/>
             </Grid>
             <Grid item xs={12} md={6}>
                 <ProfileMentor/>

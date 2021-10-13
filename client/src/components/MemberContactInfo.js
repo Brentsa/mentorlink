@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { useState } from "react";
 
-export default function MemberContactInfo(){
+export default function MemberContactInfo({bIsUserProfile}){
 
     const [bIsEditing, setIsEditing] = useState(false);
 
@@ -16,7 +16,7 @@ export default function MemberContactInfo(){
         <Box sx={{m:2}}>
             <Box sx={{display: 'flex', alignItems: 'center', mb:1}}>
                 <Typography variant="h5">Contact Info</Typography>
-                <Button color="secondary" size="small" sx={{mx: 2}} onClick={toggleEdit}>{!bIsEditing ? 'edit' : 'save'}</Button>
+                {bIsUserProfile ? <Button color="secondary" size="small" sx={{mx: 2}} onClick={toggleEdit}>{!bIsEditing ? 'edit' : 'save'}</Button> : null}
             </Box>
             {bIsEditing ? (
                 <TextField

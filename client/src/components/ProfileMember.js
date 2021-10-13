@@ -2,8 +2,10 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/system/Box";
 import MemberDescription from "./MemberDescription";
 import MemberContactInfo from "./MemberContactInfo";
+import MemberIndustry from "./MemberIndustry";
 
-export default function ProfileMember({member}){
+export default function ProfileMember({member, bIsUserProfile}){
+
     return (
         <Box sx={{display: 'flex', flexWrap: 'wrap', flexDirection: 'column'}}>
             <Box sx={{ width: '200px', height: '200px', borderRadius: '50%', border: 1, overflow: 'hidden', m: 2}}>
@@ -11,16 +13,14 @@ export default function ProfileMember({member}){
             </Box>
 
             <Box sx={{m:2}}>
-                <Typography variant="h4">Welcome, {member.firstName} {member.lastName}</Typography>
+                <Typography variant="h4">{bIsUserProfile ? "Welcome, " : ''}{member.firstName} {member.lastName}</Typography>
             </Box>
 
-            <Box sx={{m:2}}>
-                <Typography variant="h4">Industry</Typography>
-            </Box>
+            <MemberIndustry bIsUserProfile={bIsUserProfile}/>
 
-            <MemberContactInfo/>
+            <MemberContactInfo bIsUserProfile={bIsUserProfile}/>
 
-            <MemberDescription description={member.description}/>
+            <MemberDescription description={member.description} bIsUserProfile={bIsUserProfile}/>
         </Box>
     )
 }
