@@ -11,3 +11,12 @@ export const QUERY_MEMBER = gql`
         }
     }
 `;
+
+export const QUERY_INDUSTRIES = gql`
+    query industries {
+        industries {
+            _id
+            name
+        }
+    }
+`;
