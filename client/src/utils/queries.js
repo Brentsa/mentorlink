@@ -8,6 +8,10 @@ export const QUERY_MEMBER = gql`
             lastName
             username
             description
+            industry {
+                _id
+                name
+            }
         }
     }
 `;

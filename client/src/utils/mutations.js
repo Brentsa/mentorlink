@@ -28,3 +28,17 @@ export const ADD_USER = gql`
         }
     }
 `;
+
+export const ADD_INDUSTRY_TO_MEMBER = gql`
+    mutation addIndustryToMember($memberId: ID!, $industryId: ID!) {
+        addIndustryToMember(memberId: $memberId, industryId: $industryId) {
+            _id
+            firstName
+            lastName
+            industry {
+                _id
+                name
+            }
+        }
+    }
+`; 

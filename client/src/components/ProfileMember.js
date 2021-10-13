@@ -16,7 +16,7 @@ export default function ProfileMember({member, bIsUserProfile}){
                 <Typography variant="h4">{bIsUserProfile ? "Welcome, " : ''}{member.firstName} {member.lastName}</Typography>
             </Box>
 
-            <MemberIndustry industry={member?.industry} bIsUserProfile={bIsUserProfile}/>
+            <MemberIndustry industry={member.industry.name} bIsUserProfile={bIsUserProfile}/>
 
             <MemberContactInfo bIsUserProfile={bIsUserProfile}/>
 
