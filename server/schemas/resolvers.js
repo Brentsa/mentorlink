@@ -7,11 +7,12 @@ const {
 
 const { 
     members, 
-    member, 
+    member,
     addMember, 
     loginMember,
     updateMember, 
-    deleteMember, 
+    deleteMember,
+    addIndustryToMember, 
     addContactInfo, 
     deleteContactInfo
 } = require('./resolvers/memberResolvers');
@@ -45,6 +46,7 @@ const resolvers = {
         loginMember,
         updateMember,
         deleteMember,
+        addIndustryToMember,
         addContactInfo,
         deleteContactInfo,
         addMentorGroup,

@@ -2,6 +2,7 @@ const typeDef = `
     type Mutation{
         addIndustry(name: String!): Industry
         deleteIndustry(_id: ID!): Industry
+        addIndustryToMember(memberId: ID!, industryId: ID!): Member
         addMember(member: minMemberContent!): AuthMember
         loginMember(username: String!, password: String!): AuthMember
         updateMember(_id: ID!, member: minMemberContent!): Member

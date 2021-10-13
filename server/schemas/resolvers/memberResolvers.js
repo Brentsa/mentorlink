@@ -9,7 +9,7 @@ const memberResolvers = {
     },
 
     member: async function(_, {username}){
-        return await Member.findOne({username});
+        return await Member.findOne({username}).populate("industry");
     },
 
     //mutations***************************
@@ -43,6 +43,12 @@ const memberResolvers = {
         if(!context.member) throw new AuthenticationError('You must be logged in to perform this action.');
 
         return await Member.findByIdAndUpdate(_id, {...member}, {new: true});
+    },
+
+    addIndustryToMember: async function(_, {memberId, industryId}, context){
+        if(!context.member) throw new AuthenticationError("You must be logged in to add an industry");
+
+        return await Member.findOneAndUpdate(memberId, {industry: industryId}, {new: true, runValidators: true}).populate("industry");
     },
 
     deleteMember: async function(_, {_id}, context){
