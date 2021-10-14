@@ -5,20 +5,20 @@ import { QUERY_INDUSTRIES } from "../utils/queries";
 import { ADD_INDUSTRY_TO_MEMBER } from "../utils/mutations";
 import Auth from '../utils/AuthService';
 
-export default function MemberIndustry({industry, bIsUserProfile}){
-
-    console.log(industry);
+export default function MemberIndustry({member, setMember, bIsUserProfile}){
+    const industryName = member?.industry?.name;
 
     //state to determine whether or not the user is editing the industry
     const [bIsEditing, setIsEditing] = useState(false);
 
-    //state to hold the industry value, if the user has an industry set it, otherwise it is empty
-    const [currentIndustry, setCurrentIndustry] = useState(industry || '');
+    //state to control the industry selection when editing
+    const [selectedIndustry, setSelectedIndustry] = useState(industryName);
 
     //Query the database for all the industries available
     const {data, loading} = useQuery(QUERY_INDUSTRIES);
     const industryArray = data?.industries || [];
 
+    //Define the mutation to save an industry to a member
     const [addIndustryToMember] = useMutation(ADD_INDUSTRY_TO_MEMBER);
 
     //toggle the editing status of the state
@@ -26,26 +26,32 @@ export default function MemberIndustry({industry, bIsUserProfile}){
         return setIsEditing(!bIsEditing);
     }
 
+    //called when the user selects a drop down menu option
     function handleIndustryChange(event){
-        return setCurrentIndustry(event.target.value);
+        return setSelectedIndustry(event.target.value)
     }
 
-    async function handleIndustrySave(){
-        //when the save button is clicked, toggle the edit button
-        toggleEdit();
+    //called when the user saves the drop down menu selection
+    function handleIndustrySave(event){
+
+        let id;
 
         //find the industry id by matching with the industry name
-        let id;
         for(var i = 0; i<industryArray.length; i++){
-            if(currentIndustry === industryArray[i].name){
+            if(selectedIndustry === industryArray[i].name){
                 id = industryArray[i]._id
             }
         }
-        
+
+        //when the save button is clicked, toggle the edit button
+        toggleEdit();
+
         try{
             //call the mustation to add industry to member with the authed username and found industry id
-            const {data} = await addIndustryToMember({variables: {memberId: Auth.getProfile()._id, industryId: id}});
-            return console.log(data);
+            addIndustryToMember({variables: {memberId: Auth.getProfile()._id, industryId: id}});
+
+            //after the back end industry save, update the member state
+            return setMember({...member, industry: {_id: id, name: selectedIndustry}});
         }
         catch(err){
             //if the mutation doesnt work for whatever reason, notify the user of the error
@@ -62,7 +68,7 @@ export default function MemberIndustry({industry, bIsUserProfile}){
                     id="industry-selector"
                     select
                     label="Industry"
-                    value={currentIndustry}
+                    value={selectedIndustry}
                     onChange={handleIndustryChange}
                 >
                     {industryArray.map(industry => (
@@ -72,7 +78,13 @@ export default function MemberIndustry({industry, bIsUserProfile}){
                     ))}
                 </TextField>
                 : 
-                <Typography variant="h4">{currentIndustry ? currentIndustry : 'Add an industry!'}</Typography>
+                <Typography variant="h4">{
+                    bIsUserProfile ? (
+                        industryName ? industryName : 'Add an industry!'
+                    ) : (
+                        industryName ? industryName : null
+                    )
+                }</Typography>
             }
             {bIsUserProfile && Auth.UserLoggedIn() ? 
                 <>

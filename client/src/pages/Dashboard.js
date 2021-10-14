@@ -6,7 +6,7 @@ import { useQuery } from '@apollo/client';
 import { QUERY_MEMBER } from '../utils/queries';
 import { Box } from '@mui/system';
 import Auth from '../utils/AuthService';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function Dashboard(){
     //peel the username off of the URL using useParams and set it to userParam
@@ -14,15 +14,20 @@ export default function Dashboard(){
 
     //compare the profile to the current logged in user and set the state for later use
     const [bIsUserProfile] = useState(userParam === Auth.getProfile().username);
-    console.log(bIsUserProfile);
 
-    //query the member given by the params
-    const {data, loading} = useQuery(QUERY_MEMBER, {variables: {username: userParam}});
+    //create a state for the member of the profile
+    const [currentMember, setCurrentMember] = useState(null);
 
-    //assign member data if available otherwise set it to an empty object
-    const member = data?.member || {};  
+    //query the member given by the params, we want the query to execute on every render so change the fetch policy to network only
+    const {data, loading} = useQuery(QUERY_MEMBER, {variables: {username: userParam}, fetchPolicy: "network-only"});
 
-    if(member){ console.log(member);}
+    //once the data has been returned, set the current member once the component has rendered
+    useEffect(()=>{
+        if(data) {
+            console.log(data.member);
+            return setCurrentMember(data.member);
+        }
+    }, [data])
     
     //return loading while the query executes
     if(loading) return <Box>Loading...</Box>
@@ -30,7 +35,7 @@ export default function Dashboard(){
     return (
         <Grid container spacing={4}>
             <Grid item xs={12} md={6}>
-                <ProfileMember member={member} bIsUserProfile={bIsUserProfile}/>
+                {currentMember ? <ProfileMember member={currentMember} setMember={setCurrentMember} bIsUserProfile={bIsUserProfile}/> : 'User not found'}
             </Grid>
             <Grid item xs={12} md={6}>
                 <ProfileMentor/>

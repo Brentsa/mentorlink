@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { useState } from "react";
 
-export default function MemberDescription({description, bIsUserProfile}){
+export default function MemberDescription({member, setMember, bIsUserProfile}){
 
     const [bIsEditing, setIsEditing] = useState(false);
 
@@ -23,11 +23,11 @@ export default function MemberDescription({description, bIsUserProfile}){
                     id="description text"
                     multiline
                     fullWidth
-                    defaultValue={description}
+                    defaultValue={member.description}
                 />
             ) : (
                 <Typography variant="body2">
-                    {description}
+                    {member.description}
                 </Typography>    
             )}
         </Box>

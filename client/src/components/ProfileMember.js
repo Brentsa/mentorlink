@@ -4,7 +4,7 @@ import MemberDescription from "./MemberDescription";
 import MemberContactInfo from "./MemberContactInfo";
 import MemberIndustry from "./MemberIndustry";
 
-export default function ProfileMember({member, bIsUserProfile}){
+export default function ProfileMember({member, setMember, bIsUserProfile}){
 
     return (
         <Box sx={{display: 'flex', flexWrap: 'wrap', flexDirection: 'column'}}>
@@ -16,11 +16,23 @@ export default function ProfileMember({member, bIsUserProfile}){
                 <Typography variant="h4">{bIsUserProfile ? "Welcome, " : ''}{member.firstName} {member.lastName}</Typography>
             </Box>
 
-            <MemberIndustry industry={member.industry.name} bIsUserProfile={bIsUserProfile}/>
+            <MemberIndustry 
+                member={member} 
+                setMember={setMember} 
+                bIsUserProfile={bIsUserProfile}
+            />
 
-            <MemberContactInfo bIsUserProfile={bIsUserProfile}/>
+            <MemberContactInfo  
+                member={member} 
+                setMember={setMember} 
+                bIsUserProfile={bIsUserProfile}
+            />
 
-            <MemberDescription description={member?.description} bIsUserProfile={bIsUserProfile}/>
+            <MemberDescription  
+                member={member} 
+                setMember={setMember} 
+                bIsUserProfile={bIsUserProfile}
+            />
         </Box>
     )
 }
