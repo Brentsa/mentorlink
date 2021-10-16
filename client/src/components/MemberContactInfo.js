@@ -3,8 +3,28 @@ import Box from "@mui/system/Box";
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { useState } from "react";
-import {Formik} from 'formik';
+import {Formik, useField} from 'formik';
 import * as Yup from 'yup';
+
+function TextInput({label, bIsEditing, ...props}){
+    const [field, meta] = useField(props);
+
+    return (
+        <>
+            <TextField 
+                label={label}
+                color="primary"
+                variant="standard"
+                margin="dense"
+                InputProps={!bIsEditing ? {readOnly: true} : {}}
+                {...props}
+                {...field}
+                error={meta.touched && meta.error ? true : false}
+                helperText={meta.touched && meta.error ? meta.error: false}
+            />
+        </>
+    );
+};
 
 export default function MemberContactInfo({member, setMember, bIsUserProfile}){
 
@@ -51,39 +71,24 @@ export default function MemberContactInfo({member, setMember, bIsUserProfile}){
                     }, 400)
                 }}
             >
-                {formik => (
-                    <Box
-                        component='form'
-                        onSubmit={formik.handleSubmit}
-                        sx={{'& .MuiTextField-root': { m: 1, width: '25ch' }}}
-                    >
-                        <TextField 
-                            id="phoneNumber"
-                            label="Phone Number"
-                            color="primary"
-                            variant="standard"
-                            type="text"
-                            margin="dense"
-                            InputProps={!bIsEditing ? {readOnly: true} : {}}
-                            {...formik.getFieldProps("phoneNumber")}
-                            error={formik.touched.phoneNumber && formik.errors.phoneNumber ? true : false}
-                            helperText={formik.touched.phoneNumber && formik.errors.phoneNumber ? formik.errors.phoneNumber : false}
-                        />
+                <Box
+                    component='form'
+                    sx={{'& .MuiTextField-root': { m: 1, width: '25ch' }}}
+                >
+                    <TextInput 
+                        label="Phone Number"
+                        name="phoneNumber"
+                        type="text"
+                        bIsEditing={bIsEditing}
+                    />
 
-                        <TextField 
-                            id="email"
-                            label="Email"
-                            color="primary"
-                            variant="standard"
-                            type="email"
-                            margin="dense"
-                            InputProps={!bIsEditing ? {readOnly: true} : {}}
-                            {...formik.getFieldProps("email")}
-                            error={formik.touched.email && formik.errors.email ? true : false}
-                            helperText={formik.touched.email && formik.errors.email ? formik.errors.email : false}
-                        />
-                    </Box>
-                )}
+                    <TextInput
+                        label="Email Address"
+                        name="email"
+                        type="email"
+                        bIsEditing={bIsEditing}
+                    />
+                </Box>
             </Formik>
         </Box>
     )
