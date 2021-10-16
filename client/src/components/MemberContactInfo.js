@@ -36,22 +36,17 @@ export default function MemberContactInfo({member, setMember, bIsUserProfile}){
 
     return (
         <Box sx={{m:2}}>
-            <Box sx={{display: 'flex', alignItems: 'center', mb:1}}>
-                <Typography variant="h5">Contact Info</Typography>
-                {bIsUserProfile ? <Button color="secondary" size="small" sx={{mx: 2}} onClick={toggleEdit}>{!bIsEditing ? 'edit' : 'save'}</Button> : null}
-            </Box>
-
             <Formik
                 initialValues={{
                     phoneNumber: '9054671111',
                     email: 'test@live.ca', 
-                    streetNumber: '',
-                    streetName: '', 
-                    suiteNumber: '', 
-                    city: '',
-                    province: '',
-                    country: '',
-                    postalCode: ''
+                    streetNumber: '5',
+                    streetName: 'Main Street', 
+                    suiteNumber: 'B200', 
+                    city: 'Toronto',
+                    province: 'Ontario',
+                    country: 'Canada',
+                    postalCode: 'L1R2H2'
                 }}
                 validationSchema={Yup.object({
                     phoneNumber: Yup.string().max(10, 'Cannot be more than 10 numbers.').min(9, 'Cannot be less than 9 numbers.'),
@@ -64,17 +59,34 @@ export default function MemberContactInfo({member, setMember, bIsUserProfile}){
                     country: Yup.string().oneOf(['Canada', 'USA']),
                     postalCode: Yup.string().max(6, 'Cannot be more than 10 characters.').min(5, 'Cannot be less than 5 characters.')
                 })}
-                onSubmit={(values, {setSubmitting}) => {
-                    setTimeout(()=>{
+                onSubmit={(values) => {
+                    if(bIsEditing){
+                        toggleEdit()
                         alert(JSON.stringify(values, null, 2));
-                        setSubmitting(false);
-                    }, 400)
+                    }
+                    else{
+                        toggleEdit();
+                    }
                 }}
-            >
-                <Box
-                    component='form'
-                    sx={{'& .MuiTextField-root': { m: 1, width: '25ch' }}}
+            >   
+                {formik => (
+                <Box 
+                    component="form"
+                    onSubmit={(e)=>{
+                        e.preventDefault()
+                        formik.handleSubmit();
+                    }}
+                    sx={{'& .MuiTextField-root': { m: 1, width: '20ch' }}}
                 >
+                    <Box sx={{display: 'flex', alignItems: 'center', mb:1}}>
+                        <Typography variant="h5">Contact Info</Typography>
+                        {bIsUserProfile ? 
+                            <Button color="secondary" size="small" sx={{mx: 2}} type="submit">{!bIsEditing ? 'edit': 'save'}</Button>
+                            : 
+                            null
+                        }
+                    </Box>
+
                     <TextInput 
                         label="Phone Number"
                         name="phoneNumber"
@@ -88,7 +100,57 @@ export default function MemberContactInfo({member, setMember, bIsUserProfile}){
                         type="email"
                         bIsEditing={bIsEditing}
                     />
+
+                    <TextInput
+                        label="Street Number"
+                        name="streetNumber"
+                        type="number"
+                        bIsEditing={bIsEditing}
+                    />
+
+                    <TextInput
+                        label="Street Name"
+                        name="streetName"
+                        type="text"
+                        bIsEditing={bIsEditing}
+                    />
+
+                    <TextInput
+                        label="Suite Number"
+                        name="suiteNumber"
+                        type="text"
+                        bIsEditing={bIsEditing}
+                    />
+
+                    <TextInput
+                        label="City"
+                        name="city"
+                        type="text"
+                        bIsEditing={bIsEditing}
+                    />
+
+                    <TextInput
+                        label="province"
+                        name="province"
+                        type="text"
+                        bIsEditing={bIsEditing}
+                    />
+
+                    <TextInput
+                        label="Country"
+                        name="country"
+                        type="text"
+                        bIsEditing={bIsEditing}
+                    />
+
+                    <TextInput
+                        label="Postal Code"
+                        name="postalCode"
+                        type="text"
+                        bIsEditing={bIsEditing}
+                    />
                 </Box>
+                )}
             </Formik>
         </Box>
     )
