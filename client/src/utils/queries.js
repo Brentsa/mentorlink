@@ -12,6 +12,18 @@ export const QUERY_MEMBER = gql`
                 _id
                 name
             }
+            contactInfo {
+                _id
+                streetNumber
+                email
+                phoneNumber
+                postalCode
+                country
+                province
+                city
+                suiteNumber
+                streetName
+            }
         }
     }
 `;

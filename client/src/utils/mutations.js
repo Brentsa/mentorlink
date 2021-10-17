@@ -42,3 +42,23 @@ export const ADD_INDUSTRY_TO_MEMBER = gql`
         }
     }
 `; 
+
+export const ADD_CONTACT_INFO_TO_MEMBER = gql`
+    mutation addContactInfo($addContactInfoId: ID!, $addContactInfoContactInfo: contactInfoContent!) {
+        addContactInfo(_id: $addContactInfoId, contactInfo: $addContactInfoContactInfo) {
+            _id
+            username
+            contactInfo {
+                phoneNumber
+                email
+                streetNumber
+                streetName
+                suiteNumber
+                city
+                province
+                country
+                postalCode
+            }
+        }
+    }
+`;

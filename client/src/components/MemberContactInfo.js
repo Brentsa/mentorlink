@@ -28,8 +28,10 @@ function TextInput({label, bIsEditing, ...props}){
 
 export default function MemberContactInfo({member, setMember, bIsUserProfile}){
 
+    //Define a state to determine the editing status of the contact form
     const [bIsEditing, setIsEditing] = useState(false);
 
+    //Called when the editing status of the form needs to be toggled
     function toggleEdit(){
         return setIsEditing(!bIsEditing);
     }
@@ -38,15 +40,15 @@ export default function MemberContactInfo({member, setMember, bIsUserProfile}){
         <Box sx={{m:2}}>
             <Formik
                 initialValues={{
-                    phoneNumber: '9054671111',
-                    email: 'test@live.ca', 
-                    streetNumber: '5',
-                    streetName: 'Main Street', 
-                    suiteNumber: 'B200', 
-                    city: 'Toronto',
-                    province: 'Ontario',
-                    country: 'Canada',
-                    postalCode: 'L1R2H2'
+                    phoneNumber: member.contactInfo.phoneNumber,
+                    email: member.contactInfo.email, 
+                    streetNumber: member.contactInfo.streetNumber,
+                    streetName: member.contactInfo.streetName, 
+                    suiteNumber: member.contactInfo.suiteNumber, 
+                    city: member.contactInfo.city,
+                    province: member.contactInfo.province,
+                    country: member.contactInfo.country,
+                    postalCode: member.contactInfo.postalCode
                 }}
                 validationSchema={Yup.object({
                     phoneNumber: Yup.string().max(10, 'Cannot be more than 10 numbers.').min(9, 'Cannot be less than 9 numbers.'),
@@ -70,86 +72,92 @@ export default function MemberContactInfo({member, setMember, bIsUserProfile}){
                 }}
             >   
                 {formik => (
-                <Box 
-                    component="form"
-                    onSubmit={(e)=>{
-                        e.preventDefault()
-                        formik.handleSubmit();
-                    }}
-                    sx={{'& .MuiTextField-root': { m: 1, width: '20ch' }}}
-                >
-                    <Box sx={{display: 'flex', alignItems: 'center', mb:1}}>
-                        <Typography variant="h5">Contact Info</Typography>
-                        {bIsUserProfile ? 
-                            <Button color="secondary" size="small" sx={{mx: 2}} type="submit">{!bIsEditing ? 'edit': 'save'}</Button>
-                            : 
-                            null
-                        }
+                    <Box 
+                        component="form"
+                        onSubmit={(e)=>{
+                            e.preventDefault()
+                            formik.handleSubmit();
+                        }}
+                        sx={{'& .MuiTextField-root': { m: 1, width: '20ch' }}}
+                    >
+                        <Box sx={{display: 'flex', alignItems: 'center', mb:1}}>
+                            <Typography variant="h5">Contact Info</Typography>
+                            {bIsUserProfile ? 
+                                <Button color="secondary" size="small" sx={{mx: 2}} type="submit">{!bIsEditing ? 'edit': 'save'}</Button>
+                                : 
+                                null
+                            }
+                        </Box>
+
+                        <Box>
+                            <TextInput 
+                                label="Phone Number"
+                                name="phoneNumber"
+                                type="text"
+                                bIsEditing={bIsEditing}
+                            />
+
+                            <TextInput
+                                label="Email Address"
+                                name="email"
+                                type="email"
+                                bIsEditing={bIsEditing}
+                            />
+
+                            <TextInput
+                                label="Country"
+                                name="country"
+                                type="text"
+                                bIsEditing={bIsEditing}
+                            />
+                        </Box>
+
+                        <Box>
+                            <TextInput
+                                label="Street Number"
+                                name="streetNumber"
+                                type="number"
+                                bIsEditing={bIsEditing}
+                            />
+
+                            <TextInput
+                                label="Street Name"
+                                name="streetName"
+                                type="text"
+                                bIsEditing={bIsEditing}
+                            />
+
+                            <TextInput
+                                label="Suite Number"
+                                name="suiteNumber"
+                                type="text"
+                                bIsEditing={bIsEditing}
+                            />
+                        </Box>
+
+                        <Box>
+                            <TextInput
+                                label="City"
+                                name="city"
+                                type="text"
+                                bIsEditing={bIsEditing}
+                            />
+
+                            <TextInput
+                                label="province"
+                                name="province"
+                                type="text"
+                                bIsEditing={bIsEditing}
+                            />
+
+                            <TextInput
+                                label="Postal Code"
+                                name="postalCode"
+                                type="text"
+                                bIsEditing={bIsEditing}
+                            />
+                        </Box>
                     </Box>
-
-                    <TextInput 
-                        label="Phone Number"
-                        name="phoneNumber"
-                        type="text"
-                        bIsEditing={bIsEditing}
-                    />
-
-                    <TextInput
-                        label="Email Address"
-                        name="email"
-                        type="email"
-                        bIsEditing={bIsEditing}
-                    />
-
-                    <TextInput
-                        label="Street Number"
-                        name="streetNumber"
-                        type="number"
-                        bIsEditing={bIsEditing}
-                    />
-
-                    <TextInput
-                        label="Street Name"
-                        name="streetName"
-                        type="text"
-                        bIsEditing={bIsEditing}
-                    />
-
-                    <TextInput
-                        label="Suite Number"
-                        name="suiteNumber"
-                        type="text"
-                        bIsEditing={bIsEditing}
-                    />
-
-                    <TextInput
-                        label="City"
-                        name="city"
-                        type="text"
-                        bIsEditing={bIsEditing}
-                    />
-
-                    <TextInput
-                        label="province"
-                        name="province"
-                        type="text"
-                        bIsEditing={bIsEditing}
-                    />
-
-                    <TextInput
-                        label="Country"
-                        name="country"
-                        type="text"
-                        bIsEditing={bIsEditing}
-                    />
-
-                    <TextInput
-                        label="Postal Code"
-                        name="postalCode"
-                        type="text"
-                        bIsEditing={bIsEditing}
-                    />
-                </Box>
                 )}
             </Formik>
         </Box>

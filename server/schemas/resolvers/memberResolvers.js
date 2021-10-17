@@ -9,7 +9,7 @@ const memberResolvers = {
     },
 
     member: async function(_, {username}){
-        return await Member.findOne({username}).populate("industry");
+        return await Member.findOne({username}).populate("industry").populate("contactInfo");
     },
 
     //mutations***************************
@@ -60,7 +60,7 @@ const memberResolvers = {
     addContactInfo: async function(_, {_id, contactInfo}, context){
         if(!context.member) throw new AuthenticationError('You must be logged in to perform this action.');
         
-        return await Member.findByIdAndUpdate( _id, {contactInfo}, {new: true, runValidators: true});  
+        return await Member.findByIdAndUpdate( _id, {contactInfo}, {new: true, runValidators: true}).populate('contactInfo');  
     },
     
     deleteContactInfo: async function(_, {_id}, context){
