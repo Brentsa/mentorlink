@@ -44,8 +44,8 @@ export const ADD_INDUSTRY_TO_MEMBER = gql`
 `; 
 
 export const ADD_CONTACT_INFO_TO_MEMBER = gql`
-    mutation addContactInfo($addContactInfoId: ID!, $addContactInfoContactInfo: contactInfoContent!) {
-        addContactInfo(_id: $addContactInfoId, contactInfo: $addContactInfoContactInfo) {
+    mutation addContactInfo($_id: ID!, $contactInfo: contactInfoContent!) {
+        addContactInfo(_id: $_id, contactInfo: $contactInfo) {
             _id
             username
             contactInfo {

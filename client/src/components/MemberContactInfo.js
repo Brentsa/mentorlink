@@ -5,6 +5,9 @@ import TextField from '@mui/material/TextField';
 import { useState } from "react";
 import {Formik, useField} from 'formik';
 import * as Yup from 'yup';
+import { ADD_CONTACT_INFO_TO_MEMBER } from "../utils/mutations";
+import { useMutation } from '@apollo/client';
+import Auth from "../utils/AuthService";
 
 function TextInput({label, bIsEditing, ...props}){
     const [field, meta] = useField(props);
@@ -31,10 +34,33 @@ export default function MemberContactInfo({member, setMember, bIsUserProfile}){
     //Define a state to determine the editing status of the contact form
     const [bIsEditing, setIsEditing] = useState(false);
 
+    //Define the mutation that will be called to add contact info to the member
+    const [addContactInfo, {loading, error}] = useMutation(ADD_CONTACT_INFO_TO_MEMBER);
+
     //Called when the editing status of the form needs to be toggled
     function toggleEdit(){
         return setIsEditing(!bIsEditing);
     }
+
+    //Submit the contact form function
+    function submitContactInfo(values){
+        if(bIsEditing){
+            //toggle the editing status to change form to readonly
+            toggleEdit()
+
+            //call contact info mutation to save the inputted contact info
+            addContactInfo({variables: {_id: Auth.getProfile()._id, contactInfo: values}})
+
+            //change the state of the member
+            return setMember({...member, contactInfo: values})
+        }
+        else{
+            // if we are not editing then toggle the editing status to change form to edit
+            toggleEdit();
+        }
+    }
+
+    if(error) return <Box>Error....</Box>
 
     return (
         <Box sx={{m:2}}>
@@ -61,15 +87,7 @@ export default function MemberContactInfo({member, setMember, bIsUserProfile}){
                     country: Yup.string().oneOf(['Canada', 'USA']),
                     postalCode: Yup.string().max(6, 'Cannot be more than 10 characters.').min(5, 'Cannot be less than 5 characters.')
                 })}
-                onSubmit={(values) => {
-                    if(bIsEditing){
-                        toggleEdit()
-                        alert(JSON.stringify(values, null, 2));
-                    }
-                    else{
-                        toggleEdit();
-                    }
-                }}
+                onSubmit={submitContactInfo}
             >   
                 {formik => (
                     <Box 
@@ -116,7 +134,7 @@ export default function MemberContactInfo({member, setMember, bIsUserProfile}){
                             <TextInput
                                 label="Street Number"
                                 name="streetNumber"
-                                type="number"
+                                type="text"
                                 bIsEditing={bIsEditing}
                             />
 
