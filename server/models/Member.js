@@ -43,7 +43,6 @@ const contactInfoSchema = new mongoose.Schema(
         postalCode: {
             type: String,
             trim: true,
-            minlength: 5,
             maxlength: 6
         }
     }

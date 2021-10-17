@@ -60,6 +60,7 @@ export default function MemberContactInfo({member, setMember, bIsUserProfile}){
         }
     }
 
+    if(loading) return <Box>Loading....</Box>
     if(error) return <Box>Error....</Box>
 
     return (
