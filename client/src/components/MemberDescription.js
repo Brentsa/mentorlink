@@ -5,19 +5,33 @@ import TextField from '@mui/material/TextField';
 import { useState } from "react";
 import { Formik } from "formik";
 import * as Yup from 'yup';
+import { useMutation } from "@apollo/client";
+import { UPDATE_MEMBER } from "../utils/mutations";
+import Auth from "../utils/AuthService";
 
 export default function MemberDescription({member, setMember, bIsUserProfile}){
 
+    //set the editing state of the description field
     const [bIsEditing, setIsEditing] = useState(false);
 
+    //define the mutation to update the member
+    const [updateMember] = useMutation(UPDATE_MEMBER);
+
+    //toggle the description editing state
     function toggleEdit(){
         return setIsEditing(!bIsEditing);
     }
 
+    //submit the description 
     function submitDescriptionForm(values){
         if(bIsEditing){
             toggleEdit();
-            return alert(JSON.stringify(values, null, 2));
+
+            //update the member's description in the descripton field
+            updateMember({variables: {id: Auth.getProfile()._id, member:{description: values.description}}});
+
+            //update the state of the member in the profile to match
+            return setMember({...member, description: values.description});
         }
         else{
             return toggleEdit();

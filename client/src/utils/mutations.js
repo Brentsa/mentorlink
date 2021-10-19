@@ -62,3 +62,15 @@ export const ADD_CONTACT_INFO_TO_MEMBER = gql`
         }
     }
 `;
+
+export const UPDATE_MEMBER = gql`
+    mutation Mutation($id: ID!, $member: minMemberContent!) {
+        updateMember(_id: $id, member: $member) {
+            _id
+            firstName
+            lastName
+            username
+            description
+        }
+    }
+`
