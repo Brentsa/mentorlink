@@ -67,15 +67,15 @@ export default function MemberContactInfo({member, setMember, bIsUserProfile}){
         <Box sx={{m:2}}>
             <Formik
                 initialValues={{
-                    phoneNumber: member.contactInfo.phoneNumber,
-                    email: member.contactInfo.email, 
-                    streetNumber: member.contactInfo.streetNumber,
-                    streetName: member.contactInfo.streetName, 
-                    suiteNumber: member.contactInfo.suiteNumber, 
-                    city: member.contactInfo.city,
-                    province: member.contactInfo.province,
-                    country: member.contactInfo.country,
-                    postalCode: member.contactInfo.postalCode
+                    phoneNumber: member?.contactInfo?.phoneNumber,
+                    email: member?.contactInfo?.email, 
+                    streetNumber: member?.contactInfo?.streetNumber,
+                    streetName: member?.contactInfo?.streetName, 
+                    suiteNumber: member?.contactInfo?.suiteNumber, 
+                    city: member?.contactInfo?.city,
+                    province: member?.contactInfo?.province,
+                    country: member?.contactInfo?.country,
+                    postalCode: member?.contactInfo?.postalCode
                 }}
                 validationSchema={Yup.object({
                     phoneNumber: Yup.string().max(10, 'Cannot be more than 10 numbers.').min(9, 'Cannot be less than 9 numbers.'),

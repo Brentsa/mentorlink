@@ -4,6 +4,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import { QUERY_INDUSTRIES } from "../utils/queries";
 import { ADD_INDUSTRY_TO_MEMBER } from "../utils/mutations";
 import Auth from '../utils/AuthService';
+import {capFirstLetter} from '../utils/helpers'
 
 export default function MemberIndustry({member, setMember, bIsUserProfile}){
     const industryName = member?.industry?.name;
@@ -73,16 +74,16 @@ export default function MemberIndustry({member, setMember, bIsUserProfile}){
                 >
                     {industryArray.map(industry => (
                         <MenuItem key={industry._id} value={industry.name}>
-                            {industry.name}
+                            {capFirstLetter(industry.name)}
                         </MenuItem>
                     ))}
                 </TextField>
                 : 
                 <Typography variant="h4">{
                     bIsUserProfile ? (
-                        industryName ? industryName : 'Add an industry!'
+                        industryName ? capFirstLetter(industryName) : 'Add an industry!'
                     ) : (
-                        industryName ? industryName : null
+                        industryName ? capFirstLetter(industryName) : null
                     )
                 }</Typography>
             }
