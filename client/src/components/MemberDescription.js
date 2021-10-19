@@ -69,7 +69,7 @@ export default function MemberDescription({member, setMember, bIsUserProfile}){
                                 helperText={formik.touched.description && formik.errors.description ? formik.errors.description : false}
                             />
                             : 
-                            <Typography variant="body2">
+                            <Typography variant="body2" sx={{whiteSpace: "pre-line"}}>
                                 {formik.values.description}
                             </Typography>    
                         }
