@@ -9,20 +9,19 @@ import Tab from '@mui/material/Tab';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import {Link} from 'react-router-dom';
-
 import Auth from '../utils/AuthService';
+import { useSelector, useDispatch } from 'react-redux';
+import { switchPage } from '../redux/slices/pageSlice';
 
 
 export default function Header() {
-  const [value, setValue] = React.useState('');
+  //get the state of current page from Redux and define the dispatch method for state reduction
+  const currentPage = useSelector(state => state.currentPage.value);
+  const dispatch = useDispatch();
 
   const handleChange = (event, newValue) => {
-    return setValue(newValue);
+    return dispatch(switchPage(newValue));
   };
-
-  const resetValue = (event) => {
-    return setValue('');
-  }
 
   const logout = () => {
     return Auth.logout();
@@ -33,25 +32,26 @@ export default function Header() {
       <AppBar position="static">
         <Toolbar>
           
-          <Box onClick={resetValue}>
-            <Typography variant="h4" color="inherit" component={Link} to={'/'} sx={{textDecoration: 'none'}}>MentorLink</Typography>  
+          <Box>
+            <Typography variant="h4" color="inherit" sx={{textDecoration: 'none'}}>MentorLink</Typography>  
           </Box>
           
 
           <Box sx={{ width: '100%', display: {xs: 'none', lg: 'flex'}, justifyContent: 'center' }}>
             <Tabs
-              value={value}
+              value={currentPage}
               onChange={handleChange}
               textColor="secondary"
               indicatorColor="secondary"
               aria-label="app bar icons"
             >
-              <Tab value="" label="Home" component={Link} to={'/'}/>
-              <Tab value="one" label="Your Profile" component={Link} to={Auth.UserLoggedIn() ? `/dashboard/${Auth.getProfile().username}` : '/login'}/>
-              <Tab value="two" label="Your Mentor"/>
-              <Tab value="three" label="Your Mentees"/>
-              <Tab value="four" label="Search"/>
-              <Tab value="five" label="Discussion" component={Link} to={'/conversation'}/>
+              <Tab value="home" label="Home" component={Link} to={'/'}/>
+              <Tab value="yourProfile" label="Your Profile" component={Link} to={Auth.UserLoggedIn() ? `/dashboard/${Auth.getProfile().username}` : '/login'}/>
+              <Tab value="yourMentor" label="Your Mentor"/>
+              <Tab value="search" label="Search"/>
+              <Tab value="members" label="Members"/>
+              <Tab value="discussion" label="Discussion" component={Link} to={'/conversation'}/>
+              <Tab value="login" label="Login/Register" component={Link} to={'/login'}/>
             </Tabs>
           </Box>
 
@@ -69,8 +69,8 @@ export default function Header() {
 
           {!Auth.UserLoggedIn() ? (
             <>
-              <Button color="inherit" component={Link} to={'/login'} onClick={resetValue}>Login</Button>
-              <Button color="inherit" component={Link} to={'/register'} onClick={resetValue}>Register</Button>
+              <Button color="inherit" component={Link} to={'/login'} onClick={() => dispatch(switchPage('login'))}>Login</Button>
+              <Button color="inherit" component={Link} to={'/register'} onClick={() => dispatch(switchPage('login'))}>Register</Button>
             </>
           ) : (
             <Button color="inherit" onClick={logout}>Logout</Button>

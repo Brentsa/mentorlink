@@ -42,7 +42,7 @@ export default function MemberDescription({member, setMember, bIsUserProfile}){
         <Box sx={{m:2}}>
 
             <Formik
-                initialValues={{description: member.description}}
+                initialValues={{description: member?.description}}
                 validationSchema={Yup.object({description: Yup.string().max(200, "Description cannot be more than 200 characters")})}
                 onSubmit={submitDescriptionForm}
             >
