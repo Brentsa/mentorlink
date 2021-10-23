@@ -12,7 +12,7 @@ const memberResolvers = {
         return await Member.findOne({username})
         .populate("industry")
         .populate("contactInfo")
-        .populate({path: "mentorGroup", populate: {path: "mentor", populate: {path: "industry"}}});
+        .populate({path: "mentorGroup", populate: [{path: "mentor", populate: "industry"}, {path: "mentees", populate: "username"}]});
     },
 
     //mutations***************************
