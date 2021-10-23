@@ -6,8 +6,10 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import {capFirstLetter} from '../utils/helpers'
 
-export default function MemberCard() {
+export default function MemberCard({member}) {
+  console.log(member);
   return (
     <Card sx={{ 
       maxWidth: 345,
@@ -37,13 +39,17 @@ export default function MemberCard() {
         />
       </Box>
     
-      <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', p:2}}>
+      <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', p:1}}>
         <CardContent sx={{display: 'flex', flexWrap: 'wrap', flexDirection: 'column', alignItems: 'center'}}>
-          <Typography gutterBottom variant="h4" component="div">User123456</Typography>
+          <Typography gutterBottom variant="h4" component="div">
+            {member ? member.username : "FakeUsername"}
+          </Typography>
           <Box component="div" sx={{width: '50%', height: '4px', backgroundColor: 'secondary.main', mb: 2}}></Box>
-          <Typography gutterBottom variant="h5" component="div">Industry</Typography>
-          <Typography variant="body1" color="text.secondary" sx={{ textAlign: 'center', backgroundColor: '#FFF', padding: 2, borderRadius: 1, mt: 1 }}>
-            This will be the description of the member. You will be able to see things about them and learn about them. We can tell a lot about a person by their description.
+          <Typography gutterBottom variant="h5" component="div">
+            {member ? capFirstLetter(member.industry.name) : "FakeIndustry"}
+          </Typography>
+          <Typography variant="body1" color="text.secondary" sx={{ textAlign: 'center', backgroundColor: '#FFF', padding: 1, borderRadius: 1, mt: 1, whiteSpace: "pre-line" }}>
+            {member ? member.description : "FakeDescription is going to be right here."}
           </Typography>
         </CardContent>
         

@@ -9,7 +9,10 @@ const memberResolvers = {
     },
 
     member: async function(_, {username}){
-        return await Member.findOne({username}).populate("industry").populate("contactInfo");
+        return await Member.findOne({username})
+        .populate("industry")
+        .populate("contactInfo")
+        .populate({path: "mentorGroup", populate: {path: "mentor", populate: {path: "industry"}}});
     },
 
     //mutations***************************

@@ -38,7 +38,7 @@ export default function Dashboard(){
                 {currentMember ? <ProfileMember member={currentMember} setMember={setCurrentMember} bIsUserProfile={bIsUserProfile}/> : 'User not found'}
             </Grid>
             <Grid item xs={12} md={6}>
-                <ProfileMentor/>
+                <ProfileMentor member={currentMember} setMember={setCurrentMember} bIsUserProfile={bIsUserProfile}/>
             </Grid>
         </Grid>
     )

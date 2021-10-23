@@ -21,7 +21,5 @@ export default function MemberGroup(){
                 </Grid>
             </Grid>
         </Box>
-
-        
     )
 }

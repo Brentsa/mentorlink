@@ -24,6 +24,18 @@ export const QUERY_MEMBER = gql`
                 suiteNumber
                 streetName
             }
+            mentorGroup {
+                _id
+                mentor {
+                    username
+                    industry {
+                        name
+                    }
+                    description
+                }
+                numMentees
+                menteeCount
+            }
         }
     }
 `;
