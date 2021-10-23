@@ -12,6 +12,7 @@ export default function MemberCard({member}) {
   console.log(member);
   return (
     <Card sx={{ 
+      m:1,
       maxWidth: 345,
       display: 'flex', 
       flexWrap: 'wrap', 

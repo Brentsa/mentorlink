@@ -13,13 +13,13 @@ import Auth from '../utils/AuthService';
 import { useSelector, useDispatch } from 'react-redux';
 import { switchPage } from '../redux/slices/pageSlice';
 
-
 export default function Header() {
   //get the state of current page from Redux and define the dispatch method for state reduction
   const currentPage = useSelector(state => state.currentPage.value);
   const dispatch = useDispatch();
 
   const handleChange = (event, newValue) => {
+    //calls redux state reducer switch page to change current page state
     return dispatch(switchPage(newValue));
   };
 
@@ -48,10 +48,10 @@ export default function Header() {
               <Tab value="home" label="Home" component={Link} to={'/'}/>
               <Tab value="yourProfile" label="Your Profile" component={Link} to={Auth.UserLoggedIn() ? `/dashboard/${Auth.getProfile().username}` : '/login'}/>
               <Tab value="yourMentor" label="Your Mentor"/>
-              <Tab value="search" label="Search"/>
+              <Tab value="search" label="Search" component={Link} to={'/search'}/>
               <Tab value="members" label="Members"/>
               <Tab value="discussion" label="Discussion" component={Link} to={'/conversation'}/>
-              <Tab value="login" label="Login/Register" component={Link} to={'/login'}/>
+              <Tab value="login" label="Login/Register" component={Link} to={'/login'} disabled={Auth.UserLoggedIn()}/>
             </Tabs>
           </Box>
 

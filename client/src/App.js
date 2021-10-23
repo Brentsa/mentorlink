@@ -8,6 +8,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import Conversation from './pages/Conversation';
+import Search from './pages/Search'
 import { Container } from '@mui/material';
 import { Box } from '@mui/system';
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@apollo/client'
@@ -59,11 +60,12 @@ function App(){
             <Container maxWidth="xl" sx={{flex: '1 1 auto', mb: 4}}>
               <Box sx={{width: "100%", display: 'flex', flexWrap: 'wrap', justifyContent: 'center'}}>
                 <Switch>
-                  <Route exact path="/" component={Home}></Route>
-                  <Route exact path="/login" component={Login}></Route>
-                  <Route exact path="/register"component={Register}></Route>
-                  <Route exact path="/dashboard/:username" component={Dashboard}></Route>
-                  <Route exact path="/conversation" component={Conversation}></Route>
+                  <Route exact path="/" component={Home}/>
+                  <Route exact path="/login" component={Login}/>
+                  <Route exact path="/register"component={Register}/>
+                  <Route exact path="/dashboard/:username" component={Dashboard}/>
+                  <Route exact path="/conversation" component={Conversation}/>
+                  <Route exact path="/search" component={Search}/>
                 </Switch>
               </Box>
             </Container>
