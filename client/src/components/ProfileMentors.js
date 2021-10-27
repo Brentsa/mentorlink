@@ -1,11 +1,13 @@
-import Typography from "@mui/material/Typography";
 import Box from "@mui/system/Box";
+import { TextField, Typography } from "@mui/material";
 import MemberCard from "./MemberCard";
 import MemberGroup from "./MemberGroup";
 import Auth from "../utils/AuthService";
 import { Button } from "@mui/material";
 import { useMutation } from "@apollo/client";
 import { DELETE_MENTOR_GROUP } from "../utils/mutations";
+import { Formik } from "formik";
+import * as Yup from 'yup';
 
 export default function ProfileMentor({member, setMember, bIsUserProfile}){
 
@@ -65,7 +67,36 @@ export default function ProfileMentor({member, setMember, bIsUserProfile}){
                     {member?.username === Auth.getProfile()?.username ?
                         <>
                             <Typography>Start looking for a group or start one.</Typography>
-                            <Button color="secondary" variant="contained" sx={{my: 2}} onClick={createGroup}>Become Mentor</Button>
+                            <Formik 
+                                initialValues={{numMentees:5}} 
+                                validationSchema={Yup.object({numMentees: Yup.number().max(10, "10 mentees max").min(1, "Need at lease 1 mentee")})}
+                                onSubmit={(values)=>console.log(values)}
+                            >
+                                {formik => (
+                                    <Box 
+                                        component="form" 
+                                        sx={{display: "flex", alignItems: "center"}}
+                                        onSubmit={e => {
+                                            e.preventDefault();
+                                            formik.handleSubmit();
+                                            createGroup();
+                                        }}
+                                    >
+                                        <Button color="secondary" variant="contained" sx={{m: 2}} type="submit">Become Mentor</Button>
+                                        <TextField
+                                            sx={{width: 104}}
+                                            size="small"
+                                            id="numMentees"
+                                            label="# of Mentees"
+                                            type="number"
+                                            value={formik.values.numMentees}
+                                            InputLabelProps={{
+                                                shrink: true,
+                                            }}
+                                        />
+                                    </Box>
+                                )}
+                            </Formik>
                         </>
                         :
                         null
