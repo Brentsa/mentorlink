@@ -73,4 +73,19 @@ export const UPDATE_MEMBER = gql`
             description
         }
     }
-`
+`;
+
+export const DELETE_MENTOR_GROUP = gql`
+    mutation deleteMentorGroup($groupId: ID!) {
+        deleteMentorGroup(groupId: $groupId) {
+            mentor {
+                _id
+                firstName
+                lastName
+            }
+            group {
+                _id
+            }
+        }
+    }
+`;

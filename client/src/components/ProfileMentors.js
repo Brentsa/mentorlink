@@ -4,14 +4,28 @@ import MemberCard from "./MemberCard";
 import MemberGroup from "./MemberGroup";
 import Auth from "../utils/AuthService";
 import { Button } from "@mui/material";
+import { useMutation } from "@apollo/client";
+import { DELETE_MENTOR_GROUP } from "../utils/mutations";
 
 export default function ProfileMentor({member, setMember, bIsUserProfile}){
 
+    //Destructure mentor group from the member profile
     const group = member?.mentorGroup;
     console.log(group);
 
+    //Initialize a mutation to delete a mentor group
+    const [deleteMentorGroup] = useMutation(DELETE_MENTOR_GROUP);
+
+    //called when the user clicks the disband group button
     function disbandGroup(){
-        return console.log("group disbanded");
+        try {
+            //try deleting the group and then set the member state to no mentor group
+            deleteMentorGroup({variables: {groupId: group._id}});
+            setMember({...member, mentorGroup: null});
+        }
+        catch{
+            return console.log("Group not deleted");
+        }
     }
 
     return (
@@ -38,7 +52,7 @@ export default function ProfileMentor({member, setMember, bIsUserProfile}){
                     </Box> 
                 </>
             : 
-                <Box>No Group</Box>
+                <Box>No mentor group. Start looking for a group now.</Box>
             }
         </Box>
     )
