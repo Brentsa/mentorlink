@@ -13,6 +13,9 @@ export default function ProfileMentor({member, setMember, bIsUserProfile}){
     const group = member?.mentorGroup;
     console.log(group);
 
+    console.log(member?.username);
+    console.log(Auth.getProfile()?.username);
+
     //Initialize a mutation to delete a mentor group
     const [deleteMentorGroup] = useMutation(DELETE_MENTOR_GROUP);
 
@@ -28,12 +31,17 @@ export default function ProfileMentor({member, setMember, bIsUserProfile}){
         }
     }
 
+    //called when the user clicks to create a mentor group
+    function createGroup(){
+        return console.log("Group created!");
+    }
+
     return (
         <Box sx={{display: 'flex', flexWrap: 'wrap', flexDirection: 'column', alignItems: 'center'}}>
             {group ? 
                 <>
                     {group.mentor.username === Auth.getProfile().username ? 
-                        <Button color="secondary" variant="contained" margin="normal" onClick={disbandGroup} sx={{my: 2}}>Disband Your Mentor Group</Button>
+                        <Button color="secondary" variant="contained" onClick={disbandGroup} sx={{my: 2}}>Disband Your Mentor Group</Button>
                         : 
                         <Box sx={{m:3, display: 'flex', flexWrap: 'wrap', flexDirection: 'column', alignItems: 'center'}}>
                             <Typography variant="h5">Your Mentor:</Typography>
@@ -52,7 +60,17 @@ export default function ProfileMentor({member, setMember, bIsUserProfile}){
                     </Box> 
                 </>
             : 
-                <Box>No mentor group. Start looking for a group now.</Box>
+                <Box sx={{m:3, display:"flex", flexDirection:"column", alignItems:'center'}}>
+                    <Typography variant="h5">No mentor group</Typography>
+                    {member?.username === Auth.getProfile()?.username ?
+                        <>
+                            <Typography>Start looking for a group or start one.</Typography>
+                            <Button color="secondary" variant="contained" sx={{my: 2}} onClick={createGroup}>Become Mentor</Button>
+                        </>
+                        :
+                        null
+                    }
+                </Box>
             }
         </Box>
     )
