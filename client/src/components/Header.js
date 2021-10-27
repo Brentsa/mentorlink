@@ -46,11 +46,10 @@ export default function Header() {
               aria-label="app bar icons"
             >
               <Tab value="home" label="Home" component={Link} to={'/'}/>
-              <Tab value="yourProfile" label="Your Profile" component={Link} to={Auth.UserLoggedIn() ? `/dashboard/${Auth.getProfile().username}` : '/login'}/>
-              <Tab value="yourMentor" label="Your Mentor"/>
               <Tab value="search" label="Search" component={Link} to={'/search'}/>
-              <Tab value="members" label="Members"/>
-              <Tab value="discussion" label="Discussion" component={Link} to={'/conversation'}/>
+              <Tab value="yourProfile" label="Your Profile" component={Link} disabled={!Auth.UserLoggedIn()} to={Auth.UserLoggedIn() ? `/dashboard/${Auth.getProfile().username}` : '/login'}/>
+              <Tab value="yourMentor" label="Your Mentor" disabled={!Auth.UserLoggedIn()}/>
+              <Tab value="discussion" label="Discussion" component={Link} to={'/conversation'} disabled={!Auth.UserLoggedIn()}/>
               <Tab value="login" label="Login/Register" component={Link} to={'/login'} disabled={Auth.UserLoggedIn()}/>
             </Tabs>
           </Box>
