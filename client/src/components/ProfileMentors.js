@@ -12,10 +12,7 @@ export default function ProfileMentor({member, setMember, bIsUserProfile}){
 
     //Destructure mentor group from the member profile
     const group = member?.mentorGroup;
-    console.log(group);
-
-    console.log(member?.username);
-    console.log(Auth.getProfile()?.username);
+    console.log("this is the group: ", group);
 
     //Initialize a mutation to delete a mentor group
     const [deleteMentorGroup] = useMutation(DELETE_MENTOR_GROUP);
@@ -58,10 +55,10 @@ export default function ProfileMentor({member, setMember, bIsUserProfile}){
             : 
                 <Box sx={{m:3, display:"flex", flexDirection:"column", alignItems:'center'}}>
                     <Typography variant="h5">No mentor group</Typography>
-                    {member?.username === Auth.getProfile()?.username ?
+                    {bIsUserProfile ?
                         <>
                             <Typography>Start looking for a group or start one.</Typography>
-                            <CreateGroupForm/>
+                            <CreateGroupForm member={member} setMember={setMember}/>
                         </>
                         :
                         null

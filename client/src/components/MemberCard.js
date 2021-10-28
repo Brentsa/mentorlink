@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 import {capFirstLetter} from '../utils/helpers'
 
 export default function MemberCard({member}) {
-  console.log(member);
+  console.log("This is the member: ", member);
   return (
     <Card sx={{ 
       m:1,
@@ -47,7 +47,7 @@ export default function MemberCard({member}) {
           </Typography>
           <Box component="div" sx={{width: '50%', height: '4px', backgroundColor: 'secondary.main', mb: 2}}></Box>
           <Typography gutterBottom variant="h5" component="div">
-            {member ? capFirstLetter(member.industry.name) : "FakeIndustry"}
+            {member ? capFirstLetter(member?.industry.name || "") : "FakeIndustry"}
           </Typography>
           <Typography variant="body1" color="text.secondary" sx={{ textAlign: 'center', backgroundColor: '#FFF', padding: 1, borderRadius: 1, mt: 1, whiteSpace: "pre-line" }}>
             {member ? member.description : "FakeDescription is going to be right here."}

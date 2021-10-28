@@ -9,7 +9,7 @@ const typeDef = `
         deleteMember(_id: ID!): Member
         addContactInfo(_id: ID!, contactInfo: contactInfoContent!): Member
         deleteContactInfo(_id: ID!): Member
-        addMentorGroup(mentorId: ID!, numMentees: Int!, industryId: String!): MemberAndMentorGroup
+        addMentorGroup(mentorId: ID!, numMentees: Int!, industryId: ID!): MemberAndMentorGroup
         deleteMentorGroup(groupId: ID!): MemberAndMentorGroup
         addMenteeToGroup(groupId: ID!, menteeId: ID!): MentorGroup
         removeMenteeFromGroup(groupId: ID!, menteeId: ID!): MentorGroup

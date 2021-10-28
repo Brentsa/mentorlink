@@ -89,3 +89,24 @@ export const DELETE_MENTOR_GROUP = gql`
         }
     }
 `;
+
+export const CREATE_MENTOR_GROUP = gql`
+    mutation addMentorGroup($mentorId: ID!, $numMentees: Int!, $industryId: ID!){
+        addMentorGroup(mentorId: $mentorId, numMentees: $numMentees, industryId: $industryId){
+            mentor {
+                _id
+            }
+            group {
+                _id
+                mentor {
+                    _id
+                }
+                numMentees
+                industry {
+                    _id
+                    name
+                }
+            }
+        }
+    }
+`;

@@ -51,3 +51,23 @@ export const QUERY_INDUSTRIES = gql`
         }
     }
 `;
+
+export const QUERY_GROUP = gql`
+    query Query($_id: ID!) {
+        mentorGroup(_id: $_id) {
+            _id
+            mentor {
+                _id
+                firstName
+                lastName
+                username
+            }
+            numMentees
+            menteeCount
+            industry {
+                _id
+                name
+            }
+        }
+    }
+`;
