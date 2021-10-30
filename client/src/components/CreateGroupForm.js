@@ -1,5 +1,5 @@
 import Box from "@mui/system/Box";
-import { Button, TextField } from "@mui/material";
+import { Button, TextField, Typography } from "@mui/material";
 import { Formik } from "formik";
 import * as Yup from 'yup';
 import { useMutation, useLazyQuery } from "@apollo/client";
@@ -36,30 +36,31 @@ export default function CreateGroupForm({member, setMember}){
         <Formik 
             initialValues={{numMentees:5}} 
             validationSchema={Yup.object({numMentees: Yup.number().max(10, "10 mentees max").min(1, "Need at lease 1 mentee")})}
-            onSubmit={(values)=>console.log(values)}
+            onSubmit={values => createGroup(values.numMentees)}
         >
             {formik => (
                 <Box 
                     component="form" 
-                    sx={{display: "flex", alignItems: "center"}}
+                    sx={{display: "flex", alignItems: "center", flexWrap: "wrap"}}
                     onSubmit={e => {
                         e.preventDefault();
                         formik.handleSubmit();
-                        createGroup(formik.values.numMentees);
                     }}
                 >
                     <Button color="secondary" variant="contained" sx={{m: 2}} type="submit">Become Mentor</Button>
                     <TextField
-                        sx={{width: 104}}
+                        sx={{width: 120}}
                         size="small"
                         id="numMentees"
                         label="# of Mentees"
                         type="number"
-                        value={formik.values.numMentees}
                         InputLabelProps={{
                             shrink: true,
                         }}
+                        {...formik.getFieldProps('numMentees')}
+                        error={formik.touched.numMentees && formik.errors.numMentees ? true : false}
                     />
+                    <Typography color="secondary" sx={{mb: 1, width: 0, flexBasis: "100%", textAlign: 'center'}}>{formik.touched.numMentees && formik.errors.numMentees ? formik.errors.numMentees : false}</Typography>
                 </Box>
             )}
         </Formik>
