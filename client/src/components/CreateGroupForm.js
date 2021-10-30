@@ -5,18 +5,21 @@ import * as Yup from 'yup';
 import { useMutation, useLazyQuery } from "@apollo/client";
 import { CREATE_MENTOR_GROUP } from "../utils/mutations";
 import { QUERY_GROUP } from "../utils/queries";
-import { useEffect } from "react";
 
 export default function CreateGroupForm({member, setMember}){
     
     //define the create mentor group mutation
     const [createMentorGroup] = useMutation(CREATE_MENTOR_GROUP);
 
-    const [queryGroup, {data}] = useLazyQuery(QUERY_GROUP);
+    //define a lazy query to query the newly created group for full population of the group
+    const [queryGroup] = useLazyQuery(QUERY_GROUP, {
+        //when the query is completed, update the member state with the new member group data
+        onCompleted: data => updateMemberGroupState(data)
+    });
 
     //called when the user clicks to create a mentor group
     async function createGroup(numMentees){
-        //create the mentor group and store the data for the group ID
+        //create the mentor group and store the group ID for querying
         const data = await createMentorGroup({variables: {mentorId: member._id, numMentees: numMentees, industryId: member.industry._id}});
         const groupId =(data.data.addMentorGroup.group._id);
 
@@ -24,13 +27,10 @@ export default function CreateGroupForm({member, setMember}){
         return queryGroup({variables: {_id: groupId}});
     }
 
-    function updateMemberGroupState(){
-        //when called, update the current member state's mentorgroup with the queried group or null if not found
-        return setMember({...member, mentorGroup: data?.mentorGroup || null});
+    function updateMemberGroupState(memberGroupData){
+        // //when called, update the current member state's mentorgroup with the queried group or null if not found
+        return setMember({...member, mentorGroup: memberGroupData?.mentorGroup || null});
     }
-
-    //whenever lazy query data changes we update the state of the member to rerender the page
-    useEffect(updateMemberGroupState, [data]);
 
     return (
         <Formik 
