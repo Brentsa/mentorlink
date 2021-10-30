@@ -7,9 +7,9 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import {capFirstLetter} from '../utils/helpers'
+import {Link} from 'react-router-dom';
 
 export default function MemberCard({member}) {
-  console.log("This is the member: ", member);
   return (
     <Card sx={{ 
       m:1,
@@ -47,7 +47,7 @@ export default function MemberCard({member}) {
           </Typography>
           <Box component="div" sx={{width: '50%', height: '4px', backgroundColor: 'secondary.main', mb: 2}}></Box>
           <Typography gutterBottom variant="h5" component="div">
-            {member ? capFirstLetter(member?.industry.name || "") : "FakeIndustry"}
+            {member?.industry?.name ? capFirstLetter(member.industry.name) : "No Industry"}
           </Typography>
           <Typography variant="body1" color="text.secondary" sx={{ textAlign: 'center', backgroundColor: '#FFF', padding: 1, borderRadius: 1, mt: 1, whiteSpace: "pre-line" }}>
             {member ? member.description : "FakeDescription is going to be right here."}
@@ -55,7 +55,7 @@ export default function MemberCard({member}) {
         </CardContent>
         
         <CardActions>
-          <Button variant="contained" color="secondary">Go to profile</Button>
+          <Button variant="contained" color="secondary" component={Link} to={`/dashboard/${member?.username}`}>Go to profile</Button>
         </CardActions>  
       </Box>
     </Card>

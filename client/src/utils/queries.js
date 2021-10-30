@@ -43,6 +43,25 @@ export const QUERY_MEMBER = gql`
     }
 `;
 
+export const QUERY_MEMBERS = gql`
+    query Query {
+        members {
+            firstName
+            lastName
+            username
+            description
+            profilePicture
+            industry {
+                _id
+                name
+            }
+            mentorGroup {
+                _id
+            }
+        }
+    }
+`;
+
 export const QUERY_INDUSTRIES = gql`
     query industries {
         industries {

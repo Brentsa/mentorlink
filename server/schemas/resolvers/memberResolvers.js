@@ -5,7 +5,8 @@ const {signJWT} = require('../../utils/auth');
 const memberResolvers = {
     //queries***************************
     members: async function(){
-        return await Member.find({});
+        return await Member.find({})
+        .populate("industry")
     },
 
     member: async function(_, {username}){
