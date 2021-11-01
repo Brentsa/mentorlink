@@ -8,12 +8,14 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import {capFirstLetter} from '../utils/helpers'
 import {Link} from 'react-router-dom';
+import Auth from '../utils/AuthService';
 
 export default function MemberCard({member}) {
   return (
     <Card sx={{ 
       m:1,
       maxWidth: 345,
+      minHeight: 540,
       display: 'flex', 
       flexWrap: 'wrap', 
       justifyContent: 'center', 
@@ -57,7 +59,7 @@ export default function MemberCard({member}) {
         
         <CardActions sx={{width: "100%", display: "flex", flexWrap: "wrap", justifyContent: "space-evenly"}}>
           <Button variant="contained" color="secondary" component={Link} to={`/dashboard/${member?.username}`}>Profile</Button>
-          {!member?.mentorGroup && <Button variant="contained" color="secondary" onClick={() => console.log("add mentee")}>Add Mentee</Button>}
+          {!member?.mentorGroup && Auth.UserLoggedIn() ? <Button variant="contained" color="secondary" onClick={() => console.log("add mentee")}>Add Mentee</Button> : null}
         </CardActions>  
       </Box>
     </Card>
