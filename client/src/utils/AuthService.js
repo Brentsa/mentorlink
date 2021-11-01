@@ -28,7 +28,12 @@ class AuthService{
 
     //returns the decoded profile of the user
     getProfile(){
-        return jwt_decode(this.getToken());
+        try{
+            return jwt_decode(this.getToken());
+        } 
+        catch{
+            return null;
+        }
     }
 
     //return the token in local storage

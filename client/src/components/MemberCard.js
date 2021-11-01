@@ -25,6 +25,7 @@ export default function MemberCard({member}) {
       <Box sx={{
         bgcolor: 'primary.dark', 
         width: '100%', 
+        maxHeight: '35%',
         p:3, 
         borderBottomLeftRadius: '50%', 
         borderBottomRightRadius: '50%', 
@@ -40,7 +41,7 @@ export default function MemberCard({member}) {
         />
       </Box>
     
-      <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', p:1}}>
+      <Box sx={{width: "100%", display: 'flex', flexDirection: 'column', alignItems: 'center', p:1}}>
         <CardContent sx={{display: 'flex', flexWrap: 'wrap', flexDirection: 'column', alignItems: 'center'}}>
           <Typography gutterBottom variant="h4" component="div">
             {member ? member.username : "FakeUsername"}
@@ -54,8 +55,9 @@ export default function MemberCard({member}) {
           </Typography>
         </CardContent>
         
-        <CardActions>
-          <Button variant="contained" color="secondary" component={Link} to={`/dashboard/${member?.username}`}>Go to profile</Button>
+        <CardActions sx={{width: "100%", display: "flex", flexWrap: "wrap", justifyContent: "space-evenly"}}>
+          <Button variant="contained" color="secondary" component={Link} to={`/dashboard/${member?.username}`}>Profile</Button>
+          {!member?.mentorGroup && <Button variant="contained" color="secondary" onClick={() => console.log("add mentee")}>Add Mentee</Button>}
         </CardActions>  
       </Box>
     </Card>
