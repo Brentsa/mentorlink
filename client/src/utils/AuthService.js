@@ -29,7 +29,10 @@ class AuthService{
     //returns the decoded profile of the user
     getProfile(){
         try{
-            return jwt_decode(this.getToken());
+            if(this.UserLoggedIn()) 
+                return jwt_decode(this.getToken());
+            else 
+                return null;
         } 
         catch{
             return null;
