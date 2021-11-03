@@ -6,7 +6,7 @@ import { Avatar } from '@mui/material';
 import { CardActionArea } from '@mui/material';
 
 
-export default function MiniMemberCard() {
+export default function MiniMemberCard({username}) {
   return (
     <Card sx={{ 
       maxWidth: 345, 
@@ -19,7 +19,7 @@ export default function MiniMemberCard() {
         <Avatar alt="Profile Pic" src="http://placehold.it/200" sx={{ width: 60, height: 60 }}/>
 
         <CardContent sx={{display: 'flex', flexWrap: 'wrap', flexDirection: 'column', alignItems: 'center', borderLeft: 4, borderColor: 'secondary.main', marginLeft: 2}}>
-          <Typography gutterBottom variant="h6" component="div">User123456</Typography>
+          <Typography gutterBottom variant="h6" component="div">{username}</Typography>
           <Typography gutterBottom variant="body" component="div">Industry</Typography>
         </CardContent>
       </CardActionArea>

@@ -4,22 +4,11 @@ import Grid from '@mui/material/Grid';
 
 
 export default function MemberGroup({mentees}){
-    console.log(mentees)
+    
     return (
         <Box sx={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center', padding: 2}}>
             <Grid container spacing={2}>
-                <Grid item xs={12} md={6}>
-                    <MiniMemberCard/>
-                </Grid>
-                <Grid item xs={12} md={6}>
-                    <MiniMemberCard/>
-                </Grid>
-                <Grid item xs={12} md={6}>
-                    <MiniMemberCard/>
-                </Grid>
-                <Grid item xs={12} md={6}>
-                    <MiniMemberCard/>
-                </Grid>
+                {mentees.map((mentee, i) => <Grid item xs={12} md={6} key={i}><MiniMemberCard username={mentee.username}/></Grid> )}
             </Grid>
         </Box>
     )
