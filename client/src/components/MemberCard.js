@@ -9,8 +9,40 @@ import Typography from '@mui/material/Typography';
 import {capFirstLetter} from '../utils/helpers'
 import {Link} from 'react-router-dom';
 import Auth from '../utils/AuthService';
+import { useLazyQuery, useMutation } from '@apollo/client';
+import { QUERY_MEMBER } from '../utils/queries';
+import { ADD_MENTEE_TO_GROUP } from '../utils/mutations';
 
 export default function MemberCard({member}) {
+
+  //define a mutation to add a mentee to a mentor group
+  const [addMenteeMutation] = useMutation(ADD_MENTEE_TO_GROUP);
+
+  //lazy query a member and execute the callback when the member data is returned.
+  const [queryMember] = useLazyQuery(QUERY_MEMBER, {
+    onCompleted: data => addMenteeToGroup(data)
+  });
+
+  function addMenteeToGroup(data){
+    //store the user's group ID as well as the mentee's ID
+    const groupId = data.member?.mentorGroup._id;
+    const menteeId = member._id;
+
+    //add mentee to group using the IDs previously stored
+    addMenteeMutation({variables: {groupId: groupId, menteeId: menteeId}});
+  }
+
+  function queryUser(){
+    if(Auth.UserLoggedIn()) {
+      //if the user is logged in, then we query them
+      return queryMember({variables: {username: Auth.getProfile().username}});
+    }
+    else {
+      //return null if the user is not logged in
+      return null; 
+    }
+  }
+
   return (
     <Card sx={{ 
       m:1,
@@ -59,7 +91,7 @@ export default function MemberCard({member}) {
         
         <CardActions sx={{width: "100%", display: "flex", flexWrap: "wrap", justifyContent: "space-evenly"}}>
           <Button variant="contained" color="secondary" component={Link} to={`/dashboard/${member?.username}`}>Profile</Button>
-          {!member?.mentorGroup && Auth.UserLoggedIn() ? <Button variant="contained" color="secondary" onClick={() => console.log("add mentee")}>Add Mentee</Button> : null}
+          {!member?.mentorGroup && Auth.UserLoggedIn() ? <Button variant="contained" color="secondary" onClick={queryUser}>Add Mentee</Button> : null}
         </CardActions>  
       </Box>
     </Card>

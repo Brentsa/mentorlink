@@ -46,6 +46,7 @@ export const QUERY_MEMBER = gql`
 export const QUERY_MEMBERS = gql`
     query Query {
         members {
+            _id
             firstName
             lastName
             username
