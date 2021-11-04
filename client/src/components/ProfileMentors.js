@@ -12,7 +12,6 @@ export default function ProfileMentor({member, setMember, bIsUserProfile}){
 
     //Destructure mentor group from the member profile
     const group = member?.mentorGroup;
-    console.log("this is the group: ", group);
 
     //Initialize a mutation to delete a mentor group
     const [deleteMentorGroup] = useMutation(DELETE_MENTOR_GROUP);

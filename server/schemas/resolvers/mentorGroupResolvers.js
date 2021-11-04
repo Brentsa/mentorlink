@@ -49,7 +49,6 @@ const mentorGroupResolvers = {
 
         //find the group and check the mentor, 
         const group = await MentorGroup.findById(groupId).populate("mentor");
-        console.log("this group: ", group);
         const groupMentorId = group?.mentor._id.toString();
 
         //if the menteeId being added is the mentor or the next mentee will surpass the max group size 
