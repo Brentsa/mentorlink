@@ -19,13 +19,15 @@ export default function MemberCard({member}) {
   const [addMenteeMutation] = useMutation(ADD_MENTEE_TO_GROUP);
 
   //lazy query a member and execute the callback when the member data is returned.
+  //set the fetch policy to not cache so that the queried user is always fresh.
   const [queryMember] = useLazyQuery(QUERY_MEMBER, {
-    onCompleted: data => addMenteeToGroup(data)
+    onCompleted: data => addMenteeToGroup(data),
+    fetchPolicy: 'network-only'
   });
 
   function addMenteeToGroup(data){
     //store the user's group ID as well as the mentee's ID
-    const groupId = data.member?.mentorGroup._id;
+    const groupId = data.member?.mentorGroup?._id;
     const menteeId = member._id;
 
     //add mentee to group using the IDs previously stored

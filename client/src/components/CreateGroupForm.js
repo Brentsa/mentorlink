@@ -7,7 +7,7 @@ import { CREATE_MENTOR_GROUP } from "../utils/mutations";
 import { QUERY_GROUP } from "../utils/queries";
 
 export default function CreateGroupForm({member, setMember}){
-    
+
     //define the create mentor group mutation
     const [createMentorGroup] = useMutation(CREATE_MENTOR_GROUP);
 
@@ -22,14 +22,16 @@ export default function CreateGroupForm({member, setMember}){
         //create the mentor group and store the group ID for querying
         const data = await createMentorGroup({variables: {mentorId: member._id, numMentees: numMentees, industryId: member.industry._id}});
         const groupId =(data.data.addMentorGroup.group._id);
+        console.log(groupId);
 
         //lazy query the group to get the necessary data for state update
         return queryGroup({variables: {_id: groupId}});
     }
 
     function updateMemberGroupState(memberGroupData){
+        console.log(memberGroupData);
         // //when called, update the current member state's mentorgroup with the queried group or null if not found
-        return setMember({...member, mentorGroup: memberGroupData?.mentorGroup || null});
+        return setMember({...member, mentorGroup: memberGroupData?.mentorGroup});
     }
 
     return (
