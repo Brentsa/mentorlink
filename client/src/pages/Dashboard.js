@@ -8,7 +8,13 @@ import { Box } from '@mui/system';
 import Auth from '../utils/AuthService';
 import { useEffect, useState } from 'react';
 
+import { useSelector } from 'react-redux';
+
 export default function Dashboard(){
+
+    const currentMemberUser = useSelector(state => state.members.currentUser);
+    console.log(currentMemberUser);
+    
     //peel the username off of the URL using useParams and set it to userParam
     const {username: userParam} = useParams();
 
@@ -24,11 +30,10 @@ export default function Dashboard(){
     //once the data has been returned, set the current member once the component has rendered
     useEffect(()=>{
         if(data) {
-            console.log(data.member);
             return setCurrentMember(data.member);
         }
     }, [data])
-    
+
     //return loading while the query executes
     if(loading) return <Box>Loading...</Box>
 

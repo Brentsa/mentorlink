@@ -49,8 +49,9 @@ class AuthService{
         //save the token in localStorage
         localStorage.setItem('token', tokenId);
 
+        //MOVED TO REACT COMPONENT
         //Redirect user to dashboard
-        window.location.assign(`/dashboard/${this.getProfile().username}`);
+        //window.location.assign(`/dashboard/${this.getProfile().username}`);
     }
 
     //called then the user logs out, removes the token from local storage
@@ -59,7 +60,7 @@ class AuthService{
         localStorage.removeItem('token');
 
         //send the user back to home
-        window.location.assign('/');
+        //window.location.assign('/');
     }
 }
 

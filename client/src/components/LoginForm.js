@@ -10,21 +10,36 @@ import Auth from '../utils/AuthService';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
+import { useDispatch } from 'react-redux'
+import { loginUser } from '../redux/slices/memberSlice';
+import { useHistory } from 'react-router';
+
 export default function LoginForm(){
+
+    const dispatch = useDispatch();
+    const history = useHistory();
+
+    //define the mutation to login a user
     const [loginMutation, {error}] = useMutation(LOGIN);
 
     async function submitLoginForm(values){
         const {username, password} = values;
-
+        
         try{
             //try calling the login mutation in the backend with the credentials entered by the user
             const loginResponse = await loginMutation({variables: {username, password}});
 
             //if there is success then peel the token off of the response
             const {token} = loginResponse.data.loginMember;
+
+            //store the user login data in current user state
+            dispatch(loginUser(loginResponse.data.loginMember.member));
             
             //Call the login function from auth service to store the token in localStorage and redirect the user
             Auth.login(token);
+
+            //Once logged in and token is stored, redirect user to the dashboard
+            history.push(`/dashboard/${Auth.getProfile().username}`);
         }
         catch(error){
             console.log('Member login failed.');

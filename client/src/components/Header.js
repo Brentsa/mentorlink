@@ -12,11 +12,14 @@ import {Link} from 'react-router-dom';
 import Auth from '../utils/AuthService';
 import { useSelector, useDispatch } from 'react-redux';
 import { switchPage } from '../redux/slices/pageSlice';
+import { useHistory } from 'react-router';
 
 export default function Header() {
   //get the state of current page from Redux and define the dispatch method for state reduction
   const currentPage = useSelector(state => state.currentPage.value);
   const dispatch = useDispatch();
+
+  const history = useHistory();
 
   const handleChange = (event, newValue) => {
     //calls redux state reducer switch page to change current page state
@@ -24,7 +27,8 @@ export default function Header() {
   };
 
   const logout = () => {
-    return Auth.logout();
+    Auth.logout();
+    history.push('/');
   }
   
   return (
