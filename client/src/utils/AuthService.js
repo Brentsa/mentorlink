@@ -49,7 +49,6 @@ class AuthService{
         //save the token in localStorage
         localStorage.setItem('token', tokenId);
 
-        //MOVED TO REACT COMPONENT
         //Redirect user to dashboard
         //window.location.assign(`/dashboard/${this.getProfile().username}`);
     }

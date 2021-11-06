@@ -12,11 +12,13 @@ import {Link} from 'react-router-dom';
 import Auth from '../utils/AuthService';
 import { useSelector, useDispatch } from 'react-redux';
 import { switchPage } from '../redux/slices/pageSlice';
+import { setLoggedIn } from '../redux/slices/memberSlice';
 import { useHistory } from 'react-router';
 
 export default function Header() {
   //get the state of current page from Redux and define the dispatch method for state reduction
   const currentPage = useSelector(state => state.currentPage.value);
+  const bIsUserLoggedIn = useSelector(state => state.members.loggedIn);
   const dispatch = useDispatch();
 
   const history = useHistory();
@@ -27,6 +29,7 @@ export default function Header() {
   };
 
   const logout = () => {
+    dispatch(setLoggedIn(false));
     Auth.logout();
     history.push('/');
   }
@@ -51,10 +54,10 @@ export default function Header() {
             >
               <Tab value="home" label="Home" component={Link} to={'/'}/>
               <Tab value="search" label="Search" component={Link} to={'/search'}/>
-              <Tab value="yourProfile" label="Your Profile" component={Link} disabled={!Auth.UserLoggedIn()} to={Auth.UserLoggedIn() ? `/dashboard/${Auth.getProfile().username}` : '/login'}/>
-              <Tab value="yourMentor" label="Your Mentor" disabled={!Auth.UserLoggedIn()}/>
-              <Tab value="discussion" label="Discussion" component={Link} to={'/conversation'} disabled={!Auth.UserLoggedIn()}/>
-              <Tab value="login" label="Login/Register" component={Link} to={'/login'} disabled={Auth.UserLoggedIn()}/>
+              <Tab value="yourProfile" label="Your Profile" component={Link} disabled={!bIsUserLoggedIn} to={bIsUserLoggedIn ? `/dashboard/${Auth.getProfile().username}` : '/login'}/>
+              <Tab value="yourMentor" label="Your Mentor" disabled={!bIsUserLoggedIn}/>
+              <Tab value="discussion" label="Discussion" component={Link} to={'/conversation'} disabled={!bIsUserLoggedIn}/>
+              <Tab value="login" label="Login/Register" component={Link} to={'/login'} disabled={bIsUserLoggedIn}/>
             </Tabs>
           </Box>
 
@@ -70,7 +73,7 @@ export default function Header() {
             </IconButton>
           </Box>
 
-          {!Auth.UserLoggedIn() ? (
+          {!bIsUserLoggedIn ? (
             <>
               <Button color="inherit" component={Link} to={'/login'} onClick={() => dispatch(switchPage('login'))}>Login</Button>
               <Button color="inherit" component={Link} to={'/register'} onClick={() => dispatch(switchPage('login'))}>Register</Button>

@@ -10,9 +10,16 @@ import { useEffect, useState } from 'react';
 
 import { useSelector } from 'react-redux';
 
+import { useDispatch } from 'react-redux';
+import { setLoggedIn } from '../redux/slices/memberSlice';
+
 export default function Dashboard(){
 
+    const dispatch = useDispatch();
+    const bIsUserLoggedIn = useSelector(state => state.members.loggedIn);
     const currentMemberUser = useSelector(state => state.members.currentUser);
+
+    console.log(bIsUserLoggedIn);
     console.log(currentMemberUser);
     
     //peel the username off of the URL using useParams and set it to userParam
@@ -29,10 +36,15 @@ export default function Dashboard(){
 
     //once the data has been returned, set the current member once the component has rendered
     useEffect(()=>{
-        if(data) {
-            return setCurrentMember(data.member);
-        }
+        //if there is data from the lazy query, store the user's data as the current member
+        if(data) setCurrentMember(data.member);
     }, [data])
+
+    //after the component has rendered, set the user logged in state to true if they are logged in via Auth
+    useEffect(()=>{
+        //once the component has rendered, if the use is logged in, set the logged in state to true
+        if(Auth.UserLoggedIn()) dispatch(setLoggedIn(true));
+    })
 
     //return loading while the query executes
     if(loading) return <Box>Loading...</Box>

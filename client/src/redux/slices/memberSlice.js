@@ -1,10 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
+import Auth from "../../utils/AuthService";
 
 //manage the global state of members to show around the website
 export const memberSlice = createSlice({
     name: 'members',
     initialState: {
         currentUser: {},
+        loggedIn: false,
         members: []
     },
     reducers: {
@@ -17,6 +19,9 @@ export const memberSlice = createSlice({
             //delete the user from state
             state.currentUser = {};
         },
+        setLoggedIn: (state, action) => {
+            state.loggedIn = action.payload;
+        },
         //members reducers
         saveMemberQuery: (state, action) => {
             //save the queried members to global state
@@ -25,6 +30,6 @@ export const memberSlice = createSlice({
     }
 })
 
-export const {loginUser, logoutUser, saveMemberQuery} = memberSlice.actions;
+export const {loginUser, logoutUser, setLoggedIn, saveMemberQuery} = memberSlice.actions;
 
 export default memberSlice.reducer;
