@@ -10,19 +10,18 @@ import Auth from '../utils/AuthService';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
-import { useDispatch } from 'react-redux'
-import { loginUser } from '../redux/slices/memberSlice';
 import { useHistory } from 'react-router';
 
 export default function LoginForm(){
 
-    const dispatch = useDispatch();
+    //define history to redirect user using react router
     const history = useHistory();
 
     //define the mutation to login a user
     const [loginMutation, {error}] = useMutation(LOGIN);
 
     async function submitLoginForm(values){
+        //destructure username and password from the form
         const {username, password} = values;
         
         try{
@@ -31,9 +30,6 @@ export default function LoginForm(){
 
             //if there is success then peel the token off of the response
             const {token} = loginResponse.data.loginMember;
-
-            //store the user login data in current user state
-            dispatch(loginUser(loginResponse.data.loginMember.member));
             
             //Call the login function from auth service to store the token in localStorage and redirect the user
             Auth.login(token);

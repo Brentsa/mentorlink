@@ -12,7 +12,7 @@ import {Link} from 'react-router-dom';
 import Auth from '../utils/AuthService';
 import { useSelector, useDispatch } from 'react-redux';
 import { switchPage } from '../redux/slices/pageSlice';
-import { setLoggedIn } from '../redux/slices/memberSlice';
+import { logoutUser, setLoggedIn } from '../redux/slices/memberSlice';
 import { useHistory } from 'react-router';
 
 export default function Header() {
@@ -28,8 +28,11 @@ export default function Header() {
     return dispatch(switchPage(newValue));
   };
 
+  //called when the user clicks logout
   const logout = () => {
+    //set logged in state to false, remove user state, delete token, and redirect to home
     dispatch(setLoggedIn(false));
+    dispatch(logoutUser());
     Auth.logout();
     history.push('/');
   }

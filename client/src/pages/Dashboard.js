@@ -2,7 +2,7 @@ import Grid from '@mui/material/Grid';
 import { useParams } from 'react-router';
 import ProfileMember from '../components/ProfileMember';
 import ProfileMentor from '../components/ProfileMentors';
-import { useQuery } from '@apollo/client';
+import { useLazyQuery, useQuery } from '@apollo/client';
 import { QUERY_MEMBER } from '../utils/queries';
 import { Box } from '@mui/system';
 import Auth from '../utils/AuthService';
@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react';
 
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { setLoggedIn } from '../redux/slices/memberSlice';
+import { loginUser, setLoggedIn } from '../redux/slices/memberSlice';
 import { switchPage } from '../redux/slices/pageSlice';
 
 export default function Dashboard(){
@@ -36,6 +36,11 @@ export default function Dashboard(){
     //query the member given by the params, we want the query to execute on every render so change the fetch policy to network only
     const {data, loading} = useQuery(QUERY_MEMBER, {variables: {username: userParam}, fetchPolicy: "network-only"});
 
+    const [queryCurrentUser] = useLazyQuery(QUERY_MEMBER, {
+        fetchPolicy: "network-only", 
+        onCompleted: data => dispatch(loginUser(data.member))
+    })
+
     //once the data has been returned, set the current member once the component has rendered
     useEffect(()=>{
         //if there is data from the lazy query, store the user's data as the current member
@@ -45,11 +50,14 @@ export default function Dashboard(){
     //after the component has rendered, set the user logged in state to true if they are logged in via Auth
     useEffect(()=>{
         //once the component has rendered, if the use is logged in, set the logged in state to true
-        if(Auth.UserLoggedIn()) dispatch(setLoggedIn(true));
+        if(Auth.UserLoggedIn()){
+            dispatch(setLoggedIn(true));
+            queryCurrentUser({variables: {username: Auth.getProfile().username}});
+        } 
 
         //when arriving on the page set the current page state
         dispatch(switchPage("yourProfile"));
-    })
+    }, [dispatch, queryCurrentUser])
 
     //return loading while the query executes
     if(loading) return <Box>Loading...</Box>
