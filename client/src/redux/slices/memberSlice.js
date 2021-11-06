@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import Auth from "../../utils/AuthService";
 
 //manage the global state of members to show around the website
 export const memberSlice = createSlice({

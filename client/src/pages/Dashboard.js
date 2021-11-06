@@ -9,15 +9,17 @@ import Auth from '../utils/AuthService';
 import { useEffect, useState } from 'react';
 
 import { useSelector } from 'react-redux';
-
 import { useDispatch } from 'react-redux';
 import { setLoggedIn } from '../redux/slices/memberSlice';
+import { switchPage } from '../redux/slices/pageSlice';
 
 export default function Dashboard(){
 
     const dispatch = useDispatch();
     const bIsUserLoggedIn = useSelector(state => state.members.loggedIn);
     const currentMemberUser = useSelector(state => state.members.currentUser);
+
+    
 
     console.log(bIsUserLoggedIn);
     console.log(currentMemberUser);
@@ -44,6 +46,9 @@ export default function Dashboard(){
     useEffect(()=>{
         //once the component has rendered, if the use is logged in, set the logged in state to true
         if(Auth.UserLoggedIn()) dispatch(setLoggedIn(true));
+
+        //when arriving on the page set the current page state
+        dispatch(switchPage("yourProfile"));
     })
 
     //return loading while the query executes
