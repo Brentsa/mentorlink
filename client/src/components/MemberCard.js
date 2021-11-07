@@ -12,8 +12,13 @@ import Auth from '../utils/AuthService';
 import { useLazyQuery, useMutation } from '@apollo/client';
 import { QUERY_MEMBER } from '../utils/queries';
 import { ADD_MENTEE_TO_GROUP } from '../utils/mutations';
+import { useSelector } from 'react-redux';
 
 export default function MemberCard({member}) {
+
+  //store current user from global state
+  const currentUser = useSelector(state => state.members.currentUser);
+  const bIsUserLoggedIn = useSelector(state => state.members.loggedIn);
 
   //define a mutation to add a mentee to a mentor group
   const [addMenteeMutation] = useMutation(ADD_MENTEE_TO_GROUP);
@@ -32,6 +37,30 @@ export default function MemberCard({member}) {
 
     //add mentee to group using the IDs previously stored
     addMenteeMutation({variables: {groupId: groupId, menteeId: menteeId}});
+  }
+
+  function isMenteeInGroup(){
+    //if the current user has a mentor group
+    if(currentUser?.mentorGroup){
+      //check if the member card's member is in the mentor group of the current user
+      for(var i = 0; i < currentUser.mentorGroup.mentees.length; i++){
+        if(currentUser.mentorGroup.mentees[i].username === member.username){
+          return true
+        }
+      }
+    }
+
+    return false;
+  }
+
+  //return true if the current user is a mentor, false if they aren't a member
+  function isUserAMentor(){
+    return currentUser?.mentorGroup?.mentor?.username === Auth.getProfile()?.username
+  }
+
+  //group all the add mentee button conditions together in one function
+  function shouldAddButtonRender(){
+    return !member?.mentorGroup && bIsUserLoggedIn && !isMenteeInGroup() && isUserAMentor()
   }
 
   function queryUser(){
@@ -93,7 +122,7 @@ export default function MemberCard({member}) {
         
         <CardActions sx={{width: "100%", display: "flex", flexWrap: "wrap", justifyContent: "space-evenly"}}>
           <Button variant="contained" color="secondary" component={Link} to={`/dashboard/${member?.username}`}>Profile</Button>
-          {!member?.mentorGroup && Auth.UserLoggedIn() ? <Button variant="contained" color="secondary" onClick={queryUser}>Add Mentee</Button> : null}
+          {shouldAddButtonRender() ? <Button variant="contained" color="secondary" onClick={queryUser}>Add Mentee</Button> : null}
         </CardActions>  
       </Box>
     </Card>

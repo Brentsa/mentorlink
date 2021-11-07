@@ -19,9 +19,11 @@ export default function Header() {
   //get the state of current page from Redux and define the dispatch method for state reduction
   const currentPage = useSelector(state => state.currentPage.value);
   const bIsUserLoggedIn = useSelector(state => state.members.loggedIn);
+  const currentMemberUser = useSelector(state => state.members.currentUser);
   const dispatch = useDispatch();
-
   const history = useHistory();
+
+  const usersMentorUsername = currentMemberUser?.mentorGroup?.mentor?.username || null;
 
   const handleChange = (event, newValue) => {
     //calls redux state reducer switch page to change current page state
@@ -58,7 +60,7 @@ export default function Header() {
               <Tab value="home" label="Home" component={Link} to={'/'}/>
               <Tab value="search" label="Search" component={Link} to={'/search'}/>
               <Tab value="yourProfile" label="Your Profile" component={Link} disabled={!bIsUserLoggedIn} to={bIsUserLoggedIn ? `/dashboard/${Auth.getProfile().username}` : '/login'}/>
-              <Tab value="yourMentor" label="Your Mentor" disabled={!bIsUserLoggedIn}/>
+              <Tab value="yourMentor" label="Your Mentor" component ={Link} disabled={!bIsUserLoggedIn || usersMentorUsername === currentMemberUser.username} to={bIsUserLoggedIn && currentMemberUser?.mentorGroup ? `/dashboard/${usersMentorUsername}` : '/login'}/>
               <Tab value="discussion" label="Discussion" component={Link} to={'/conversation'} disabled={!bIsUserLoggedIn}/>
               <Tab value="login" label="Login/Register" component={Link} to={'/login'} disabled={bIsUserLoggedIn}/>
             </Tabs>
