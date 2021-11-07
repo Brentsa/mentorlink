@@ -19,8 +19,6 @@ export default function Dashboard(){
     const bIsUserLoggedIn = useSelector(state => state.members.loggedIn);
     const currentMemberUser = useSelector(state => state.members.currentUser);
 
-    
-
     console.log(bIsUserLoggedIn);
     console.log(currentMemberUser);
     

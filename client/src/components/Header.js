@@ -23,8 +23,10 @@ export default function Header() {
   const dispatch = useDispatch();
   const history = useHistory();
 
+  //capture the user's mentors username if there is a mentor
   const usersMentorUsername = currentMemberUser?.mentorGroup?.mentor?.username || null;
 
+  //called when the tab changes
   const handleChange = (event, newValue) => {
     //calls redux state reducer switch page to change current page state
     return dispatch(switchPage(newValue));

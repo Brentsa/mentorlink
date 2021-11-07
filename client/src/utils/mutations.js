@@ -115,6 +115,9 @@ export const ADD_MENTEE_TO_GROUP = gql`
     mutation AddMenteeToGroupMutation($groupId: ID!, $menteeId: ID!) {
         addMenteeToGroup(groupId: $groupId, menteeId: $menteeId) {
             _id
+            mentees {
+                _id
+            }
         }
     }
 `;
