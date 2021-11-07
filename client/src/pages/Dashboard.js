@@ -16,10 +16,10 @@ import { switchPage } from '../redux/slices/pageSlice';
 export default function Dashboard(){
 
     const dispatch = useDispatch();
-    const bIsUserLoggedIn = useSelector(state => state.members.loggedIn);
+    //const bIsUserLoggedIn = useSelector(state => state.members.loggedIn);
     const currentMemberUser = useSelector(state => state.members.currentUser);
 
-    console.log(bIsUserLoggedIn);
+    //console.log(bIsUserLoggedIn);
     console.log(currentMemberUser);
     
     //peel the username off of the URL using useParams and set it to userParam

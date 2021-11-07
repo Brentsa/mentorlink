@@ -36,6 +36,7 @@ export const QUERY_MEMBER = gql`
                 numMentees
                 menteeCount
                 mentees {
+                    _id
                     username
                 }
             }

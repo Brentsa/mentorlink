@@ -9,7 +9,13 @@ export const memberSlice = createSlice({
         members: []
     },
     reducers: {
-        //current user reducers
+        //logged in reducer
+        setLoggedIn: (state, action) => {
+            //set logged in by giving true or false
+            state.loggedIn = action.payload;
+        },
+
+        //current user
         loginUser: (state, action) => {
             //save the given user to the payload
             state.currentUser = action.payload;
@@ -18,9 +24,12 @@ export const memberSlice = createSlice({
             //delete the user from state
             state.currentUser = {};
         },
-        setLoggedIn: (state, action) => {
-            state.loggedIn = action.payload;
+        addMenteeGroup: (state, action) => {
+            //update the mentorGroup state
+            state.currentUser.mentorGroup.mentees = action.payload.mentees;
+            state.currentUser.mentorGroup.menteeCount++;
         },
+        
         //members reducers
         saveMemberQuery: (state, action) => {
             //save the queried members to global state
@@ -29,6 +38,13 @@ export const memberSlice = createSlice({
     }
 })
 
-export const {loginUser, logoutUser, setLoggedIn, saveMemberQuery} = memberSlice.actions;
+export const {
+    loginUser, 
+    logoutUser,
+    addMenteeGroup, 
+    setLoggedIn, 
+    saveMemberQuery,
+    addMentorGroup
+} = memberSlice.actions;
 
 export default memberSlice.reducer;
