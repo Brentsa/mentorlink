@@ -12,6 +12,7 @@ import { useMutation } from '@apollo/client';
 import { ADD_MENTEE_TO_GROUP } from '../utils/mutations';
 import { useDispatch, useSelector } from 'react-redux';
 import { addMenteeGroup} from '../redux/slices/memberSlice';
+import { useEffect, useState, useCallback } from 'react';
 
 export default function MemberCard({member}) {
   const dispatch = useDispatch();
@@ -20,12 +21,30 @@ export default function MemberCard({member}) {
   const currentUser = useSelector(state => state.members.currentUser);
   const bIsUserLoggedIn = useSelector(state => state.members.loggedIn);
 
+  //group all the add mentee button conditions together in one function
+  const shouldAddButtonRender = useCallback(() => {
+    //return bool value depending if the mentee is in the member group or not
+    function isMenteeInGroup(){
+        //if the current user has a mentor group
+        if(currentUser?.mentorGroup){
+          //check if the member card's member is in the mentor group of the current user
+          for(var i = 0; i < currentUser.mentorGroup.mentees.length; i++){
+            if(currentUser.mentorGroup.mentees[i]._id === member._id) return true
+          }
+        }
+        return false;
+      }
+
+    return bIsUserLoggedIn && !isMenteeInGroup()
+  }, [bIsUserLoggedIn, currentUser, member])
+
   //state to determine if the add mentee button should render
-  const [shouldRender, setShouldRender] = React.useState(shouldAddButtonRender());
+  const [shouldRender, setShouldRender] = useState(() => shouldAddButtonRender());
 
   //define a mutation to add a mentee to a mentor group
   const [addMenteeMutation] = useMutation(ADD_MENTEE_TO_GROUP);
 
+  //Called when add mentee button is clicked
   async function addMenteeToGroup(){
     const groupId = currentUser?.mentorGroup._id;
     const menteeId = member._id;
@@ -38,27 +57,10 @@ export default function MemberCard({member}) {
     dispatch(addMenteeGroup(menteeData));
   }
 
-  function handleAddMenteeClick(){
-    addMenteeToGroup()
-    setShouldRender(false);
-  }
-
-  function isMenteeInGroup(){
-    //if the current user has a mentor group
-    if(currentUser?.mentorGroup){
-      //check if the member card's member is in the mentor group of the current user
-      for(var i = 0; i < currentUser.mentorGroup.mentees.length; i++){
-        if(currentUser.mentorGroup.mentees[i]._id === member._id) return true
-      }
-    }
-    return false;
-  }
-
-  //group all the add mentee button conditions together in one function
-  function shouldAddButtonRender(){
-    console.log(bIsUserLoggedIn && !isMenteeInGroup());
-    return bIsUserLoggedIn && !isMenteeInGroup()
-  }
+  //whenever the current user changes, member card checks if the add mentee button should be rendered or not
+  useEffect(()=>{
+    setShouldRender(shouldAddButtonRender());
+  }, [currentUser, shouldAddButtonRender])
 
   return (
     <Card sx={{ 
@@ -108,7 +110,7 @@ export default function MemberCard({member}) {
         
         <CardActions sx={{width: "100%", display: "flex", flexWrap: "wrap", justifyContent: "space-evenly"}}>
           <Button variant="contained" color="secondary" component={Link} to={`/dashboard/${member?.username}`}>Profile</Button>
-          {shouldRender ? <Button variant="contained" color="secondary" onClick={handleAddMenteeClick}>Add Mentee</Button> : null}
+          {shouldRender ? <Button variant="contained" color="secondary" onClick={addMenteeToGroup}>Add Mentee</Button> : null}
         </CardActions>  
       </Box>
     </Card>
