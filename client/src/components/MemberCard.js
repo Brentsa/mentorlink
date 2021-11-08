@@ -25,17 +25,26 @@ export default function MemberCard({member}) {
   const shouldAddButtonRender = useCallback(() => {
     //return bool value depending if the mentee is in the member group or not
     function isMenteeInGroup(){
-        //if the current user has a mentor group
-        if(currentUser?.mentorGroup){
-          //check if the member card's member is in the mentor group of the current user
-          for(var i = 0; i < currentUser.mentorGroup.mentees.length; i++){
-            if(currentUser.mentorGroup.mentees[i]._id === member._id) return true
-          }
+      //if the current user has a mentor group
+      if(currentUser?.mentorGroup){
+        //check if the member card's member is in the mentor group of the current user
+        for(var i = 0; i < currentUser.mentorGroup.mentees.length; i++){
+          if(currentUser.mentorGroup.mentees[i]._id === member._id) return true
         }
-        return false;
       }
+      return false;
+    }
 
-    return bIsUserLoggedIn && !isMenteeInGroup()
+    //return bool value the depends on the room available in the mentor group
+    function isRoomInGroupForMentee(){
+      if(currentUser?.mentorGroup){
+        //return true if there is at least room for 1 additional member
+        return currentUser.mentorGroup.menteeCount < currentUser.mentorGroup.numMentees;
+      }
+      return false;
+    }
+
+    return bIsUserLoggedIn && !isMenteeInGroup() && isRoomInGroupForMentee();
   }, [bIsUserLoggedIn, currentUser, member])
 
   //state to determine if the add mentee button should render
