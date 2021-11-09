@@ -8,7 +8,6 @@ import { Box } from '@mui/system';
 import Auth from '../utils/AuthService';
 import { useEffect, useState } from 'react';
 
-import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { loginUser, setLoggedIn } from '../redux/slices/memberSlice';
 import { switchPage } from '../redux/slices/pageSlice';
@@ -16,11 +15,6 @@ import { switchPage } from '../redux/slices/pageSlice';
 export default function Dashboard(){
 
     const dispatch = useDispatch();
-    //const bIsUserLoggedIn = useSelector(state => state.members.loggedIn);
-    const currentMemberUser = useSelector(state => state.members.currentUser);
-
-    //console.log(bIsUserLoggedIn);
-    console.log(currentMemberUser);
     
     //peel the username off of the URL using useParams and set it to userParam
     const {username: userParam} = useParams();

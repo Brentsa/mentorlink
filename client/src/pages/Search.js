@@ -9,24 +9,23 @@ import { useEffect } from "react";
 
 export default function Search(){
 
-    const members = useSelector(state => state.members.members);
     const dispatch = useDispatch();
-    console.log(members);
-
+    const members = useSelector(state => state.members.members);
+    
     //when search loads, query members to display
     const {data, loading} = useQuery(QUERY_MEMBERS);
     
+    //update the members state once page completes render
     useEffect(() => {
-        if(data){
-            dispatch(saveMemberQuery(data.members))
-        }
-    })
+        if(!data) return null
+        dispatch(saveMemberQuery(data.members))
+    }, [data, dispatch])
 
     if(loading) return <Box>Loading...</Box>;
 
     return (
         <Box sx={{display: "flex", flexWrap: "wrap", justifyContent: "center"}}>
-            {data.members.map( (member, i) => 
+            {members.map( (member, i) => 
                 //if the iterated member matches the logged in user, don't show their profile in the search
                 Auth.getProfile()?.username !== member.username ? <MemberCard member={member} key={i}/> : null 
             )}
