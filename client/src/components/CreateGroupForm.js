@@ -5,8 +5,12 @@ import * as Yup from 'yup';
 import { useMutation, useLazyQuery } from "@apollo/client";
 import { CREATE_MENTOR_GROUP } from "../utils/mutations";
 import { QUERY_GROUP } from "../utils/queries";
+import { useDispatch } from "react-redux";
+import { addMentorGroup } from "../redux/slices/memberSlice";
 
 export default function CreateGroupForm({member, setMember}){
+
+    const dispatch = useDispatch();
 
     //define the create mentor group mutation
     const [createMentorGroup] = useMutation(CREATE_MENTOR_GROUP);
@@ -28,9 +32,11 @@ export default function CreateGroupForm({member, setMember}){
     }
 
     function updateMemberGroupState(memberGroupData){
-        console.log(memberGroupData);
-        // //when called, update the current member state's mentorgroup with the queried group or null if not found
-        return setMember({...member, mentorGroup: memberGroupData?.mentorGroup});
+        //when called, update the current member state's mentorgroup with the queried group or null if not found
+        setMember({...member, mentorGroup: memberGroupData?.mentorGroup});
+
+        //update the current member's mentor group for conditional rendering
+        dispatch(addMentorGroup(memberGroupData?.mentorGroup));
     }
 
     return (

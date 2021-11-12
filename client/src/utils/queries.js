@@ -83,6 +83,9 @@ export const QUERY_GROUP = gql`
                 lastName
                 username
             }
+            mentees {
+                _id
+            }
             numMentees
             menteeCount
             industry {

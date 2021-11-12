@@ -7,8 +7,12 @@ import { Button } from "@mui/material";
 import { useMutation } from "@apollo/client";
 import { DELETE_MENTOR_GROUP } from "../utils/mutations";
 import CreateGroupForm from "./CreateGroupForm";
+import { useDispatch } from "react-redux";
+import { removeMentorGroup } from "../redux/slices/memberSlice";
 
 export default function ProfileMentor({member, setMember, bIsUserProfile}){
+
+    const dispatch = useDispatch();
 
     //Destructure mentor group from the member profile
     const group = member?.mentorGroup;
@@ -22,6 +26,9 @@ export default function ProfileMentor({member, setMember, bIsUserProfile}){
             //try deleting the group and then set the member state to no mentor group
             deleteMentorGroup({variables: {groupId: group._id}});
             setMember({...member, mentorGroup: null});
+
+            //remove the mentor group from the current member state
+            dispatch(removeMentorGroup());
         }
         catch{
             return console.log("Group not deleted");
