@@ -40,6 +40,11 @@ export default function Header() {
     Auth.logout();
     history.push('/');
   }
+
+  function disableYourMentorButton(){
+    //disable your mentor button if the user isn't logged in, they are the mentor of their group, or they don't have a mentor group
+    return !bIsUserLoggedIn || usersMentorUsername === currentMemberUser.username || !currentMemberUser?.mentorGroup;
+  }
   
   return (
     <Box sx={{ flex: '0 1 auto', marginBottom: 3 }}>
@@ -62,7 +67,7 @@ export default function Header() {
               <Tab value="home" label="Home" component={Link} to={'/'}/>
               <Tab value="search" label="Search" component={Link} to={'/search'}/>
               <Tab value="yourProfile" label="Your Profile" component={Link} disabled={!bIsUserLoggedIn} to={bIsUserLoggedIn ? `/dashboard/${Auth.getProfile().username}` : '/login'}/>
-              <Tab value="yourMentor" label="Your Mentor" component ={Link} disabled={!bIsUserLoggedIn || usersMentorUsername === currentMemberUser.username} to={bIsUserLoggedIn && currentMemberUser?.mentorGroup ? `/dashboard/${usersMentorUsername}` : '/login'}/>
+              <Tab value="yourMentor" label="Your Mentor" component ={Link} disabled={disableYourMentorButton()} to={currentMemberUser?.mentorGroup ? `/dashboard/${usersMentorUsername}` : null}/>
               <Tab value="discussion" label="Discussion" component={Link} to={'/conversation'} disabled={!bIsUserLoggedIn}/>
               <Tab value="login" label="Login/Register" component={Link} to={'/login'} disabled={bIsUserLoggedIn}/>
             </Tabs>

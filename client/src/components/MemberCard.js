@@ -44,7 +44,12 @@ export default function MemberCard({member}) {
       return false;
     }
 
-    return bIsUserLoggedIn && !isMenteeInGroup() && isRoomInGroupForMentee();
+    //return true if the current user matches the member in the card
+    function userMatchesCard(){
+      return currentUser.username === member.username;
+    }
+
+    return bIsUserLoggedIn && !isMenteeInGroup() && isRoomInGroupForMentee() && !userMatchesCard();
   }, [bIsUserLoggedIn, currentUser, member])
 
   //state to determine if the add mentee button should render
