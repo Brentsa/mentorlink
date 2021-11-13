@@ -2,14 +2,11 @@ import { Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-
 import { useMutation } from '@apollo/client';
 import {LOGIN} from '../utils/mutations';
 import Auth from '../utils/AuthService';
-
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-
 import { useHistory } from 'react-router';
 
 export default function LoginForm(){

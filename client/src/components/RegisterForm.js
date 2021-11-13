@@ -2,15 +2,17 @@ import { Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-
 import { useMutation } from '@apollo/client';
 import { ADD_USER } from '../utils/mutations';
 import Auth from '../utils/AuthService';
-
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import { useHistory } from 'react-router';
 
 export default function RegisterForm(){
+
+    //define history with react router for redirecting user
+    const history = useHistory();
 
     //define a mutation that creates a new user in the back end
     const [addUser] = useMutation(ADD_USER);
@@ -23,7 +25,10 @@ export default function RegisterForm(){
             //try adding the user via muation, save the token, and then call the front end login function to save token to localstorage
             const addUserResponse = await addUser({variables: {member: {username, firstName, lastName, password}}})
             const {token} = addUserResponse.data.addMember;
-            return Auth.login(token);
+            Auth.login(token);
+
+            //after user has been added and token stored, redirect user to their dashboard
+            return history.push(`/dashboard/${Auth.getProfile().username}`);
         }
         catch{
             return console.log('Member not created.');
