@@ -7,7 +7,6 @@ import { QUERY_MEMBER } from '../utils/queries';
 import { Box } from '@mui/system';
 import Auth from '../utils/AuthService';
 import { useEffect, useState } from 'react';
-
 import { useDispatch } from 'react-redux';
 import { loginUser, setLoggedIn } from '../redux/slices/memberSlice';
 import { switchPage } from '../redux/slices/pageSlice';

@@ -2,7 +2,7 @@ import MemberCard from "../components/MemberCard";
 import Box from "@mui/system/Box";
 import { QUERY_MEMBERS } from "../utils/queries"
 import { useQuery } from "@apollo/client";
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { saveMemberQuery } from "../redux/slices/memberSlice";
 import { useEffect } from "react";
 import { switchPage } from "../redux/slices/pageSlice";
@@ -10,8 +10,6 @@ import { switchPage } from "../redux/slices/pageSlice";
 export default function Home(){
 
     const dispatch = useDispatch();
-    const members = useSelector(state => state.members.members);
-    console.log(members);
 
     //when search loads, query members to display
     const {data, loading} = useQuery(QUERY_MEMBERS);

@@ -2,7 +2,7 @@ require('dotenv').config()
 const jwt = require('jsonwebtoken');
 
 //expiration is 10 mins
-const expiration = '2h';
+const expiration = '1h';
 
 function signJWT(member){
     //Destructure _id, firstName and username from the given member

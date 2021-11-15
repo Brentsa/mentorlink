@@ -1,6 +1,7 @@
 import './App.css';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import ContentContainer from './components/ContentContainer';
 import Home from './pages/Home';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -55,7 +56,7 @@ function App(){
     <ApolloProvider client={client}>
       <ThemeProvider theme={theme}>
         <Router>
-          <Box sx={{display: 'flex', flexDirection: 'column', height: '100vh'}}>
+          <ContentContainer>
             <Header/>
             <Container maxWidth="xl" sx={{flex: '1 1 auto', mb: 4}}>
               <Box sx={{width: "100%", display: 'flex', flexWrap: 'wrap', justifyContent: 'center'}}>
@@ -70,7 +71,7 @@ function App(){
               </Box>
             </Container>
             <Footer/>
-          </Box>
+          </ContentContainer>
         </Router>
       </ThemeProvider>
     </ApolloProvider>

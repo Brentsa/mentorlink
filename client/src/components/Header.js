@@ -67,7 +67,7 @@ export default function Header() {
               <Tab value="home" label="Home" component={Link} to={'/'}/>
               <Tab value="search" label="Search" component={Link} to={'/search'}/>
               <Tab value="yourProfile" label="Your Profile" component={Link} disabled={!bIsUserLoggedIn} to={bIsUserLoggedIn ? `/dashboard/${Auth.getProfile().username}` : '/login'}/>
-              <Tab value="yourMentor" label="Your Mentor" component ={Link} disabled={disableYourMentorButton()} to={currentMemberUser?.mentorGroup ? `/dashboard/${usersMentorUsername}` : null}/>
+              <Tab value="yourMentor" label="Your Mentor" component ={Link} disabled={disableYourMentorButton()} to={currentMemberUser?.mentorGroup ? `/dashboard/${usersMentorUsername}` : '/login'}/>
               <Tab value="discussion" label="Discussion" component={Link} to={'/conversation'} disabled={!bIsUserLoggedIn}/>
               <Tab value="login" label="Login/Register" component={Link} to={'/login'} disabled={bIsUserLoggedIn}/>
             </Tabs>
