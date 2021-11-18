@@ -107,6 +107,7 @@ export default function RegisterForm(){
                         variant="filled"
                         color="primary"
                         type="password"
+                        autoComplete='new-password'
                         {...formik.getFieldProps('password')}
                         error={formik.touched.password && formik.errors.password ? true : false}
                         helperText={formik.touched.password && formik.errors.password ? formik.errors.password : false}
