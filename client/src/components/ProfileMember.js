@@ -9,7 +9,7 @@ export default function ProfileMember({member, setMember, bIsUserProfile}){
     return (
         <Box sx={{display: 'flex', flexWrap: 'wrap', flexDirection: 'column'}}>
             <Box sx={{ width: '200px', height: '200px', borderRadius: '50%', border: 1, overflow: 'hidden', m: 2}}>
-                <img src="http://placehold.it/200" alt='member' width='100%' height='100%'/>  
+                <img src={`https://i.pravatar.cc/100?u=${member.username}`} alt='member' width='100%' height='100%'/>  
             </Box>
 
             <Box sx={{m:2}}>
