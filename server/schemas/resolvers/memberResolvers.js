@@ -21,7 +21,7 @@ const memberResolvers = {
         const newMember = await Member.create(member);
 
         //at this point, the member has been authenticated since they were just created, now we can give them authorization
-        const token = signJWT(member);
+        const token = signJWT(newMember);
 
         return {token, member: newMember};
     },
@@ -52,7 +52,7 @@ const memberResolvers = {
     addIndustryToMember: async function(_, {memberId, industryId}, context){
         if(!context.member) throw new AuthenticationError("You must be logged in to add an industry");
 
-        return await Member.findOneAndUpdate(memberId, {industry: industryId}, {new: true, runValidators: true}).populate("industry");
+        return await Member.findByIdAndUpdate(memberId, {industry: industryId}, {new: true, runValidators: true}).populate("industry");
     },
 
     deleteMember: async function(_, {_id}, context){
