@@ -24,6 +24,7 @@ export default function MemberDescription({member, setMember, bIsUserProfile}){
 
     //submit the description 
     function submitDescriptionForm(values){
+        console.log('clicked');
         if(bIsEditing){
             toggleEdit();
 
@@ -40,9 +41,8 @@ export default function MemberDescription({member, setMember, bIsUserProfile}){
 
     return (
         <Box sx={{m:2}}>
-
             <Formik
-                initialValues={{description: member?.description}}
+                initialValues={{description: member?.description ?? ''}}
                 validationSchema={Yup.object({description: Yup.string().max(200, "Description cannot be more than 200 characters")})}
                 onSubmit={submitDescriptionForm}
             >
@@ -56,7 +56,11 @@ export default function MemberDescription({member, setMember, bIsUserProfile}){
                     >
                         <Box sx={{display: 'flex', alignItems: 'center', mb: 1}}>
                             <Typography variant="h5">Description</Typography>
-                            {bIsUserProfile ? <Button color="secondary" size="small" sx={{mx: 2}} type="submit">{!bIsEditing ? 'edit' : 'save'}</Button> : null}
+                            {bIsUserProfile ? 
+                                <Button color="secondary" size="small" sx={{mx: 2}} type="submit">{!bIsEditing ? 'edit' : 'save'}</Button> 
+                                : 
+                                null
+                            }
                         </Box>
                         {bIsEditing ? 
                             <TextField
