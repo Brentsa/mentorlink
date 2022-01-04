@@ -1,6 +1,5 @@
 import Typography from "@mui/material/Typography";
 import Box from "@mui/system/Box";
-import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { useState } from "react";
 import { Formik } from "formik";
@@ -8,6 +7,7 @@ import * as Yup from 'yup';
 import { useMutation } from "@apollo/client";
 import { UPDATE_MEMBER } from "../utils/mutations";
 import Auth from "../utils/AuthService";
+import EditSaveButton from "./EditSaveButton";
 
 export default function MemberDescription({member, setMember, bIsUserProfile}){
 
@@ -26,16 +26,20 @@ export default function MemberDescription({member, setMember, bIsUserProfile}){
     function submitDescriptionForm(values){
         if(bIsEditing){
             toggleEdit();
-
-            //update the member's description in the descripton field
-            updateMember({variables: {id: Auth.getProfile()._id, member:{description: values.description}}});
-
-            //update the state of the member in the profile to match
-            return setMember({...member, description: values.description});
+            updateDatabaseAndState(values);
         }
         else{
             return toggleEdit();
         }
+    }
+
+    //call mutation to update the database and then update the member's state
+    function updateDatabaseAndState(values){
+        //update the member's description in the descripton field
+        updateMember({variables: {id: Auth.getProfile()._id, member:{description: values.description}}});
+
+        //update the state of the member in the profile to match
+        return setMember({...member, description: values.description});
     }
 
     return (
@@ -53,14 +57,8 @@ export default function MemberDescription({member, setMember, bIsUserProfile}){
                             formik.handleSubmit();
                         }}
                     >
-                        <Box sx={{display: 'flex', alignItems: 'center', mb: 1}}>
-                            <Typography variant="h5">Description</Typography>
-                            {bIsUserProfile ? 
-                                <Button color="secondary" size="small" sx={{mx: 2}} type="submit">{!bIsEditing ? 'edit' : 'save'}</Button> 
-                                : 
-                                null
-                            }
-                        </Box>
+                        <EditSaveButton title="Description" bIsEditing={bIsEditing} bIsUserProfile={bIsUserProfile}/>
+
                         {bIsEditing ? 
                             <TextField
                                 id="description"
@@ -76,6 +74,7 @@ export default function MemberDescription({member, setMember, bIsUserProfile}){
                                 {formik.values.description}
                             </Typography>    
                         }
+
                     </Box>
                 )}
             </Formik>

@@ -1,6 +1,5 @@
-import Typography from "@mui/material/Typography";
 import Box from "@mui/system/Box";
-import Button from '@mui/material/Button';
+import EditSaveButton from "./EditSaveButton";
 import TextField from '@mui/material/TextField';
 import { useState } from "react";
 import {Formik, useField} from 'formik';
@@ -99,14 +98,7 @@ export default function MemberContactInfo({member, setMember, bIsUserProfile}){
                         }}
                         sx={{'& .MuiTextField-root': { m: 1, width: '20ch' }}}
                     >
-                        <Box sx={{display: 'flex', alignItems: 'center', mb:1}}>
-                            <Typography variant="h5">Contact Info</Typography>
-                            {bIsUserProfile ? 
-                                <Button color="secondary" size="small" sx={{mx: 2}} type="submit">{!bIsEditing ? 'edit': 'save'}</Button>
-                                : 
-                                null
-                            }
-                        </Box>
+                        <EditSaveButton title="Contact Info" bIsEditing={bIsEditing} bIsUserProfile={bIsUserProfile}/>
 
                         <Box>
                             <TextInput 
