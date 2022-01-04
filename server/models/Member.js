@@ -7,13 +7,18 @@ const contactInfoSchema = new mongoose.Schema(
         phoneNumber:{
             type: String,
             maxlength: 10,
-            minlength: 9,
-            trim: true
+            trim: true,
+            validate: {
+                validator: function(val){
+                    return val.length >= 9 || val === '';
+                },
+                message: () => 'Phone number must be at least 9 characters'
+            }
         }, 
         email: {
             type: String,
             trim: true,
-            match: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+            match: /(^$|^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(?:[a-zA-Z]{2}|com|org|net|edu|gov|mil|biz|info|mobi|name|aero|asia|jobs|museum)$)/
         },
         streetNumber:{
             type: String,
@@ -38,12 +43,18 @@ const contactInfoSchema = new mongoose.Schema(
         country: {
             type: String,
             trim: true,
-            enum: ['Canada', 'USA']
+            enum: ['', 'Canada', 'USA']
         },
         postalCode: {
             type: String,
             trim: true,
-            maxlength: 6
+            maxlength: 6,
+            validate: {
+                validator: function(val){
+                    return val.length >= 5 || val === '';
+                },
+                message: () => 'Postal code must be at least 5 characters'
+            }
         }
     }
 );

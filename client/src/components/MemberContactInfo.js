@@ -46,7 +46,7 @@ export default function MemberContactInfo({member, setMember, bIsUserProfile}){
     function submitContactInfo(values){
         if(bIsEditing){
             //toggle the editing status to change form to readonly
-            toggleEdit()
+            toggleEdit();
 
             //call contact info mutation to save the inputted contact info
             addContactInfo({variables: {_id: Auth.getProfile()._id, contactInfo: values}})
@@ -163,7 +163,7 @@ export default function MemberContactInfo({member, setMember, bIsUserProfile}){
                             />
 
                             <TextInput
-                                label="province"
+                                label="Province"
                                 name="province"
                                 type="text"
                                 bIsEditing={bIsEditing}

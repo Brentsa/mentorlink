@@ -24,7 +24,6 @@ export default function MemberDescription({member, setMember, bIsUserProfile}){
 
     //submit the description 
     function submitDescriptionForm(values){
-        console.log('clicked');
         if(bIsEditing){
             toggleEdit();
 

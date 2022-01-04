@@ -63,7 +63,7 @@ const memberResolvers = {
 
     addContactInfo: async function(_, {_id, contactInfo}, context){
         if(!context.member) throw new AuthenticationError('You must be logged in to perform this action.');
-        
+
         return await Member.findByIdAndUpdate( _id, {contactInfo}, {new: true, runValidators: true}).populate('contactInfo');  
     },
     
