@@ -6,12 +6,12 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import {capFirstLetter} from '../utils/helpers'
+import {capFirstLetter} from '../../utils/helpers'
 import {Link} from 'react-router-dom';
 import { useMutation } from '@apollo/client';
-import { ADD_MENTEE_TO_GROUP } from '../utils/mutations';
+import { ADD_MENTEE_TO_GROUP } from '../../utils/mutations';
 import { useDispatch, useSelector } from 'react-redux';
-import { addMenteeGroup} from '../redux/slices/memberSlice';
+import { addMenteeGroup} from '../../redux/slices/memberSlice';
 import { useEffect, useState, useCallback } from 'react';
 
 export default function MemberCard({member}) {

@@ -1,10 +1,10 @@
 import { Button, Box, Typography, MenuItem, TextField } from "@mui/material";
 import { useEffect, useMemo, useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
-import { QUERY_INDUSTRIES } from "../utils/queries";
-import { ADD_INDUSTRY_TO_MEMBER } from "../utils/mutations";
-import Auth from '../utils/AuthService';
-import {capFirstLetter} from '../utils/helpers'
+import { QUERY_INDUSTRIES } from "../../utils/queries";
+import { ADD_INDUSTRY_TO_MEMBER } from "../../utils/mutations";
+import Auth from '../../utils/AuthService';
+import {capFirstLetter} from '../../utils/helpers'
 
 export default function MemberIndustry({member, setMember, bIsUserProfile}){
     const industryName = member?.industry?.name;

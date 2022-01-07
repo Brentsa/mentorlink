@@ -9,10 +9,10 @@ import Tab from '@mui/material/Tab';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import {Link} from 'react-router-dom';
-import Auth from '../utils/AuthService';
+import Auth from '../../utils/AuthService';
 import { useSelector, useDispatch } from 'react-redux';
-import { switchPage } from '../redux/slices/pageSlice';
-import { logoutUser, setLoggedIn } from '../redux/slices/memberSlice';
+import { switchPage } from '../../redux/slices/pageSlice';
+import { logoutUser, setLoggedIn } from '../../redux/slices/memberSlice';
 import { useHistory } from 'react-router';
 
 export default function Header() {

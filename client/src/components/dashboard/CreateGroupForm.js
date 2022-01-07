@@ -3,10 +3,10 @@ import { Button, TextField, Typography } from "@mui/material";
 import { Formik } from "formik";
 import * as Yup from 'yup';
 import { useMutation, useLazyQuery } from "@apollo/client";
-import { CREATE_MENTOR_GROUP } from "../utils/mutations";
-import { QUERY_GROUP } from "../utils/queries";
+import { CREATE_MENTOR_GROUP } from "../../utils/mutations";
+import { QUERY_GROUP } from "../../utils/queries";
 import { useDispatch } from "react-redux";
-import { addMentorGroup } from "../redux/slices/memberSlice";
+import { addMentorGroup } from "../../redux/slices/memberSlice";
 
 export default function CreateGroupForm({member, setMember}){
 

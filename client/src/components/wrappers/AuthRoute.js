@@ -1,5 +1,5 @@
 import { Route, Redirect } from "react-router";
-import Auth from "../utils/AuthService";
+import Auth from "../../utils/AuthService";
 
 
 export default function AuthRoute({component: Component, ...rest}){

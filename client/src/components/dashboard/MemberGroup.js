@@ -1,5 +1,5 @@
 import Box from "@mui/system/Box";
-import MiniMemberCard from "./MiniMemberCard";
+import MiniMemberCard from "../cards/MiniMemberCard";
 import Grid from '@mui/material/Grid';
 
 

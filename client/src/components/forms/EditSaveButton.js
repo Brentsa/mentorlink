@@ -1,7 +1,7 @@
 import Typography from "@mui/material/Typography";
 import Box from "@mui/system/Box";
 import Button from '@mui/material/Button';
-import Auth from "../utils/AuthService";
+import Auth from "../../utils/AuthService";
 
 export default function EditSaveButton({title, bIsEditing, bIsUserProfile}){
 

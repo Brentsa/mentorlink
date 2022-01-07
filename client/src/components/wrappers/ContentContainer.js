@@ -1,10 +1,10 @@
 import { Box } from '@mui/system';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { QUERY_MEMBER } from '../utils/queries';
+import { QUERY_MEMBER } from '../../utils/queries';
 import { useLazyQuery } from "@apollo/client";
-import { loginUser, setLoggedIn } from '../redux/slices/memberSlice';
-import Auth from "../utils/AuthService";
+import { loginUser, setLoggedIn } from '../../redux/slices/memberSlice';
+import Auth from "../../utils/AuthService";
 
 export default function ContentContainer(props){
 

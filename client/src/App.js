@@ -1,10 +1,10 @@
 import './App.css';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import ContentContainer from './components/ContentContainer';
+import ContentContainer from './components/wrappers/ContentContainer';
 import Home from './pages/Home';
-import Header from './components/Header';
-import Footer from './components/Footer';
+import Header from './components/layout/Header';
+import Footer from './components/layout/Footer';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';

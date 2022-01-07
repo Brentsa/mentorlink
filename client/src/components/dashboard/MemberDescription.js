@@ -3,10 +3,10 @@ import { useState } from "react";
 import { Formik } from "formik";
 import * as Yup from 'yup';
 import { useMutation } from "@apollo/client";
-import { UPDATE_MEMBER } from "../utils/mutations";
-import Auth from "../utils/AuthService";
-import EditSaveButton from "./EditSaveButton";
-import TextInput from "./TextInput";
+import { UPDATE_MEMBER } from "../../utils/mutations";
+import Auth from "../../utils/AuthService";
+import EditSaveButton from "../forms/EditSaveButton";
+import TextInput from "../forms/TextInput";
 //import FormContainer from "./FormContainer";
 
 

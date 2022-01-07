@@ -1,4 +1,4 @@
-import MemberCard from "../components/MemberCard";
+import MemberCard from "../components/cards/MemberCard";
 import Box from "@mui/system/Box";
 import { QUERY_MEMBERS } from "../utils/queries"
 import { useQuery } from "@apollo/client";

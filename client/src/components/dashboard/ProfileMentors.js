@@ -1,14 +1,14 @@
 import Box from "@mui/system/Box";
 import { Typography } from "@mui/material";
-import MemberCard from "./MemberCard";
+import MemberCard from "../cards/MemberCard";
 import MemberGroup from "./MemberGroup";
-import Auth from "../utils/AuthService";
+import Auth from "../../utils/AuthService";
 import { Button } from "@mui/material";
 import { useMutation } from "@apollo/client";
-import { DELETE_MENTOR_GROUP } from "../utils/mutations";
+import { DELETE_MENTOR_GROUP } from "../../utils/mutations";
 import CreateGroupForm from "./CreateGroupForm";
 import { useDispatch } from "react-redux";
-import { removeMentorGroup } from "../redux/slices/memberSlice";
+import { removeMentorGroup } from "../../redux/slices/memberSlice";
 
 export default function ProfileMentor({member, setMember, bIsUserProfile}){
 

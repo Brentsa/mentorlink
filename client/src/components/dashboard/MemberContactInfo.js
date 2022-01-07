@@ -1,12 +1,12 @@
 import Box from "@mui/system/Box";
-import EditSaveButton from "./EditSaveButton";
+import EditSaveButton from "../forms/EditSaveButton";
 import { useState } from "react";
 import {Formik} from 'formik';
 import * as Yup from 'yup';
-import { ADD_CONTACT_INFO_TO_MEMBER } from "../utils/mutations";
+import { ADD_CONTACT_INFO_TO_MEMBER } from "../../utils/mutations";
 import { useMutation } from '@apollo/client';
-import Auth from "../utils/AuthService";
-import TextInput from "./TextInput";
+import Auth from "../../utils/AuthService";
+import TextInput from "../forms/TextInput";
 
 export default function MemberContactInfo({member, setMember, bIsUserProfile}){
 

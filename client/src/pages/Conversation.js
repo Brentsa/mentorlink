@@ -1,9 +1,9 @@
 import { Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import EnterMessageBox from '../components/EnterMessageBox';
-import Message from '../components/Message';
-import MiniMemberCard from '../components/MiniMemberCard';
+import EnterMessageBox from '../components/conversation/EnterMessageBox';
+import Message from '../components/conversation/Message';
+import MiniMemberCard from '../components/cards/MiniMemberCard';
 
 export default function Conversation(){
     return (

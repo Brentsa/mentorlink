@@ -1,7 +1,7 @@
 import Grid from '@mui/material/Grid';
 import { useParams } from 'react-router';
-import ProfileMember from '../components/ProfileMember';
-import ProfileMentor from '../components/ProfileMentors';
+import ProfileMember from '../components/dashboard/ProfileMember';
+import ProfileMentor from '../components/dashboard/ProfileMentors';
 import { useLazyQuery, useQuery } from '@apollo/client';
 import { QUERY_MEMBER } from '../utils/queries';
 import { Box } from '@mui/system';
