@@ -46,9 +46,10 @@ export default function Dashboard(){
             queryCurrentUser({variables: {username: Auth.getProfile().username}});
         } 
 
-        //when arriving on the page set the current page state
-        dispatch(switchPage("yourProfile"));
-    }, [dispatch, queryCurrentUser])
+        //when arriving on the page set the current page state to your profile if your account
+        if(bIsUserProfile) dispatch(switchPage("yourProfile"));
+        else dispatch(switchPage('search'));
+    }, [dispatch, queryCurrentUser, bIsUserProfile])
 
     //return loading while the query executes
     if(loading) return <Box>Loading...</Box>

@@ -39,11 +39,11 @@ export default function ProfileMentor({member, setMember, bIsUserProfile}){
         <Box sx={{display: 'flex', flexWrap: 'wrap', flexDirection: 'column', alignItems: 'center'}}>
             {group ? 
                 <>
-                    {group.mentor.username === Auth.getProfile().username ? 
+                    {group.mentor.username === Auth.getProfile()?.username ? 
                         <Button color="secondary" variant="contained" onClick={disbandGroup} sx={{my: 2}}>Disband Your Mentor Group</Button>
                         : 
                         <Box sx={{m:3, display: 'flex', flexWrap: 'wrap', flexDirection: 'column', alignItems: 'center'}}>
-                            <Typography variant="h5">Your Mentor:</Typography>
+                            <Typography variant="h5">Mentor:</Typography>
                             <Box sx={{p:2}}>
                                 <MemberCard member={group.mentor}/> 
                             </Box>
