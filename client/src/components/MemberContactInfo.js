@@ -1,32 +1,12 @@
 import Box from "@mui/system/Box";
 import EditSaveButton from "./EditSaveButton";
-import TextField from '@mui/material/TextField';
 import { useState } from "react";
-import {Formik, useField} from 'formik';
+import {Formik} from 'formik';
 import * as Yup from 'yup';
 import { ADD_CONTACT_INFO_TO_MEMBER } from "../utils/mutations";
 import { useMutation } from '@apollo/client';
 import Auth from "../utils/AuthService";
-
-function TextInput({label, bIsEditing, ...props}){
-    const [field, meta] = useField(props);
-
-    return (
-        <>
-            <TextField 
-                label={label}
-                color="primary"
-                variant="standard"
-                margin="dense"
-                InputProps={!bIsEditing ? {readOnly: true} : {}}
-                {...props}
-                {...field}
-                error={meta.touched && meta.error ? true : false}
-                helperText={meta.touched && meta.error ? meta.error: false}
-            />
-        </>
-    );
-};
+import TextInput from "./TextInput";
 
 export default function MemberContactInfo({member, setMember, bIsUserProfile}){
 
@@ -101,73 +81,23 @@ export default function MemberContactInfo({member, setMember, bIsUserProfile}){
                         <EditSaveButton title="Contact Info" bIsEditing={bIsEditing} bIsUserProfile={bIsUserProfile}/>
 
                         <Box>
-                            <TextInput 
-                                label="Phone Number"
-                                name="phoneNumber"
-                                type="text"
-                                bIsEditing={bIsEditing}
-                            />
-
-                            <TextInput
-                                label="Email Address"
-                                name="email"
-                                type="email"
-                                bIsEditing={bIsEditing}
-                            />
-
-                            <TextInput
-                                label="Country"
-                                name="country"
-                                type="text"
-                                bIsEditing={bIsEditing}
-                            />
+                            <TextInput label="Phone Number" name="phoneNumber" bIsEditing={bIsEditing}/>
+                            <TextInput label="Email Address" name="email" type="email" bIsEditing={bIsEditing}/>
+                            <TextInput label="Country" name="country" bIsEditing={bIsEditing}/>
                         </Box>
 
                         <Box>
-                            <TextInput
-                                label="Street Number"
-                                name="streetNumber"
-                                type="text"
-                                bIsEditing={bIsEditing}
-                            />
-
-                            <TextInput
-                                label="Street Name"
-                                name="streetName"
-                                type="text"
-                                bIsEditing={bIsEditing}
-                            />
-
-                            <TextInput
-                                label="Suite Number"
-                                name="suiteNumber"
-                                type="text"
-                                bIsEditing={bIsEditing}
-                            />
+                            <TextInput label="Street Number" name="streetNumber" bIsEditing={bIsEditing}/>
+                            <TextInput label="Street Name" name="streetName" bIsEditing={bIsEditing}/>
+                            <TextInput label="Suite Number" name="suiteNumber" bIsEditing={bIsEditing}/>
                         </Box>
 
                         <Box>
-                            <TextInput
-                                label="City"
-                                name="city"
-                                type="text"
-                                bIsEditing={bIsEditing}
-                            />
-
-                            <TextInput
-                                label="Province"
-                                name="province"
-                                type="text"
-                                bIsEditing={bIsEditing}
-                            />
-
-                            <TextInput
-                                label="Postal Code"
-                                name="postalCode"
-                                type="text"
-                                bIsEditing={bIsEditing}
-                            />
+                            <TextInput label="City" name="city" bIsEditing={bIsEditing}/>
+                            <TextInput label="Province" name="province" bIsEditing={bIsEditing}/>
+                            <TextInput label="Postal Code" name="postalCode" bIsEditing={bIsEditing}/>
                         </Box>
+
                     </Box>
                 )}
             </Formik>

@@ -1,6 +1,4 @@
-import Typography from "@mui/material/Typography";
 import Box from "@mui/system/Box";
-import TextField from '@mui/material/TextField';
 import { useState } from "react";
 import { Formik } from "formik";
 import * as Yup from 'yup';
@@ -8,6 +6,9 @@ import { useMutation } from "@apollo/client";
 import { UPDATE_MEMBER } from "../utils/mutations";
 import Auth from "../utils/AuthService";
 import EditSaveButton from "./EditSaveButton";
+import TextInput from "./TextInput";
+//import FormContainer from "./FormContainer";
+
 
 export default function MemberDescription({member, setMember, bIsUserProfile}){
 
@@ -59,21 +60,14 @@ export default function MemberDescription({member, setMember, bIsUserProfile}){
                     >
                         <EditSaveButton title="Description" bIsEditing={bIsEditing} bIsUserProfile={bIsUserProfile}/>
 
-                        {bIsEditing ? 
-                            <TextField
-                                id="description"
-                                label="Description"
-                                multiline
-                                fullWidth
-                                {...formik.getFieldProps("description")}
-                                error={formik.touched.description && formik.errors.description ? true : false}
-                                helperText={formik.touched.description && formik.errors.description ? formik.errors.description : false}
-                            />
-                            : 
-                            <Typography variant="body2" sx={{whiteSpace: "pre-line"}}>
-                                {formik.values.description}
-                            </Typography>    
-                        }
+                        <TextInput
+                            name="description"
+                            id="description"
+                            variant="outlined"
+                            multiline
+                            fullWidth
+                            bIsEditing={bIsEditing}
+                        />
 
                     </Box>
                 )}
@@ -81,3 +75,44 @@ export default function MemberDescription({member, setMember, bIsUserProfile}){
         </Box>
     )
 }
+
+// export default function MemberDescription({member, setMember, bIsUserProfile}){
+
+//     //define the mutation to update the member
+//     const [updateMember] = useMutation(UPDATE_MEMBER);
+
+//     //call mutation to update the database and then update the member's state
+//     function updateDatabaseAndState(values){
+//         //update the member's description in the descripton field
+//         updateMember({variables: {id: Auth.getProfile()._id, member:{description: values.description}}});
+
+//         //update the state of the member in the profile to match
+//         return setMember({...member, description: values.description});
+//     }
+
+//     const formValues = {description: member?.description ?? ''};
+//     const schemaRules = Yup.object({description: Yup.string().max(200, "Description cannot be more than 200 characters")});
+
+//     return (
+//         <FormContainer
+//             formValues={formValues}
+//             schemaRules={schemaRules}
+//             formSubmitFunction={updateDatabaseAndState}
+//             bIsUserProfile={bIsUserProfile}
+
+//             textarea={
+//                 <FormikTextArea
+//                         id="description"
+//                         label="Description"
+//                 />
+//             }
+
+//             text={
+//                 <Typography variant="body2" sx={{whiteSpace: "pre-line"}}>
+//                     Hello
+//                 </Typography>  
+//             }
+//         >  
+//         </FormContainer>
+//     )
+// }
