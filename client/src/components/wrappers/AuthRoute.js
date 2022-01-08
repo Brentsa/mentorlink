@@ -2,14 +2,16 @@ import { Route, Redirect } from "react-router";
 import Auth from "../../utils/AuthService";
 
 
-export default function AuthRoute({component: Component, ...rest}){
+export default function AuthRoute({children, ...rest}){
+    console.log(Auth.UserLoggedIn());
+    
     return (
-        <Route
-            {...rest}
-            render={props => Auth.UserLoggedIn() 
-                ? <Component {...props} />
-                : <Redirect to={{pathname: '/login', state: {from: props.location}}} />
+        <Route {...rest}>
+            {Auth.UserLoggedIn() ? 
+                children
+                :
+                <Redirect to='/login'/>
             }
-        />
+        </Route>
     )
 }
