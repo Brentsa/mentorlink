@@ -78,7 +78,7 @@ export const UPDATE_MEMBER = gql`
 export const DELETE_MENTOR_GROUP = gql`
     mutation deleteMentorGroup($groupId: ID!) {
         deleteMentorGroup(groupId: $groupId) {
-            mentor {
+            member {
                 _id
                 firstName
                 lastName
@@ -93,7 +93,7 @@ export const DELETE_MENTOR_GROUP = gql`
 export const CREATE_MENTOR_GROUP = gql`
     mutation addMentorGroup($mentorId: ID!, $numMentees: Int!, $industryId: ID!){
         addMentorGroup(mentorId: $mentorId, numMentees: $numMentees, industryId: $industryId){
-            mentor {
+            member {
                 _id
             }
             group {
@@ -114,9 +114,22 @@ export const CREATE_MENTOR_GROUP = gql`
 export const ADD_MENTEE_TO_GROUP = gql`
     mutation AddMenteeToGroupMutation($groupId: ID!, $menteeId: ID!) {
         addMenteeToGroup(groupId: $groupId, menteeId: $menteeId) {
-            _id
-            mentees {
+            member {
                 _id
+            }
+            group {
+                _id
+                mentor {
+                    _id
+                }
+                numMentees
+                industry {
+                    _id
+                    name
+                }
+                mentees{
+                    _id
+                }
             }
         }
     }

@@ -25,7 +25,7 @@ const mentorGroupResolvers = {
         //add the mentor group to the mentor
         const mentor = await Member.findByIdAndUpdate(mentorId, {mentorGroup: group._id}, {new: true});
 
-        return {group, mentor};
+        return {group, member: mentor};
     },
 
     deleteMentorGroup: async function(_, {groupId}, context){
@@ -41,7 +41,7 @@ const mentorGroupResolvers = {
         //delete the group
         const deletedGroup = await MentorGroup.findByIdAndDelete(groupId);
 
-        return {group: deletedGroup, mentor}
+        return {group: deletedGroup, member: mentor};
     },
     
     addMenteeToGroup: async function(_, {groupId, menteeId}, context){
@@ -57,7 +57,11 @@ const mentorGroupResolvers = {
         
         //if adding a correct mentee, add them to the mentee set
         group.mentees.addToSet(menteeId);
-        return await group.save();
+
+        //find the mentee and update their mentor group
+        const mentee = await Member.findByIdAndUpdate(menteeId, {mentorGroup: groupId}, {new: true});
+
+        return {group: await group.save(), member: mentee};
     },
 
     removeMenteeFromGroup: async function(_, {groupId, menteeId}, context){

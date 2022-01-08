@@ -25,6 +25,7 @@ export default function CreateGroupForm({member, setMember}){
     async function createGroup(numMentees){
         //create the mentor group and store the group ID for querying
         const data = await createMentorGroup({variables: {mentorId: member._id, numMentees: numMentees, industryId: member.industry._id}});
+        console.log(data);
         const groupId =(data.data.addMentorGroup.group._id);
 
         //lazy query the group to get the necessary data for state update

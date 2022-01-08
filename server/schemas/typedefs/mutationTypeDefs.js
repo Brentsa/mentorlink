@@ -11,7 +11,7 @@ const typeDef = `
         deleteContactInfo(_id: ID!): Member
         addMentorGroup(mentorId: ID!, numMentees: Int!, industryId: ID!): MemberAndMentorGroup
         deleteMentorGroup(groupId: ID!): MemberAndMentorGroup
-        addMenteeToGroup(groupId: ID!, menteeId: ID!): MentorGroup
+        addMenteeToGroup(groupId: ID!, menteeId: ID!): MemberAndMentorGroup
         removeMenteeFromGroup(groupId: ID!, menteeId: ID!): MentorGroup
         updateNumberOfMentees(groupId: ID!, numMentees: Int!): MentorGroup
         addMessage(groupId: ID!, content: messageContent!): MentorGroup

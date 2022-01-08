@@ -65,7 +65,9 @@ export default function MemberCard({member}) {
 
      //add mentee to group using the IDs previously stored
     const info = await addMenteeMutation({variables: {groupId: groupId, menteeId: menteeId}});
-    const menteeData = {...info.data.addMenteeToGroup}
+    const menteeData = {...info.data.addMenteeToGroup.group}
+
+    console.log(info);
 
     //update the current member user global state to show the new mentees
     dispatch(addMenteeGroup(menteeData));

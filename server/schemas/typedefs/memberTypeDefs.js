@@ -31,7 +31,7 @@ const typeDef = `
     }
 
     type MemberAndMentorGroup{
-        mentor: Member
+        member: Member
         group: MentorGroup
     }
 
