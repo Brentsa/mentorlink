@@ -41,6 +41,7 @@ const mentorGroupResolvers = {
         //delete the group
         const deletedGroup = await MentorGroup.findByIdAndDelete(groupId);
 
+        //remove the group from all mentees
         await Member.updateMany({mentorGroup: groupId}, {mentorGroup: null});
 
         return {group: deletedGroup, member: mentor};
@@ -60,7 +61,7 @@ const mentorGroupResolvers = {
         //if adding a correct mentee, add them to the mentee set
         group.mentees.addToSet(menteeId);
 
-        //find the mentee and update their mentor group
+        //find the mentees and and remove their mentor groups
         const mentee = await Member.findByIdAndUpdate(menteeId, {mentorGroup: groupId}, {new: true});
 
         return {group: await group.save(), member: mentee};
