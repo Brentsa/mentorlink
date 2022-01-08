@@ -6,6 +6,8 @@ import Auth from '../utils/AuthService';
 import { useSelector, useDispatch } from 'react-redux'
 import { saveMemberQuery } from "../redux/slices/memberSlice";
 import { useEffect } from "react";
+import { switchPage } from "../redux/slices/pageSlice";
+
 
 export default function Search(){
 
@@ -13,12 +15,13 @@ export default function Search(){
     const members = useSelector(state => state.members.members);
     
     //when search loads, query members to display
-    const {data, loading} = useQuery(QUERY_MEMBERS);
+    const {data, loading} = useQuery(QUERY_MEMBERS, {fetchPolicy: "network-only"});
     
     //update the members state once page completes render
     useEffect(() => {
-        if(!data) return null
-        dispatch(saveMemberQuery(data.members))
+        dispatch(switchPage('search'));
+        if(!data) return null;
+        return dispatch(saveMemberQuery(data.members))
     }, [data, dispatch])
 
     if(loading) return <Box>Loading...</Box>;

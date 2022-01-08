@@ -41,6 +41,8 @@ const mentorGroupResolvers = {
         //delete the group
         const deletedGroup = await MentorGroup.findByIdAndDelete(groupId);
 
+        await Member.updateMany({mentorGroup: groupId}, {mentorGroup: null});
+
         return {group: deletedGroup, member: mentor};
     },
     
