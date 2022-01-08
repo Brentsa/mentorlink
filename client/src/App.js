@@ -15,6 +15,7 @@ import { Box } from '@mui/system';
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context';
 import AuthRoute from './components/wrappers/AuthRoute';
+import GuestRoute from './components/wrappers/GuestRoute';
 
 const theme = createTheme({
   palette: {
@@ -63,8 +64,8 @@ function App(){
               <Box sx={{width: "100%", display: 'flex', flexWrap: 'wrap', justifyContent: 'center'}}>
                 <Switch>
                   <Route exact path="/" component={Home}/>
-                  <Route exact path="/login" component={Login}/>
-                  <Route exact path="/register"component={Register}/>
+                  <GuestRoute exact path="/login"><Login/></GuestRoute>
+                  <GuestRoute exact path="/register"><Register/></GuestRoute>
                   <Route exact path="/dashboard/:username" component={Dashboard}/>
                   <AuthRoute exact path="/conversation"><Conversation/></AuthRoute>
                   <Route exact path="/search" component={Search}/>
