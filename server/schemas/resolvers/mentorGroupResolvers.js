@@ -67,7 +67,13 @@ const mentorGroupResolvers = {
     removeMenteeFromGroup: async function(_, {groupId, menteeId}, context){
         if(!context.member) return new AuthenticationError('You must be logged in to perform this action.')
 
-        return await MentorGroup.findByIdAndUpdate(groupId, {$pull: {mentees: menteeId}}, {new: true, runValidators: true})
+        //find the group and remove the mentee from it
+        const group = await MentorGroup.findByIdAndUpdate(groupId, {$pull: {mentees: menteeId}}, {new: true, runValidators: true})
+
+        //find the mentee and remove the group relation
+        const member = await Member.findByIdAndUpdate(menteeId, {mentorGroup: null}, {new: true});
+
+        return {group, member};
     },
 
     updateNumberOfMentees: async function(_, {groupId, numMentees}, context){

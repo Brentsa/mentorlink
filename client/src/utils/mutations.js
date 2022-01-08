@@ -134,3 +134,24 @@ export const ADD_MENTEE_TO_GROUP = gql`
         }
     }
 `;
+
+ export const REMOVE_MENTEE_FROM_GROUP = gql`
+    mutation Mutation($groupId: ID!, $menteeId: ID!) {
+        removeMenteeFromGroup(groupId: $groupId, menteeId: $menteeId) {
+        member {
+            _id
+            username
+            mentorGroup {
+            _id
+            }
+        }
+        group {
+            _id
+            mentees {
+            _id
+            username
+            }
+        }
+        }
+    }
+`;

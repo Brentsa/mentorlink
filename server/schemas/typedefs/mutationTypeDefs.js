@@ -12,7 +12,7 @@ const typeDef = `
         addMentorGroup(mentorId: ID!, numMentees: Int!, industryId: ID!): MemberAndMentorGroup
         deleteMentorGroup(groupId: ID!): MemberAndMentorGroup
         addMenteeToGroup(groupId: ID!, menteeId: ID!): MemberAndMentorGroup
-        removeMenteeFromGroup(groupId: ID!, menteeId: ID!): MentorGroup
+        removeMenteeFromGroup(groupId: ID!, menteeId: ID!): MemberAndMentorGroup
         updateNumberOfMentees(groupId: ID!, numMentees: Int!): MentorGroup
         addMessage(groupId: ID!, content: messageContent!): MentorGroup
         readMessage(groupId: ID!, messageId: ID!): MentorGroup
