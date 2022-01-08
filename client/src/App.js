@@ -1,5 +1,5 @@
 import './App.css';
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import ContentContainer from './components/wrappers/ContentContainer';
 import Home from './pages/Home';
@@ -69,6 +69,7 @@ function App(){
                   <Route exact path="/dashboard/:username" component={Dashboard}/>
                   <AuthRoute exact path="/conversation"><Conversation/></AuthRoute>
                   <Route exact path="/search" component={Search}/>
+                  <Redirect from="*" to="/"/>
                 </Switch>
               </Box>
             </Container>
