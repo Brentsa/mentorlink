@@ -13,6 +13,7 @@ import { ADD_MENTEE_TO_GROUP } from '../../utils/mutations';
 import { useDispatch, useSelector } from 'react-redux';
 import { addMenteeGroup} from '../../redux/slices/memberSlice';
 import { useEffect, useState, useCallback } from 'react';
+import StarIcon from '@mui/icons-material/Star';
 
 export default function MemberCard({member}) {
   const dispatch = useDispatch();
@@ -49,7 +50,7 @@ export default function MemberCard({member}) {
       return currentUser.username === member.username;
     }
 
-    return bIsUserLoggedIn && !isMenteeInGroup() && isRoomInGroupForMentee() && !userMatchesCard();
+    return bIsUserLoggedIn && !isMenteeInGroup() && isRoomInGroupForMentee() && !userMatchesCard() && !member.mentorGroup;
   }, [bIsUserLoggedIn, currentUser, member])
 
   //state to determine if the add mentee button should render
@@ -123,7 +124,7 @@ export default function MemberCard({member}) {
         </CardContent>
         
         <CardActions sx={{width: "100%", display: "flex", flexWrap: "wrap", justifyContent: "space-evenly"}}>
-          <Button variant="contained" color="secondary" component={Link} to={`/dashboard/${member?.username}`}>Profile</Button>
+          <Button variant="contained" color="secondary" component={Link} to={`/dashboard/${member?.username}`}>Profile {member.mentorGroup && <StarIcon/>}</Button>
           {shouldRender ? <Button variant="contained" color="secondary" onClick={addMenteeToGroup}>Add Mentee</Button> : null}
         </CardActions>  
       </Box>
