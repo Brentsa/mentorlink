@@ -1,17 +1,34 @@
 import { useState } from 'react';
-import {Box, TextField, Button } from '@mui/material';
+import { Box, TextField, Button } from '@mui/material';
+import { useMutation } from '@apollo/client';
+import { ADD_MESSAGE } from '../../utils/mutations';
+import Auth from '../../utils/AuthService';
+import { QUERY_MENTOR_GROUP_CONVO } from '../../utils/queries';
 
-export default function EnterMessageBox(){
+export default function EnterMessageBox({groupId}){
 
+    //create a message state to hold the text of the message
     const [message, setMessage] = useState('');
 
+    const [addMessage] = useMutation(ADD_MESSAGE);
+
+    //Set the message, whenever there is a change in the textfield
     const handleTextChange = (event) => {
         return setMessage(event.target.value);
     }
 
-    function sumbitMessage(event){
+    //Called when the message send button is clicked
+    async function sumbitMessage(event){
         event.preventDefault();
-        return console.log(message);
+        console.log(message);
+
+        //add the submitted message to the conversation using the mutation
+        addMessage({
+            variables: {groupId: groupId, content:{creator: Auth.getProfile()._id, text: message}},
+            refetchQueries: [QUERY_MENTOR_GROUP_CONVO, "MentorGroup"]
+        });
+
+        return setMessage('');
     }
 
     return (

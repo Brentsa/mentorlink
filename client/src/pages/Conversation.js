@@ -17,6 +17,7 @@ export default function Conversation(){
     //define a lazy query for the mentor group
     const [getGroup, {data, loading}] = useLazyQuery(QUERY_MENTOR_GROUP_CONVO);
 
+    //initialize the state of the mentor group
     const [group, setGroup] = useState(null);
 
     useEffect(()=>{
@@ -62,7 +63,7 @@ export default function Conversation(){
                 }
 
             </Grid>
-            <EnterMessageBox/>
+            <EnterMessageBox setGroup={setGroup} groupId={groupId} group={group}/>
         </Box>
     )
 }

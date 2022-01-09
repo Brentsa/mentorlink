@@ -155,3 +155,19 @@ export const ADD_MENTEE_TO_GROUP = gql`
         }
     }
 `;
+
+export const ADD_MESSAGE = gql`
+    mutation AddMessage($groupId: ID!, $content: messageContent!) {
+        addMessage(groupId: $groupId, content: $content) {
+        conversation {
+            _id
+            creator {
+            _id
+            username
+            }
+            text
+            createdAt
+        }
+        }
+    }
+`
