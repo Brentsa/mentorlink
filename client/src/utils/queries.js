@@ -95,3 +95,31 @@ export const QUERY_GROUP = gql`
         }
     }
 `;
+
+export const QUERY_MENTOR_GROUP_CONVO = gql`
+    query MentorGroup($id: ID!) {
+        mentorGroup(_id: $id) {
+        _id
+        mentor {
+            _id
+            username
+        }
+        numMentees
+        menteeCount
+        mentees {
+            _id
+            username
+        }
+        conversation {
+            text
+            _id
+            creator {
+            username
+            _id
+            }
+            createdAt
+        }
+        convoLength
+        }
+    }
+`;
