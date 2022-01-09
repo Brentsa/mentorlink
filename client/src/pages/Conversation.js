@@ -4,12 +4,15 @@ import Grid from '@mui/material/Grid';
 import EnterMessageBox from '../components/conversation/EnterMessageBox';
 import Message from '../components/conversation/Message';
 import MiniMemberCard from '../components/cards/MiniMemberCard';
+import { useSelector } from 'react-redux';
 
 export default function Conversation(){
+    const mentorGroup = useSelector(state => state.members.currentUser.mentorGroup);
+    
     return (
         <Box sx={{display: 'flex', alignItems: 'center', flexDirection: 'column', width: '100%'}}>
             <Typography variant="h5">Mentor:</Typography>
-            <MiniMemberCard/>
+            <MiniMemberCard username={mentorGroup?.mentor.username}/>
             <Grid 
                 container  
                 rowSpacing={2} 

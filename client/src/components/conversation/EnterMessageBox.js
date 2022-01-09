@@ -29,7 +29,7 @@ export default function EnterMessageBox(){
                 value={message}
                 onChange={handleTextChange}
                 sx={{
-                    width: "80%"
+                    width: "80%",
                 }}
             />
             <Button

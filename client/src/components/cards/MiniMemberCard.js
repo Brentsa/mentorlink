@@ -24,7 +24,7 @@ export default function MiniMemberCard({username}) {
       }
     }}>
       <CardActionArea sx={{padding: 2, display: 'flex', justifyContent: 'center', alignItems: 'center' }} onClick={goToMemberProfile}>
-        <Avatar alt="Profile Pic" src="http://placehold.it/200" sx={{ width: 60, height: 60 }}/>
+        <Avatar alt="Profile Pic" src={`https://i.pravatar.cc/60?u=${username}`} sx={{ width: 60, height: 60 }}/>
 
         <CardContent sx={{display: 'flex', flexWrap: 'wrap', flexDirection: 'column', alignItems: 'center', borderLeft: 4, borderColor: 'secondary.main', marginLeft: 2}}>
           <Typography gutterBottom variant="h6" component="div">{username}</Typography>
