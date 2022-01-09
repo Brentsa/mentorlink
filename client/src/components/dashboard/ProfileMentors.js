@@ -41,7 +41,6 @@ export default function ProfileMentor({member, setMember, bIsUserProfile}){
 
     //called if the user clicks leave mentor group button
     function leaveGroup(){
-        console.log('clicked');
         try{
             //try removing the mentee from the group in the backend and delete their group and set member state of group to null
             removeMenteeFromGroup({variables: {groupId: group._id, menteeId: member._id}});
