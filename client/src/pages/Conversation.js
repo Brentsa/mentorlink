@@ -31,6 +31,11 @@ export default function Conversation(){
 
     console.log(group);
 
+    //whenever the conversation is loaded, get the conversation box
+    var element = document.getElementById("conversation-screen");
+    //When the conversation box is set, set the top of the scroll screen to the bottom of the messages
+    if(element){ element.scrollTop = element.scrollHeight; }
+
     if(loading) return <Box>Loading...</Box>
 
     return (
@@ -38,6 +43,7 @@ export default function Conversation(){
             <Typography variant="h5">Mentor:</Typography>
             <MiniMemberCard username={group?.mentor.username}/>
             <Grid 
+                id="conversation-screen"
                 container  
                 rowSpacing={2} 
                 sx={{
@@ -53,7 +59,8 @@ export default function Conversation(){
                     overflowY: 'auto', 
                     '::-webkit-scrollbar': {
                         display: 'none'
-                    }
+                    },
+                       
                 }}
             >
                 {group ?
