@@ -15,7 +15,7 @@ export default function Message({bIsUserMessage, message}){
                         <Box sx={{bgcolor: 'tertiary.main', p:1, px:2, borderRadius: 4, borderBottomRightRadius: 0}}>
                             <Typography>{text}</Typography>
                         </Box>
-                        <Typography variant='body2'>{formatDateTime(createdAt)}</Typography>
+                        <Typography variant='body2' fontSize={12}>{formatDateTime(createdAt)}</Typography>
                     </Grid>
                 </>
                 : 
@@ -25,7 +25,7 @@ export default function Message({bIsUserMessage, message}){
                         <Box sx={{bgcolor: 'primary.dark', p:1, px:2, borderRadius: 4, borderBottomLeftRadius: 0}}>
                             <Typography color='contrastText.main'>{text}</Typography>
                         </Box>                            
-                        <Typography variant='body2'>{formatDateTime(createdAt)}</Typography>
+                        <Typography variant='body2' fontSize={12}>{formatDateTime(createdAt)}</Typography>
                     </Grid>
                     <Grid item xs></Grid>
                 </>

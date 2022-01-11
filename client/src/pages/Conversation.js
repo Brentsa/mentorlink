@@ -3,15 +3,18 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import EnterMessageBox from '../components/conversation/EnterMessageBox';
 import Message from '../components/conversation/Message';
-import MiniMemberCard from '../components/cards/MiniMemberCard';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useLazyQuery } from '@apollo/client';
 import { QUERY_MENTOR_GROUP_CONVO } from '../utils/queries';
 import { useEffect, useState } from 'react';
-import AuthService from '../utils/AuthService';
-import { MemberChip } from '../components/cards/MemberChip';
+import Auth from '../utils/AuthService';
+import { switchPage } from '../redux/slices/pageSlice';
+import { ConversationHeader } from '../components/conversation/ConversationHeader';
 
 export default function Conversation(){
+    const dispatch = useDispatch();
+    dispatch(switchPage('discussion'));
+
     //find the group id from the current user's state
     const groupId = useSelector(state => state.members.currentUser.mentorGroup?._id);
     
@@ -41,27 +44,15 @@ export default function Conversation(){
 
     return (
         <Box sx={{display: 'flex', alignItems: 'center', flexDirection: 'column', width: '100%'}}>
-            <Box display="flex">
-                <Box marginX={1}>
-                    <Typography variant="h5">Mentor:</Typography>
-                    <MiniMemberCard username={group?.mentor.username} industry={group?.mentor?.industry?.name}/>
-                </Box>
-                <Box marginX={1}>
-                    <Typography variant="h5">Mentees:</Typography>
-                    <Box display="flex" flexDirection="column">
-                        <MemberChip/>
-                        <MemberChip/>
-                        <MemberChip/>
-                    </Box>
-                </Box>
-            </Box>
-            
+            <ConversationHeader group={group}/>
             <Grid 
                 id="conversation-screen"
                 container  
-                rowSpacing={2} 
+                rowSpacing={1} 
+                width='80%'
                 sx={{
-                    my: 4, 
+                    mt: 4, 
+                    mb: 2,
                     p: 2, 
                     minHeight: '20vh',
                     maxHeight: '60vh', 
@@ -78,7 +69,7 @@ export default function Conversation(){
                 }}
             >
                 {group?.conversation.length > 0 ?
-                    group.conversation.map((message, id) => <Message key={id} message={message} bIsUserMessage={message.creator._id === AuthService.getProfile()?._id}/>)
+                    group.conversation.map((message, id) => <Message key={id} message={message} bIsUserMessage={message.creator._id === Auth.getProfile()?._id}/>)
                     :
                     <Typography variant='h5' color="lightBlue.main">Write a message below to start the conversation</Typography>
                 }
