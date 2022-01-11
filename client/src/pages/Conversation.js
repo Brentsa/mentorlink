@@ -14,8 +14,8 @@ export default function Conversation(){
     //find the group id from the current user's state
     const groupId = useSelector(state => state.members.currentUser.mentorGroup?._id);
     
-    //define a lazy query for the mentor group
-    const [getGroup, {data, loading}] = useLazyQuery(QUERY_MENTOR_GROUP_CONVO);
+    //define a lazy query for the mentor group, poll for changes to the conversation every 5 seconds
+    const [getGroup, {data, loading}] = useLazyQuery(QUERY_MENTOR_GROUP_CONVO, {pollInterval: 5000});
 
     //initialize the state of the mentor group
     const [group, setGroup] = useState(null);
