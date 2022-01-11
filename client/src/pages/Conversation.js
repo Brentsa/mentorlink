@@ -41,7 +41,7 @@ export default function Conversation(){
     return (
         <Box sx={{display: 'flex', alignItems: 'center', flexDirection: 'column', width: '100%'}}>
             <Typography variant="h5">Mentor:</Typography>
-            <MiniMemberCard username={group?.mentor.username}/>
+            <MiniMemberCard username={group?.mentor.username} industry={group?.mentor?.industry?.name}/>
             <Grid 
                 id="conversation-screen"
                 container  
@@ -64,7 +64,7 @@ export default function Conversation(){
                 }}
             >
                 {group ?
-                    group.conversation.map((message, id) => <Message key={id} text={message.text} bIsUserMessage={message.creator._id === AuthService.getProfile()?._id}/>)
+                    group.conversation.map((message, id) => <Message key={id} message={message} bIsUserMessage={message.creator._id === AuthService.getProfile()?._id}/>)
                     :
                     <Box>Write a message below to start the conversation</Box>
                 }

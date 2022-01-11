@@ -7,7 +7,7 @@ import { CardActionArea } from '@mui/material';
 import { useHistory } from 'react-router-dom';
 
 
-export default function MiniMemberCard({username}) {
+export default function MiniMemberCard({username, industry}) {
   const history = useHistory();
 
   //redirect the user to the member's profile page
@@ -27,8 +27,8 @@ export default function MiniMemberCard({username}) {
         <Avatar alt="Profile Pic" src={`https://i.pravatar.cc/60?u=${username}`} sx={{ width: 60, height: 60 }}/>
 
         <CardContent sx={{display: 'flex', flexWrap: 'wrap', flexDirection: 'column', alignItems: 'center', borderLeft: 4, borderColor: 'secondary.main', marginLeft: 2}}>
-          <Typography gutterBottom variant="h6" component="div">{username}</Typography>
-          <Typography gutterBottom variant="body" component="div">Industry</Typography>
+          <Typography gutterBottom variant="h6" component="div">{username ?? "username"}</Typography>
+          <Typography gutterBottom variant="body" component="div">{industry ?? "industry"}</Typography>
         </CardContent>
       </CardActionArea>
     </Card>

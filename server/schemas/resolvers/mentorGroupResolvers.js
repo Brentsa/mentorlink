@@ -8,13 +8,15 @@ const mentorGroupResolvers = {
             .populate('mentor')
             .populate('industry')
             .populate('mentees')
+            .populate({path: 'conversation', populate: {path: 'creator'}});
     },
 
     mentorGroup: async function(_, {_id}){
         return await MentorGroup.findById(_id)
             .populate('mentor')
             .populate('industry')
-            .populate('mentees');
+            .populate('mentees')
+            .populate({path: 'conversation', populate: {path: 'creator'}});
     },
 
     //mutations***************************
