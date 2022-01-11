@@ -13,7 +13,7 @@ const mentorGroupResolvers = {
 
     mentorGroup: async function(_, {_id}){
         return await MentorGroup.findById(_id)
-            .populate('mentor')
+            .populate({path: 'mentor', populate: {path: 'industry'}})
             .populate('industry')
             .populate('mentees')
             .populate({path: 'conversation', populate: {path: 'creator'}});

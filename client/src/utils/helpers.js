@@ -1,6 +1,8 @@
 
 //capitalize the first letter of a string
 export function capFirstLetter(string){
+    if(!string) return '';
+    
     return string.trim()[0].toUpperCase() + string.trim().slice(1);
 }
 
@@ -15,5 +17,5 @@ export function formatDateTime(date){
     var ampm = dateObj.getUTCHours() > 12 ? "am" : "pm";
 
     //returns date in format of 12/01/2022 @ 4:15pm
-    return `${month}/${day}/${year} @ ${hours}:${minutes}${ampm}`
+    return `${month}/${day}/${year} @ ${hours}:${minutes}${ampm}`;
 }

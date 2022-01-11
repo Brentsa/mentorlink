@@ -13,7 +13,10 @@ const memberResolvers = {
         return await Member.findOne({username})
         .populate("industry")
         .populate("contactInfo")
-        .populate({path: "mentorGroup", populate: [{path: "mentor", populate: "industry"}, {path: "mentees", populate: "username"}]});
+        .populate({path: "mentorGroup", populate: [
+            {path: "mentor", populate: "industry"}, 
+            {path: "mentees", populate: [{path: "username"}, {path: "industry"}]}
+        ]});
     },
 
     //mutations***************************

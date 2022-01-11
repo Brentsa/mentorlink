@@ -38,6 +38,9 @@ export const QUERY_MEMBER = gql`
                 mentees {
                     _id
                     username
+                    industry {
+                        name
+                    }
                 }
             }
         }
@@ -103,6 +106,9 @@ export const QUERY_MENTOR_GROUP_CONVO = gql`
         mentor {
             _id
             username
+            industry{
+                name
+            }
         }
         numMentees
         menteeCount
