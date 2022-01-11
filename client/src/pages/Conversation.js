@@ -9,6 +9,7 @@ import { useLazyQuery } from '@apollo/client';
 import { QUERY_MENTOR_GROUP_CONVO } from '../utils/queries';
 import { useEffect, useState } from 'react';
 import AuthService from '../utils/AuthService';
+import { MemberChip } from '../components/cards/MemberChip';
 
 export default function Conversation(){
     //find the group id from the current user's state
@@ -40,8 +41,21 @@ export default function Conversation(){
 
     return (
         <Box sx={{display: 'flex', alignItems: 'center', flexDirection: 'column', width: '100%'}}>
-            <Typography variant="h5">Mentor:</Typography>
-            <MiniMemberCard username={group?.mentor.username} industry={group?.mentor?.industry?.name}/>
+            <Box display="flex">
+                <Box marginX={1}>
+                    <Typography variant="h5">Mentor:</Typography>
+                    <MiniMemberCard username={group?.mentor.username} industry={group?.mentor?.industry?.name}/>
+                </Box>
+                <Box marginX={1}>
+                    <Typography variant="h5">Mentees:</Typography>
+                    <Box display="flex" flexDirection="column">
+                        <MemberChip/>
+                        <MemberChip/>
+                        <MemberChip/>
+                    </Box>
+                </Box>
+            </Box>
+            
             <Grid 
                 id="conversation-screen"
                 container  
@@ -63,10 +77,10 @@ export default function Conversation(){
                        
                 }}
             >
-                {group ?
+                {group?.conversation.length > 0 ?
                     group.conversation.map((message, id) => <Message key={id} message={message} bIsUserMessage={message.creator._id === AuthService.getProfile()?._id}/>)
                     :
-                    <Box>Write a message below to start the conversation</Box>
+                    <Typography variant='h5' color="lightBlue.main">Write a message below to start the conversation</Typography>
                 }
 
             </Grid>

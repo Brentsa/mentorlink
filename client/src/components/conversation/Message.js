@@ -8,7 +8,7 @@ export default function Message({bIsUserMessage, message}){
 
     return (
         <Grid container item>
-            {bIsUserMessage ? (
+            {bIsUserMessage ? 
                 <>
                     <Grid item xs></Grid>
                     <Grid item xs='auto' maxWidth='45%' display="flex" flexDirection="column" alignItems="end">
@@ -18,7 +18,7 @@ export default function Message({bIsUserMessage, message}){
                         <Typography variant='body2'>{formatDateTime(createdAt)}</Typography>
                     </Grid>
                 </>
-            ) : (
+                : 
                 <>
                     <Grid item xs='auto' maxWidth='45%'>
                         <Typography sx={{ml:2, fontSize: 12}} fontWeight="bold" variant='body2'>{creator.username}</Typography>
@@ -29,7 +29,7 @@ export default function Message({bIsUserMessage, message}){
                     </Grid>
                     <Grid item xs></Grid>
                 </>
-            )}
+            }
         </Grid>
     )
 }
