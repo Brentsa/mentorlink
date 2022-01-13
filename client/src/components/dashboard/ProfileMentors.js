@@ -55,6 +55,7 @@ export default function ProfileMentor({member, setMember, bIsUserProfile}){
         return;
     }
 
+    console.log(group?.mentor?.username + ' ' + member?.username);
     return (
         <Box sx={{display: 'flex', flexWrap: 'wrap', flexDirection: 'column', alignItems: 'center'}}>
             {group ? 
@@ -68,10 +69,14 @@ export default function ProfileMentor({member, setMember, bIsUserProfile}){
                                 :
                                 null
                             }
-                            <Typography variant="h5">Mentor:</Typography>
-                            <Box sx={{p:2}}>
-                                <MemberCard member={group.mentor}/> 
-                            </Box>
+                            {group.mentor.username !== member.username &&
+                                <>
+                                    <Typography variant="h5">Mentor</Typography>
+                                    <Box sx={{p:2}}>
+                                        <MemberCard member={group.mentor}/> 
+                                    </Box>
+                                </>
+                            }
                         </Box>
                     }
                     <Box sx={{m:3, display: 'flex', flexWrap: 'wrap', flexDirection: 'column', alignItems: 'center'}}>
