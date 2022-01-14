@@ -21,6 +21,9 @@ export default function Dashboard(){
     //compare the profile to the current logged in user and set the state for later use
     const [bIsUserProfile] = useState(userParam === Auth.getProfile()?.username);
 
+    //console.log(userParam);
+    //console.log(Auth.getProfile()?.username);
+
     //create a state for the member of the profile
     const [currentMember, setCurrentMember] = useState(null);
 

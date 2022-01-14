@@ -54,8 +54,7 @@ export default function ProfileMentor({member, setMember, bIsUserProfile}){
         }
         return;
     }
-
-    console.log(group?.mentor?.username + ' ' + member?.username);
+    
     return (
         <Box sx={{display: 'flex', flexWrap: 'wrap', flexDirection: 'column', alignItems: 'center'}}>
             {group ? 
