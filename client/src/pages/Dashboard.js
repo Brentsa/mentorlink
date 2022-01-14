@@ -17,19 +17,17 @@ export default function Dashboard(){
     
     //peel the username off of the URL using useParams and set it to userParam
     const {username: userParam} = useParams();
-
+   
     //compare the profile to the current logged in user and set the state for later use
-    const [bIsUserProfile] = useState(userParam === Auth.getProfile()?.username);
-
-    //console.log(userParam);
-    //console.log(Auth.getProfile()?.username);
+    const [bIsUserProfile, setIsUserProfile] = useState(false);
 
     //create a state for the member of the profile
-    const [currentMember, setCurrentMember] = useState(null);
+    const [currentMember, setCurrentMember] = useState({});
 
     //query the member given by the params, we want the query to execute on every render so change the fetch policy to network only
     const {data, loading} = useQuery(QUERY_MEMBER, {variables: {username: userParam}, fetchPolicy: "network-only"});
 
+    //lazy query the user, only over the network, and save their data to global statewhen done
     const [queryCurrentUser] = useLazyQuery(QUERY_MEMBER, {
         fetchPolicy: "network-only", 
         onCompleted: data => dispatch(loginUser(data.member))
@@ -43,16 +41,22 @@ export default function Dashboard(){
 
     //after the component has rendered, set the user logged in state to true if they are logged in via Auth
     useEffect(()=>{
+
         //once the component has rendered, if the use is logged in, set the logged in state to true
         if(Auth.UserLoggedIn()){
+            //set the logged in global state for the logged in user
             dispatch(setLoggedIn(true));
+            //set the state of the profile based on the username param in the url
+            setIsUserProfile(userParam === Auth.getProfile().username);
+            //lazy query the current user
             queryCurrentUser({variables: {username: Auth.getProfile().username}});
         } 
 
         //when arriving on the page set the current page state to your profile if your account
         if(bIsUserProfile) dispatch(switchPage("yourProfile"));
         else dispatch(switchPage('search'));
-    }, [dispatch, queryCurrentUser, bIsUserProfile])
+
+    }, [dispatch, queryCurrentUser, bIsUserProfile, setIsUserProfile, userParam])
 
     //return loading while the query executes
     if(loading) return <Box>Loading...</Box>

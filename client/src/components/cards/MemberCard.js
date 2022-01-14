@@ -82,7 +82,6 @@ export default function MemberCard({member}) {
     setShouldRender(shouldAddButtonRender());
   }, [currentUser, shouldAddButtonRender])
 
-  console.log(member);
   return (
     <Card sx={{ 
       m:1,
