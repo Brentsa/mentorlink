@@ -22,12 +22,12 @@ export default function Dashboard(){
     const [bIsUserProfile, setIsUserProfile] = useState(false);
 
     //create a state for the member of the profile
-    const [currentMember, setCurrentMember] = useState({});
+    const [currentMember, setCurrentMember] = useState(null);
 
     //query the member given by the params, we want the query to execute on every render so change the fetch policy to network only
     const {data, loading} = useQuery(QUERY_MEMBER, {variables: {username: userParam}, fetchPolicy: "network-only"});
 
-    //lazy query the user, only over the network, and save their data to global statewhen done
+    //lazy query the user, only over the network, and save their data to global state when done
     const [queryCurrentUser] = useLazyQuery(QUERY_MEMBER, {
         fetchPolicy: "network-only", 
         onCompleted: data => dispatch(loginUser(data.member))
@@ -42,7 +42,7 @@ export default function Dashboard(){
     //after the component has rendered, set the user logged in state to true if they are logged in via Auth
     useEffect(()=>{
 
-        //once the component has rendered, if the use is logged in, set the logged in state to true
+        //once the component has rendered, if the use is logged in, set the logged in state to true, user profile bool, and current user global state
         if(Auth.UserLoggedIn()){
             //set the logged in global state for the logged in user
             dispatch(setLoggedIn(true));

@@ -31,9 +31,7 @@ export default function Conversation(){
         if(data){
             setGroup(data.mentorGroup);
         }
-    }, [groupId, data, getGroup])
-
-    console.log(group);
+    }, [groupId, data, getGroup]);
 
     //whenever the conversation is loaded, get the conversation box
     var element = document.getElementById("conversation-screen");
