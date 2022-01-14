@@ -70,7 +70,7 @@ export default function MemberIndustry({member, setMember, bIsUserProfile}){
     if(loading) return <Box sx={{m:2}}><Typography variant="h4">Loading...</Typography></Box>
 
     return (
-        <Box sx={{m:2, display: 'flex'}}>
+        <Box sx={{m:1, display: 'flex'}}>
             {bIsEditing ? 
                 <TextField
                     id="industry-selector"

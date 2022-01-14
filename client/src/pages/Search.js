@@ -8,7 +8,6 @@ import { saveMemberQuery } from "../redux/slices/memberSlice";
 import { useEffect } from "react";
 import { switchPage } from "../redux/slices/pageSlice";
 
-
 export default function Search(){
 
     const dispatch = useDispatch();
@@ -30,7 +29,7 @@ export default function Search(){
         <Box sx={{display: "flex", flexWrap: "wrap", justifyContent: "center"}}>
             {members.map( (member, i) => 
                 //if the iterated member matches the logged in user, don't show their profile in the search
-                Auth.getProfile()?.username !== member.username ? <MemberCard member={member} key={i}/> : null 
+                Auth.getProfile()?.username !== member.username && <MemberCard member={member} key={i}/>
             )}
         </Box>
     )
