@@ -36,7 +36,10 @@ export const memberSlice = createSlice({
             //remove mentor group from state
             state.currentUser.mentorGroup = null;
         },
-        
+        removeMenteeFromGroup: (state, action) => {
+            const newGroup = state.currentUser.mentorGroup.mentees.filter(mentee => mentee._id !== action.payload.menteeId);
+            state.currentUser.mentorGroup.mentees = newGroup;
+        },
         //members reducers
         saveMemberQuery: (state, action) => {
             //save the queried members to global state
@@ -52,7 +55,8 @@ export const {
     setLoggedIn, 
     saveMemberQuery,
     addMentorGroup,
-    removeMentorGroup
+    removeMentorGroup,
+    removeMenteeFromGroup
 } = memberSlice.actions;
 
 export default memberSlice.reducer;

@@ -9,8 +9,9 @@ import { DELETE_MENTOR_GROUP, REMOVE_MENTEE_FROM_GROUP } from "../../utils/mutat
 import CreateGroupForm from "./CreateGroupForm";
 import { useDispatch } from "react-redux";
 import { removeMentorGroup } from "../../redux/slices/memberSlice";
+import { isUserProfile } from "../../utils/helpers";
 
-export default function ProfileMentor({member, setMember, bIsUserProfile}){
+export default function ProfileMentor({member, setMember}){
 
     const dispatch = useDispatch();
 
@@ -48,12 +49,11 @@ export default function ProfileMentor({member, setMember, bIsUserProfile}){
             setMember({...member, mentorGroup: null});
 
             //remove the mentor group from the current member state
-            dispatch(removeMentorGroup());
+            return dispatch(removeMentorGroup());
         }
         catch{
             return console.log("Mentee not removed from group");
         }
-        return;
     }
 
     return (
@@ -82,7 +82,7 @@ export default function ProfileMentor({member, setMember, bIsUserProfile}){
                     <Box sx={{m:3, display: 'flex', flexWrap: 'wrap', flexDirection: 'column', alignItems: 'center'}}>
                         <Typography variant="h5">Current Mentees - {group.menteeCount}/{group.numMentees} </Typography>
                         {group.menteeCount > 0 ? 
-                            <MemberGroup mentees={group.mentees} mentorGroup={group} bIsUserProfile={bIsUserProfile}/> 
+                            <MemberGroup mentees={group.mentees} mentorGroup={group} bIsUserProfile={isUserProfile(member?.username)} setMember={setMember}/> 
                             :
                             <Box>Add mentees to your mentor group!</Box>
                         }
@@ -91,7 +91,7 @@ export default function ProfileMentor({member, setMember, bIsUserProfile}){
             : 
                 <Box sx={{m:3, display:"flex", flexDirection:"column", alignItems:'center'}}>
                     <Typography variant="h5">No mentor group</Typography>
-                    {bIsUserProfile ?
+                    {isUserProfile(member?.username) ?
                         <>
                             <Typography>Start looking for a group or start one.</Typography>
                             <CreateGroupForm member={member} setMember={setMember}/>

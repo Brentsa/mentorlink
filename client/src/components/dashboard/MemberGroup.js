@@ -5,7 +5,7 @@ import { useMutation } from '@apollo/client';
 import { REMOVE_MENTEE_FROM_GROUP } from '../../utils/mutations';
 
 
-export default function MemberGroup({mentees, mentorGroup, bIsUserProfile}){
+export default function MemberGroup({mentees, mentorGroup, bIsUserProfile, setMember}){
 
     const [removeMenteeMutation, {data}] = useMutation(REMOVE_MENTEE_FROM_GROUP);
     
@@ -20,6 +20,7 @@ export default function MemberGroup({mentees, mentorGroup, bIsUserProfile}){
                             mentorGroup={mentorGroup} 
                             bIsUserProfile={bIsUserProfile}
                             removeMenteeMutation={removeMenteeMutation}
+                            setMember={setMember}
                         />
                     </Grid> 
                 )}

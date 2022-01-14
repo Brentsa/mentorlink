@@ -7,10 +7,10 @@ import { UPDATE_MEMBER } from "../../utils/mutations";
 import Auth from "../../utils/AuthService";
 import EditSaveButton from "../forms/EditSaveButton";
 import TextInput from "../forms/TextInput";
-//import FormContainer from "./FormContainer";
+import { isUserProfile } from "../../utils/helpers";
 
 
-export default function MemberDescription({member, setMember, bIsUserProfile}){
+export default function MemberDescription({member, setMember}){
 
     //set the editing state of the description field
     const [bIsEditing, setIsEditing] = useState(false);
@@ -58,7 +58,7 @@ export default function MemberDescription({member, setMember, bIsUserProfile}){
                             formik.handleSubmit();
                         }}
                     >
-                        <EditSaveButton title="Description" bIsEditing={bIsEditing} bIsUserProfile={bIsUserProfile}/>
+                        <EditSaveButton title="Description" bIsEditing={bIsEditing} bIsUserProfile={isUserProfile(member.username)}/>
 
                         <TextInput
                             name="description"
@@ -75,44 +75,3 @@ export default function MemberDescription({member, setMember, bIsUserProfile}){
         </Box>
     )
 }
-
-// export default function MemberDescription({member, setMember, bIsUserProfile}){
-
-//     //define the mutation to update the member
-//     const [updateMember] = useMutation(UPDATE_MEMBER);
-
-//     //call mutation to update the database and then update the member's state
-//     function updateDatabaseAndState(values){
-//         //update the member's description in the descripton field
-//         updateMember({variables: {id: Auth.getProfile()._id, member:{description: values.description}}});
-
-//         //update the state of the member in the profile to match
-//         return setMember({...member, description: values.description});
-//     }
-
-//     const formValues = {description: member?.description ?? ''};
-//     const schemaRules = Yup.object({description: Yup.string().max(200, "Description cannot be more than 200 characters")});
-
-//     return (
-//         <FormContainer
-//             formValues={formValues}
-//             schemaRules={schemaRules}
-//             formSubmitFunction={updateDatabaseAndState}
-//             bIsUserProfile={bIsUserProfile}
-
-//             textarea={
-//                 <FormikTextArea
-//                         id="description"
-//                         label="Description"
-//                 />
-//             }
-
-//             text={
-//                 <Typography variant="body2" sx={{whiteSpace: "pre-line"}}>
-//                     Hello
-//                 </Typography>  
-//             }
-//         >  
-//         </FormContainer>
-//     )
-// }

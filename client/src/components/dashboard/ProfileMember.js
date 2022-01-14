@@ -4,8 +4,9 @@ import MemberDescription from "./MemberDescription";
 import MemberContactInfo from "./MemberContactInfo";
 import MemberIndustry from "./MemberIndustry";
 import { Chip } from "@mui/material";
+import { isUserProfile } from "../../utils/helpers";
 
-export default function ProfileMember({member, setMember, bIsUserProfile}){
+export default function ProfileMember({member, setMember}){
 
     //return true if the user is a mentor
     function isUserMentor(){
@@ -22,14 +23,13 @@ export default function ProfileMember({member, setMember, bIsUserProfile}){
 
                 <Box display='flex' alignContent='center' flexWrap="wrap">
                     <Box sx={{m:1}} flexBasis="100%">
-                        <Typography variant="h4">{bIsUserProfile ? "Welcome, " : ''}{member.firstName} {member.lastName}</Typography>
+                        <Typography variant="h4">{isUserProfile(member.username) ? "Welcome, " : ''}{member.firstName} {member.lastName}</Typography>
                     </Box>
                     
                     <Box flexBasis="100%">
                         <MemberIndustry
                             member={member} 
-                            setMember={setMember} 
-                            bIsUserProfile={bIsUserProfile}
+                            setMember={setMember}
                         />
                     </Box>
                 </Box>
@@ -40,13 +40,11 @@ export default function ProfileMember({member, setMember, bIsUserProfile}){
             <MemberContactInfo  
                 member={member} 
                 setMember={setMember} 
-                bIsUserProfile={bIsUserProfile}
             />
 
             <MemberDescription  
                 member={member} 
-                setMember={setMember} 
-                bIsUserProfile={bIsUserProfile}
+                setMember={setMember}
             />
         </Box>
     )

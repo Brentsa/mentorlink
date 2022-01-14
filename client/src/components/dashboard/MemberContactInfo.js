@@ -7,8 +7,9 @@ import { ADD_CONTACT_INFO_TO_MEMBER } from "../../utils/mutations";
 import { useMutation } from '@apollo/client';
 import Auth from "../../utils/AuthService";
 import TextInput from "../forms/TextInput";
+import { isUserProfile } from "../../utils/helpers";
 
-export default function MemberContactInfo({member, setMember, bIsUserProfile}){
+export default function MemberContactInfo({member, setMember}){
 
     //Define a state to determine the editing status of the contact form
     const [bIsEditing, setIsEditing] = useState(false);
@@ -78,7 +79,7 @@ export default function MemberContactInfo({member, setMember, bIsUserProfile}){
                         }}
                         sx={{'& .MuiTextField-root': { m: 1, width: '20ch' }}}
                     >
-                        <EditSaveButton title="Contact Info" bIsEditing={bIsEditing} bIsUserProfile={bIsUserProfile}/>
+                        <EditSaveButton title="Contact Info" bIsEditing={bIsEditing} bIsUserProfile={isUserProfile(member.username)}/>
 
                         <Box>
                             <TextInput label="Phone Number" name="phoneNumber" bIsEditing={bIsEditing}/>

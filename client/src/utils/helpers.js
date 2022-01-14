@@ -1,3 +1,4 @@
+import Auth from "./AuthService";
 
 //capitalize the first letter of a string
 export function capFirstLetter(string){
@@ -18,4 +19,8 @@ export function formatDateTime(date){
 
     //returns date in format of 12/01/2022 @ 4:15pm
     return `${month}/${day}/${year} @ ${hours}:${minutes}${ampm}`;
+}
+
+export function isUserProfile(usernameOrId){
+    return Auth.getProfile()?.username === usernameOrId || Auth.getProfile()?._id === usernameOrId;
 }

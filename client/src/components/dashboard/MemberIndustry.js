@@ -4,9 +4,10 @@ import { useMutation, useQuery } from "@apollo/client";
 import { QUERY_INDUSTRIES } from "../../utils/queries";
 import { ADD_INDUSTRY_TO_MEMBER } from "../../utils/mutations";
 import Auth from '../../utils/AuthService';
-import {capFirstLetter} from '../../utils/helpers'
+import {capFirstLetter, isUserProfile} from '../../utils/helpers'
 
-export default function MemberIndustry({member, setMember, bIsUserProfile}){
+
+export default function MemberIndustry({member, setMember}){
     const industryName = member?.industry?.name;
 
     //Query the database for all the industries available
@@ -87,14 +88,14 @@ export default function MemberIndustry({member, setMember, bIsUserProfile}){
                 </TextField>
                 : 
                 <Typography variant="h4">{
-                    bIsUserProfile ? (
+                    isUserProfile(member.username) ? (
                         industryName ? capFirstLetter(industryName) : 'Add an industry!'
                     ) : (
                         industryName ? capFirstLetter(industryName) : null
                     )
                 }</Typography>
             }
-            {bIsUserProfile && Auth.UserLoggedIn() ? 
+            {isUserProfile(member.username) && Auth.UserLoggedIn() ? 
                 <>
                     {bIsEditing?
                         <Button color="secondary" size="small" sx={{mx: 2}} onClick={handleIndustrySave}>save</Button> 
