@@ -39,6 +39,7 @@ export default function Dashboard(){
 
     //after the component has rendered, set the user logged in state to true if they are logged in via Auth
     useEffect(()=>{
+        console.log(currentMember);
 
         //once the component has rendered, if the use is logged in, set the logged in state to true, user profile bool, and current user global state
         if(Auth.UserLoggedIn()){

@@ -7,14 +7,11 @@ import { CardActionArea } from '@mui/material';
 import { useHistory } from 'react-router-dom';
 import { capFirstLetter } from '../../utils/helpers';
 import Auth from '../../utils/AuthService';
-import { useDispatch } from 'react-redux';
-import { removeMenteeFromGroup } from '../../redux/slices/memberSlice';
 
 
-export default function MiniMemberCard({mentee, industry, mentorGroup, bIsUserProfile, removeMenteeMutation, setMember}) {
+export default function MiniMemberCard({mentee, industry, mentorGroup, bIsUserProfile, removeMenteeMutation, setMember, member}) {
   const {username, _id} = mentee;
   const history = useHistory();
-  //const dispatch = useDispatch();
 
   //redirect the user to the member's profile page
   function goToMemberProfile(){
@@ -22,10 +19,12 @@ export default function MiniMemberCard({mentee, industry, mentorGroup, bIsUserPr
   }
 
   function removeMentee(){
-    console.log(mentorGroup);
+    //call the remove mentee mutation and remove the mentee from the group
     removeMenteeMutation({variables: {groupId: mentorGroup?._id, menteeId: _id}});
-    //dispatch(removeMenteeFromGroup({menteeId: _id}));
-    //setMember()
+
+    //filter the removed mentee from the mentee list and update the state
+    const newGroup = member.mentorGroup.mentees.filter(member => member.username !== username);
+    setMember({...member, mentorGroup: {...member.mentorGroup, mentees: newGroup}});
   }
 
   return (
