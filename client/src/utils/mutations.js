@@ -148,8 +148,7 @@ export const ADD_MENTEE_TO_GROUP = gql`
         group {
             _id
             mentees {
-            _id
-            username
+                _id
             }
         }
         }

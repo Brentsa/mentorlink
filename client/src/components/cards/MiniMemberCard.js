@@ -9,7 +9,8 @@ import { capFirstLetter } from '../../utils/helpers';
 import Auth from '../../utils/AuthService';
 
 
-export default function MiniMemberCard({username, industry, mentor, bIsUserProfile}) {
+export default function MiniMemberCard({mentee, industry, mentorGroup, bIsUserProfile, removeMenteeMutation}) {
+  const {username, _id} = mentee;
   const history = useHistory();
 
   //redirect the user to the member's profile page
@@ -18,7 +19,8 @@ export default function MiniMemberCard({username, industry, mentor, bIsUserProfi
   }
 
   function removeMentee(){
-    return console.log("clicked");
+    console.log(mentorGroup);
+    removeMenteeMutation({variables: {groupId: mentorGroup?._id, menteeId: _id}});
   }
 
   return (
@@ -33,7 +35,7 @@ export default function MiniMemberCard({username, industry, mentor, bIsUserProfi
         boxShadow: 4
       }
     }}>
-      { Auth.getProfile()?.username === mentor && bIsUserProfile &&
+      { Auth.getProfile()?.username === mentorGroup?.mentor?.username && bIsUserProfile &&
         <Button color='secondary' variant='contained' disableElevation size='small' onClick={removeMentee}>remove</Button>
       }
       <CardActionArea sx={{padding: 2, display: 'flex', justifyContent: 'center', alignItems: 'center' }} onClick={goToMemberProfile}>

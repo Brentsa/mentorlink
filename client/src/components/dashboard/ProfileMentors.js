@@ -82,7 +82,7 @@ export default function ProfileMentor({member, setMember, bIsUserProfile}){
                     <Box sx={{m:3, display: 'flex', flexWrap: 'wrap', flexDirection: 'column', alignItems: 'center'}}>
                         <Typography variant="h5">Current Mentees - {group.menteeCount}/{group.numMentees} </Typography>
                         {group.menteeCount > 0 ? 
-                            <MemberGroup mentees={group.mentees} mentor={group.mentor.username} bIsUserProfile={bIsUserProfile}/> 
+                            <MemberGroup mentees={group.mentees} mentorGroup={group} bIsUserProfile={bIsUserProfile}/> 
                             :
                             <Box>Add mentees to your mentor group!</Box>
                         }
