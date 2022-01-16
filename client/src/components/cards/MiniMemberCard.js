@@ -10,7 +10,10 @@ import Auth from '../../utils/AuthService';
 
 
 export default function MiniMemberCard({mentee, industry, mentorGroup, bIsUserProfile, removeMenteeMutation, setMember, member}) {
-  const {username, _id} = mentee;
+  //const {username, _id} = mentee;
+  const username = mentee?.username;
+  const _id = mentee?._id;
+  
   const history = useHistory();
 
   //redirect the user to the member's profile page

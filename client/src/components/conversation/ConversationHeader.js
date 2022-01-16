@@ -9,7 +9,7 @@ export function ConversationHeader({group}){
         <Box display="flex">
             <Box marginX={1}>
                 <Typography variant="h5">Mentor:</Typography>
-                <MiniMemberCard username={group?.mentor.username} industry={group?.mentor?.industry?.name}/>
+                <MiniMemberCard mentee={group?.mentor} industry={group?.mentor?.industry?.name}/>
             </Box>
             <Box marginX={1}>
                 <Typography variant="h5">Mentees:</Typography>
