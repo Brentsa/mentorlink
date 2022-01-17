@@ -8,8 +8,12 @@ import Auth from '../../utils/AuthService';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { useHistory } from 'react-router';
+import { useDispatch } from 'react-redux';
+import { setLoggedIn } from '../../redux/slices/memberSlice';
 
 export default function RegisterForm(){
+
+    const dispatch = useDispatch();
 
     //define history with react router for redirecting user
     const history = useHistory();
@@ -26,6 +30,9 @@ export default function RegisterForm(){
             const addUserResponse = await addUser({variables: {member: {username, firstName, lastName, password}}})
             const {token} = addUserResponse.data.addMember;
             Auth.login(token);
+
+            //set global logged in state to true
+            dispatch(setLoggedIn(true));
 
             //after user has been added and token stored, redirect user to their dashboard
             return history.push(`/dashboard/${Auth.getProfile().username}`);

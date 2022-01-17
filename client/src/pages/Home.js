@@ -10,15 +10,15 @@ import { switchPage } from "../redux/slices/pageSlice";
 export default function Home(){
 
     const dispatch = useDispatch();
-    
-    //when arriving on the page set the current page state, mainly for logging out state functionality
-    dispatch(switchPage("home"));
 
     //when search loads, query members to display
     const {data, loading} = useQuery(QUERY_MEMBERS);
 
     useEffect(() => {
         if(data) dispatch(saveMemberQuery(data.members))
+
+        //when arriving on the page set the current page state, mainly for logging out state functionality
+        dispatch(switchPage("home"));
     })
 
     if(loading) return <Box>Loading...</Box>;
