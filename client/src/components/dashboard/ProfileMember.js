@@ -34,7 +34,7 @@ export default function ProfileMember({member, setMember}){
                         />
                     </Box>
 
-                    <ImageUploader/>
+                    <ImageUploader member={member}/>
                 </Box>
             </Box>
 

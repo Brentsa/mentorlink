@@ -21,4 +21,4 @@ const firebaseApp = initializeApp(firebaseConfig);
 const storage = getStorage(firebaseApp);
 const imagesRef = ref(storage, "images");
 
-export default storage;
+export {imagesRef, ref};
