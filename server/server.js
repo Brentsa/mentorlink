@@ -5,7 +5,6 @@ const {ApolloServerPluginDrainHttpServer} = require('apollo-server-core');
 const http = require('http');
 const {typeDefs, resolvers} = require('./schemas');
 const { authMiddleware } = require('./utils/auth');
-const path = require('path');
 
 async function runApolloServer(typeDefs, resolvers){
     const app = express();

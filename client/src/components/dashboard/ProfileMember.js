@@ -5,6 +5,7 @@ import MemberContactInfo from "./MemberContactInfo";
 import MemberIndustry from "./MemberIndustry";
 import { Chip } from "@mui/material";
 import { isUserProfile } from "../../utils/helpers";
+import ImageUploader from "../forms/ImageUploader";
 
 export default function ProfileMember({member, setMember}){
 
@@ -32,10 +33,10 @@ export default function ProfileMember({member, setMember}){
                             setMember={setMember}
                         />
                     </Box>
+
+                    <ImageUploader/>
                 </Box>
-                
             </Box>
-           
 
             <MemberContactInfo  
                 member={member} 
