@@ -5,7 +5,7 @@ import MemberContactInfo from "./MemberContactInfo";
 import MemberIndustry from "./MemberIndustry";
 import { Chip } from "@mui/material";
 import { isUserProfile } from "../../utils/helpers";
-import ImageUploader from "../forms/ImageUploader";
+import FadeModal from "../misc/FadeModal";
 
 export default function ProfileMember({member, setMember}){
 
@@ -24,6 +24,7 @@ export default function ProfileMember({member, setMember}){
                         alt='member' 
                         width='auto' 
                         height='200px'
+                        sx={{objectFit: 'cover'}}
                     />  
                 </Box>
 
@@ -39,7 +40,9 @@ export default function ProfileMember({member, setMember}){
                         />
                     </Box>
 
-                    <ImageUploader member={member}/>
+                    {isUserProfile(member.username) && 
+                        <FadeModal member={member}/>
+                    }
                 </Box>
             </Box>
 

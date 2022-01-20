@@ -1,21 +1,28 @@
 import { useState } from "react";
 import { imagesRef} from "../../firebase/config";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-
 import { Box } from "@mui/system";
+import LinearProgress from '@mui/material/LinearProgress';
 import { useMutation } from "@apollo/client";
 import { ADD_PROFILE_PIC } from "../../utils/mutations";
 
 export default function ImageUploader({member}){
 
     //define the mutation to add a profile picture to the logged in user
-    const [addProfilePic] = useMutation(ADD_PROFILE_PIC);
+    const [addProfilePic] = useMutation(ADD_PROFILE_PIC, {
+        onCompleted: () => setComplete(true)
+    });
 
     //define state to hold the supplied file
     const [file, setFile] = useState(null);
+    const [progress, setProgress] = useState(0);
+    const [complete, setComplete] = useState(false);
 
     //set the current file whenever the file input is changed
     function handleChange(e){
+        setProgress(0);
+        setComplete(false);
+
         const givenFile = e.target.files[0];
         setFile(givenFile);
     }
@@ -29,8 +36,8 @@ export default function ImageUploader({member}){
 
         uploadTask.on('state_changed',
             (snapshot) => {
-                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                console.log(progress);
+                const prog = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                setProgress(prog);
             },
             (error) => {
                 switch(error.code){
@@ -70,6 +77,8 @@ export default function ImageUploader({member}){
             display='flex'
             flexDirection='column'
         >
+            <LinearProgress variant="determinate" value={progress} />
+            {complete && <h1>New Picture Uploaded.</h1>}
             <label htmlFor="upload">Select a profile picture: </label>
             <input type="file" id="upload" name="upload" onChange={handleChange}/>
             <button type="submit">Save</button>
