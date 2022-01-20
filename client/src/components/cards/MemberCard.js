@@ -108,7 +108,7 @@ export default function MemberCard({member}) {
       }}>
         <CardMedia
           component="img"
-          image={`https://i.pravatar.cc/200?u=${member.username}`}
+          image={member.profilePicture ?? `https://i.pravatar.cc/200?u=${member.username}`}
           alt="placeholder image"
           sx={{width: 200, height: 200, borderRadius: '50%'}}
         />

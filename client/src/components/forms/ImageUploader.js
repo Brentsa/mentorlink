@@ -3,19 +3,24 @@ import { imagesRef} from "../../firebase/config";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 import { Box } from "@mui/system";
+import { useMutation } from "@apollo/client";
+import { ADD_PROFILE_PIC } from "../../utils/mutations";
 
 export default function ImageUploader({member}){
 
-    // const userStorageRef = ref(imagesRef, `${member.username}`);
-    // console.log(userStorageRef);
+    //define the mutation to add a profile picture to the logged in user
+    const [addProfilePic] = useMutation(ADD_PROFILE_PIC);
 
+    //define state to hold the supplied file
     const [file, setFile] = useState(null);
 
+    //set the current file whenever the file input is changed
     function handleChange(e){
         const givenFile = e.target.files[0];
         setFile(givenFile);
     }
 
+    //called when the user saves the profile picture
     function handleSubmit(e){
         e.preventDefault();
         const metadata = { contentType: 'image/png'};
@@ -43,8 +48,16 @@ export default function ImageUploader({member}){
                 }
             },
             () => {
-                getDownloadURL(uploadTask.snapshot.ref).then(downloadUrl => {
+                //on success, get the download url of the picture 
+                getDownloadURL(uploadTask.snapshot.ref)
+                .then(downloadUrl => {
                     console.log("image: " + downloadUrl);
+
+                    //set the image url of the user in the database
+                    addProfilePic({variables: {url: downloadUrl}});
+                })
+                .catch((error) => {
+                    console.log(error);
                 });
             }
         )

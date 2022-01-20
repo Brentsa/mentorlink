@@ -8,6 +8,7 @@ export const QUERY_MEMBER = gql`
             lastName
             username
             description
+            profilePicture
             industry {
                 _id
                 name
@@ -32,6 +33,7 @@ export const QUERY_MEMBER = gql`
                         name
                     }
                     description
+                    profilePicture
                 }
                 numMentees
                 menteeCount
@@ -85,6 +87,7 @@ export const QUERY_GROUP = gql`
                 firstName
                 lastName
                 username
+                profilePicture
             }
             mentees {
                 _id
@@ -109,6 +112,7 @@ export const QUERY_MENTOR_GROUP_CONVO = gql`
             industry{
                 name
             }
+            profilePicture
         }
         numMentees
         menteeCount

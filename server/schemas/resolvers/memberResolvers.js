@@ -52,6 +52,7 @@ const memberResolvers = {
         return await Member.findByIdAndUpdate(_id, {...member}, {new: true});
     },
 
+    //Add a profile pic url to the member
     addProfilePic: async function(_, {url}, context){
         if(!context.member) throw new AuthenticationError('You must be logged in to perform this action.');
 

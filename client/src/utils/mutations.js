@@ -158,15 +158,27 @@ export const ADD_MENTEE_TO_GROUP = gql`
 export const ADD_MESSAGE = gql`
     mutation AddMessage($groupId: ID!, $content: messageContent!) {
         addMessage(groupId: $groupId, content: $content) {
-        conversation {
-            _id
-            creator {
-            _id
-            username
+            conversation {
+                _id
+                creator {
+                    _id
+                    username
+                }
+                text
+                createdAt
             }
-            text
-            createdAt
         }
+    }
+`
+
+export const ADD_PROFILE_PIC = gql`
+    mutation AddProfilePic($url: String!) {
+        addProfilePic(url: $url) {
+            _id
+            firstName
+            lastName
+            username
+            profilePicture
         }
     }
 `
