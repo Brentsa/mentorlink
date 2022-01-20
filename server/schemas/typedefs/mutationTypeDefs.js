@@ -8,6 +8,7 @@ const typeDef = `
         updateMember(_id: ID!, member: minMemberContent!): Member
         deleteMember(_id: ID!): Member
         addContactInfo(_id: ID!, contactInfo: contactInfoContent!): Member
+        addProfilePic(url: String!): Member
         deleteContactInfo(_id: ID!): Member
         addMentorGroup(mentorId: ID!, numMentees: Int!, industryId: ID!): MemberAndMentorGroup
         deleteMentorGroup(groupId: ID!): MemberAndMentorGroup

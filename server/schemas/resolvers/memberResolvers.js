@@ -52,6 +52,12 @@ const memberResolvers = {
         return await Member.findByIdAndUpdate(_id, {...member}, {new: true});
     },
 
+    addProfilePic: async function(_, {url}, context){
+        if(!context.member) throw new AuthenticationError('You must be logged in to perform this action.');
+
+        return await Member.findByIdAndUpdate(context.member._id, {profilePicture: url}, {new: true});
+    },
+
     addIndustryToMember: async function(_, {memberId, industryId}, context){
         if(!context.member) throw new AuthenticationError("You must be logged in to add an industry");
 

@@ -13,6 +13,7 @@ const {
     updateMember, 
     deleteMember,
     addIndustryToMember, 
+    addProfilePic,
     addContactInfo, 
     deleteContactInfo
 } = require('./resolvers/memberResolvers');
@@ -48,6 +49,7 @@ const resolvers = {
         deleteMember,
         addIndustryToMember,
         addContactInfo,
+        addProfilePic,
         deleteContactInfo,
         addMentorGroup,
         deleteMentorGroup,
