@@ -19,7 +19,12 @@ export default function ProfileMember({member, setMember}){
             <Box display='flex'>
                 <Box sx={{ width: '200px', height: '200px', borderRadius: '50%', border: 1, overflow: 'hidden', m: 2}} flexShrink={0}>
                     {isUserMentor() && <Chip label="Mentor" variant="filled" color="secondary" sx={{m:1, position: 'absolute'}}/>}
-                    <img src={member.profilePicture ?? `https://i.pravatar.cc/100?u=${member.username}`} alt='member' width='100%' height='100%'/>  
+                    <img 
+                        src={member.profilePicture ?? `https://i.pravatar.cc/100?u=${member.username}`} 
+                        alt='member' 
+                        width='auto' 
+                        height='200px'
+                    />  
                 </Box>
 
                 <Box display='flex' alignContent='center' flexWrap="wrap">
