@@ -5,23 +5,28 @@ import { Box } from "@mui/system";
 import LinearProgress from '@mui/material/LinearProgress';
 import { useMutation } from "@apollo/client";
 import { ADD_PROFILE_PIC } from "../../utils/mutations";
+import { Button, Typography } from "@mui/material";
 
-export default function ImageUploader({member}){
+export default function ImageUploader({member, modalOpen}){
 
     //define the mutation to add a profile picture to the logged in user
     const [addProfilePic] = useMutation(ADD_PROFILE_PIC, {
-        onCompleted: () => setComplete(true)
+        onCompleted: () => {
+            setStatus('Upload Complete');
+            setTimeout(()=>modalOpen(false), 2000);
+        },
+        onError: () => setStatus('Upload Failed')
     });
 
     //define state to hold the supplied file
     const [file, setFile] = useState(null);
     const [progress, setProgress] = useState(0);
-    const [complete, setComplete] = useState(false);
+    const [status, setStatus] = useState('');
 
     //set the current file whenever the file input is changed
     function handleChange(e){
         setProgress(0);
-        setComplete(false);
+        setStatus('');
 
         const givenFile = e.target.files[0];
         setFile(givenFile);
@@ -36,36 +41,32 @@ export default function ImageUploader({member}){
 
         uploadTask.on('state_changed',
             (snapshot) => {
+                //keep record of the upload progress and continually set state
                 const prog = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
                 setProgress(prog);
             },
             (error) => {
                 switch(error.code){
                     case 'storage/unauthorized':
-                        console.log('User not authorized.')
+                        setStatus('User Not Authorized');
                         break;
                     case 'storage/cancelled':
-                        console.log('Upload cancelled.')
+                        setStatus('Upload Cancelled');
                         break;
                     case 'storage/unknown':
+                        setStatus('Upload Failed');
                         console.log(error.serverResponse);
                         break;
                     default:
                         break;
                 }
             },
-            () => {
+            async () => {
                 //on success, get the download url of the picture 
-                getDownloadURL(uploadTask.snapshot.ref)
-                .then(downloadUrl => {
-                    console.log("image: " + downloadUrl);
+                const downloadUrl = await getDownloadURL(uploadTask.snapshot.ref)
 
-                    //set the image url of the user in the database
-                    addProfilePic({variables: {url: downloadUrl}});
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
+                //set the image url of the user in the database
+                addProfilePic({variables: {url: downloadUrl}});
             }
         )
     }
@@ -77,11 +78,21 @@ export default function ImageUploader({member}){
             display='flex'
             flexDirection='column'
         >
-            <LinearProgress variant="determinate" value={progress} />
-            {complete && <h1>New Picture Uploaded.</h1>}
-            <label htmlFor="upload">Select a profile picture: </label>
-            <input type="file" id="upload" name="upload" onChange={handleChange}/>
-            <button type="submit">Save</button>
+            <LinearProgress variant="determinate" value={progress} sx={{mb: 2}}/>
+            {status && <Typography variant="h6" mx='auto'>{status}</Typography>}
+            {file && 
+                <Box sx={{width: '50%', my: 2, mx: 'auto'}}>
+                    <img src={window.URL.createObjectURL(file)} alt="thumbnail"></img>
+                </Box>
+            }
+            <Box display='flex' justifyContent="center">
+                <Button variant="contained" component="label" sx={{minWidth: "max-content", width: '40%', mr: 1}}>
+                    Select Picture
+                    <input type="file" id="upload" onChange={handleChange} name="upload" hidden/>
+                </Button>
+                <Button type="submit" color="secondary" variant="contained" sx={{minWidth: 'max-content', width: '40%', ml: 1}}>Save Picture</Button>
+            </Box>
+            
         </Box>
     )
 }

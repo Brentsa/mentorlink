@@ -40,10 +40,10 @@ export default function FadeModal({member}) {
       >
         <Fade in={open}>
           <Box sx={style}>
-            <Typography id="transition-modal-title" variant="h6" component="h2">
+            <Typography variant="h6" component="h2">
               Set a new profile picture!
             </Typography>
-            <ImageUploader member={member}/>
+            <ImageUploader member={member} modalOpen={setOpen}/>
           </Box>
         </Fade>
       </Modal>
