@@ -6,6 +6,7 @@ import MemberIndustry from "./MemberIndustry";
 import { Chip } from "@mui/material";
 import { isUserProfile } from "../../utils/helpers";
 import FadeModal from "../misc/FadeModal";
+import CardMedia from '@mui/material/CardMedia';
 
 export default function ProfileMember({member, setMember}){
 
@@ -19,13 +20,12 @@ export default function ProfileMember({member, setMember}){
             <Box display='flex'>
                 <Box sx={{ width: '200px', height: '200px', borderRadius: '50%', border: 1, overflow: 'hidden', m: 2}} flexShrink={0}>
                     {isUserMentor() && <Chip label="Mentor" variant="filled" color="secondary" sx={{m:1, position: 'absolute'}}/>}
-                    <img 
-                        src={member.profilePicture ?? `https://i.pravatar.cc/100?u=${member.username}`} 
-                        alt='member' 
-                        width='auto' 
-                        height='200px'
-                        sx={{objectFit: 'cover'}}
-                    />  
+                    <CardMedia
+                        component="img"
+                        image={member.profilePicture ?? `https://i.pravatar.cc/200?u=${member.username}`}
+                        alt="member"
+                        sx={{width: 200, height: 200, borderRadius: '50%'}}
+                    />
                 </Box>
 
                 <Box display='flex' alignContent='center' flexWrap="wrap">

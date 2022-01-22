@@ -13,6 +13,6 @@ code {
 }
 
 img {
-  max-width: 100%;
-  max-width: auto;
+  width: 100%;
+  height: 100%;
 }

@@ -4,11 +4,11 @@ import ProfileMember from '../components/dashboard/ProfileMember';
 import ProfileMentor from '../components/dashboard/ProfileMentors';
 import { useQuery } from '@apollo/client';
 import { QUERY_MEMBER } from '../utils/queries';
-import { Box } from '@mui/system';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { switchPage } from '../redux/slices/pageSlice';
 import { isUserProfile } from '../utils/helpers';
+import CircularProgress from '@mui/material/CircularProgress';
 
 export default function Dashboard(){
 
@@ -22,12 +22,11 @@ export default function Dashboard(){
     const [currentMember, setCurrentMember] = useState(null);
 
     //query the member given by the params, we want the query to execute on every render so change the fetch policy to network only
-    const {data, loading} = useQuery(QUERY_MEMBER, {variables: {username: userParam}, fetchPolicy: "network-only"});
-
-    //once the data has been returned, set the current member once the component has rendered
-    useEffect(()=>{
-        if(data) setCurrentMember(data.member);
-    }, [data]);
+    const {loading} = useQuery(QUERY_MEMBER, {
+        variables: {username: userParam}, 
+        fetchPolicy: "network-only", 
+        onCompleted: data => setCurrentMember(data.member)
+    });
 
     //manage the state of the current page based on who's profile the user is visiting
     useEffect(()=>{
@@ -35,16 +34,15 @@ export default function Dashboard(){
             //when arriving on the page set the current page state to your profile if your account
             if(isUserProfile(currentMember?.username)) 
                 dispatch(switchPage("yourProfile"));
-            else if(user?.mentorGroup?.mentor?.username === currentMember?.mentorGroup?.mentor?.username)
+            else if(user?.mentorGroup?.mentor?.username === currentMember.username)
                 dispatch(switchPage("yourMentor"));
+            else
+                dispatch(switchPage('search'));
         }
-        else 
-            dispatch(switchPage('search'));
-
     }, [dispatch, currentMember, user]);
 
     //return loading while the query executes
-    if(loading) return <Box>Loading...</Box>
+    if(loading) return <CircularProgress color="secondary" />
 
     return (
         <Grid container spacing={4}>
@@ -57,25 +55,3 @@ export default function Dashboard(){
         </Grid>
     )
 }
-
-
-
-
-
-    //after the component has rendered, set the user logged in state to true if they are logged in via Auth
-    // useEffect(()=>{
-    //     //once the component has rendered, if the use is logged in, set the logged in state to true, user profile bool, and current user global state
-    //     if(Auth.UserLoggedIn()){
-    //         //set the logged in global state for the logged in user
-    //         dispatch(setLoggedIn(true));
-
-    //         //lazy query the current user
-    //         queryCurrentUser({variables: {username: Auth.getProfile().username}});
-    //     }
-    // }, [dispatch, queryCurrentUser, userParam])
-
-    //lazy query the user, only over the network, and save their data to global state when done
-    // const [queryCurrentUser] = useLazyQuery(QUERY_MEMBER, {
-    //     fetchPolicy: "network-only", 
-    //     onCompleted: data => dispatch(loginUser(data.member))
-    // });
