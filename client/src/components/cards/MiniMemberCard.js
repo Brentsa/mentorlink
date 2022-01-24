@@ -9,10 +9,12 @@ import { capFirstLetter } from '../../utils/helpers';
 import Auth from '../../utils/AuthService';
 
 
-export default function MiniMemberCard({mentee, industry, mentorGroup, bIsUserProfile, removeMenteeMutation, setMember, member}) {
+export default function MiniMemberCard({mentorGroup, bIsUserProfile, removeMenteeMutation, setMember, member, mentor}) {
   //const {username, _id} = mentee;
-  const username = mentee?.username;
-  const _id = mentee?._id;
+  const username = member?.username;
+  const _id = member?._id;
+  const industry = member?.industry?.name;
+  const profilePicture = member?.profilePicture
   
   const history = useHistory();
 
@@ -26,8 +28,8 @@ export default function MiniMemberCard({mentee, industry, mentorGroup, bIsUserPr
     removeMenteeMutation({variables: {groupId: mentorGroup?._id, menteeId: _id}});
 
     //filter the removed mentee from the mentee list and update the state
-    const newGroup = member.mentorGroup.mentees.filter(member => member.username !== username);
-    setMember({...member, mentorGroup: {...member.mentorGroup, mentees: newGroup}});
+    const newGroup = mentorGroup.mentees.filter(member => member.username !== username);
+    setMember({...mentor, mentorGroup: {...mentorGroup, mentees: newGroup}});
   }
 
   return (
@@ -46,7 +48,7 @@ export default function MiniMemberCard({mentee, industry, mentorGroup, bIsUserPr
         <Button color='secondary' variant='contained' disableElevation size='small' onClick={removeMentee}>remove</Button>
       }
       <CardActionArea sx={{padding: 2, display: 'flex', justifyContent: 'center', alignItems: 'center' }} onClick={goToMemberProfile}>
-        <Avatar alt="Profile Pic" src={mentee?.profilePicture ?? `https://i.pravatar.cc/60?u=${username}`} sx={{ width: 60, height: 60 }}/>
+        <Avatar alt="Profile Pic" src={profilePicture ?? `https://i.pravatar.cc/60?u=${username}`} sx={{ width: 60, height: 60 }}/>
 
         <CardContent sx={{display: 'flex', flexWrap: 'wrap', flexDirection: 'column', alignItems: 'center', borderLeft: 4, borderColor: 'secondary.main', marginLeft: 2}}>
           <Typography gutterBottom variant="h6" component="div">{username ?? "username"}</Typography>
