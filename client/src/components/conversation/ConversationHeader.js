@@ -15,7 +15,7 @@ export function ConversationHeader({group}){
                 <Typography variant="h5">Mentees:</Typography>
                 <Box display="flex" flexWrap="wrap" maxHeight="8rem" maxWidth="28rem">
                     {group &&
-                        group.mentees.map((mentee, id) => <MemberChip username={mentee.username} key={id}/>)
+                        group.mentees.map((mentee, id) => <MemberChip mentee={mentee} key={id}/>)
                     }
                 </Box>
             </Box>

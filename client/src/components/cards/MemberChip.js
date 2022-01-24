@@ -1,10 +1,11 @@
 import { Avatar, Chip } from "@mui/material";
 
-export function MemberChip({username}){
+export function MemberChip({mentee}){
+    const {username, profilePicture} = mentee;
 
     return (
         <Chip
-            avatar={<Avatar alt="Natacha" src={`https://i.pravatar.cc/40?u=${username}`} />}
+            avatar={<Avatar alt="Natacha" src={profilePicture ?? `https://i.pravatar.cc/40?u=${username}`} />}
             label={username ?? "Avatar"}
             color="secondary"
             component="a" 
