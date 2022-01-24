@@ -7,12 +7,18 @@ import { useMutation } from "@apollo/client";
 import { ADD_PROFILE_PIC } from "../../utils/mutations";
 import { Button, Typography } from "@mui/material";
 
-export default function ImageUploader({member, modalOpen}){
+export default function ImageUploader({member, setMember, modalOpen}){
 
     //define the mutation to add a profile picture to the logged in user
     const [addProfilePic] = useMutation(ADD_PROFILE_PIC, {
-        onCompleted: () => {
+        onCompleted: data => {
+            //set the status message indicating the upload is done
             setStatus('Upload Complete');
+
+            //update the member state's profile picture url
+            setMember({...member, profilePicture: data.addProfilePic.profilePicture});
+
+            //close the modal after 2 seconds
             setTimeout(()=>modalOpen(false), 2000);
         },
         onError: () => setStatus('Upload Failed')
@@ -40,12 +46,12 @@ export default function ImageUploader({member, modalOpen}){
         const uploadTask = uploadBytesResumable(fileRef, file, metadata);
 
         uploadTask.on('state_changed',
-            (snapshot) => {
+            snapshot => {
                 //keep record of the upload progress and continually set state
                 const prog = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
                 setProgress(prog);
             },
-            (error) => {
+            error => {
                 switch(error.code){
                     case 'storage/unauthorized':
                         setStatus('User Not Authorized');

@@ -41,7 +41,7 @@ export default function ProfileMember({member, setMember}){
                     </Box>
 
                     {isUserProfile(member.username) && 
-                        <FadeModal member={member}/>
+                        <FadeModal member={member} setMember={setMember}/>
                     }
                 </Box>
             </Box>
