@@ -7,7 +7,12 @@ import { useMutation } from "@apollo/client";
 import { ADD_PROFILE_PIC } from "../../utils/mutations";
 import { Button, Typography } from "@mui/material";
 
-export default function ImageUploader({member, setMember, modalOpen}){
+export default function ImageUploader({member, setMember, modalClose, setCanClose}){
+
+    //define state to hold the supplied file
+    const [file, setFile] = useState(null);
+    const [progress, setProgress] = useState(0);
+    const [status, setStatus] = useState('');
 
     //define the mutation to add a profile picture to the logged in user
     const [addProfilePic] = useMutation(ADD_PROFILE_PIC, {
@@ -15,19 +20,23 @@ export default function ImageUploader({member, setMember, modalOpen}){
             //set the status message indicating the upload is done
             setStatus('Upload Complete');
 
+            //allow the modal to close once the upload is finished
+            setCanClose(true);
+
             //update the member state's profile picture url
             setMember({...member, profilePicture: data.addProfilePic.profilePicture});
 
             //close the modal after 2 seconds
-            setTimeout(()=>modalOpen(false), 2000);
+            setTimeout(()=> modalClose(), 2000);
         },
-        onError: () => setStatus('Upload Failed')
-    });
+        onError: () => {
+            //set the status indicating an error
+            setStatus('Upload Failed')
 
-    //define state to hold the supplied file
-    const [file, setFile] = useState(null);
-    const [progress, setProgress] = useState(0);
-    const [status, setStatus] = useState('');
+            //allow the modal to close once the upload is finished
+            setCanClose(true);
+        }
+    });
 
     //set the current file whenever the file input is changed
     function handleChange(e){
@@ -41,10 +50,16 @@ export default function ImageUploader({member, setMember, modalOpen}){
     //called when the user saves the profile picture
     function handleSubmit(e){
         e.preventDefault();
+
+        //When the image is submitted, the modal cannot close until it has been resolved
+        setCanClose(false);
+
+        //set firebase data: specify the content being stored, reference to the storage, and type of upload task
         const metadata = { contentType: 'image/png'};
         const fileRef = ref(imagesRef, `${member.username}/` + file.name);
         const uploadTask = uploadBytesResumable(fileRef, file, metadata);
 
+        //Begin uploading the image to firebase
         uploadTask.on('state_changed',
             snapshot => {
                 //keep record of the upload progress and continually set state

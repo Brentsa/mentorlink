@@ -21,8 +21,12 @@ const style = {
 
 export default function FadeModal({member, setMember}) {
   const [open, setOpen] = useState(false);
+  const [canClose, setCanClose] = useState(true);
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    canClose && setOpen(false);
+  }
+
 
   return (
     <div>
@@ -43,7 +47,7 @@ export default function FadeModal({member, setMember}) {
             <Typography variant="h6" component="h2">
               Set a new profile picture!
             </Typography>
-            <ImageUploader member={member} setMember={setMember} modalOpen={setOpen}/>
+            <ImageUploader member={member} setMember={setMember} modalOpen={handleOpen} modalClose={handleClose} setCanClose={setCanClose}/>
           </Box>
         </Fade>
       </Modal>
