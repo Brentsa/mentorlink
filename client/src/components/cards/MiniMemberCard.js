@@ -34,7 +34,8 @@ export default function MiniMemberCard({mentorGroup, bIsUserProfile, removeMente
 
   return (
     <Card sx={{ 
-      maxWidth: 345, 
+      m: 1,
+      width: 'max-content',
       minHeight: 120,
       display: 'flex',
       flexDirection: 'column',
