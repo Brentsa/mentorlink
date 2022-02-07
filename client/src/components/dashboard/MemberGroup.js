@@ -10,16 +10,16 @@ export default function MemberGroup({mentees, mentorGroup, bIsUserProfile, setMe
 
     return (
         <Box sx={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center', padding: 2}}>
-                {mentees.map((mentee, i) => 
-                        <MiniMemberCard
-                            mentorGroup={mentorGroup} 
-                            bIsUserProfile={bIsUserProfile}
-                            removeMenteeMutation={removeMenteeMutation}
-                            setMember={setMember}
-                            member={mentee}
-                            mentor={member}
-                        />
-                )}
+            {mentees.map((mentee, i) => 
+                <MiniMemberCard
+                    mentorGroup={mentorGroup} 
+                    bIsUserProfile={bIsUserProfile}
+                    removeMenteeMutation={removeMenteeMutation}
+                    setMember={setMember}
+                    member={mentee}
+                    mentor={member}
+                />
+            )}
         </Box>
     )
 }

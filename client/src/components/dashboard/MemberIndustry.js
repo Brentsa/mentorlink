@@ -87,7 +87,7 @@ export default function MemberIndustry({member, setMember}){
                     ))}
                 </TextField>
                 : 
-                <Typography variant="h4">{
+                <Typography variant="h5">{
                     isUserProfile(member.username) ? (
                         industryName ? capFirstLetter(industryName) : 'Add an industry!'
                     ) : (

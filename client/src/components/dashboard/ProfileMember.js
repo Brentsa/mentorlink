@@ -29,8 +29,12 @@ export default function ProfileMember({member, setMember}){
                 </Box>
 
                 <Box display='flex' alignContent='center' flexWrap="wrap">
+                <Box sx={{m:1}} flexBasis="100%">
+                        <Typography variant="h4">{member.username}</Typography>
+                    </Box>
+
                     <Box sx={{m:1}} flexBasis="100%">
-                        <Typography variant="h4">{isUserProfile(member.username) ? "Welcome, " : ''}{member.firstName} {member.lastName}</Typography>
+                        <Typography variant="h5">{isUserProfile(member.username) ? "Welcome, " : ''}{member.firstName} {member.lastName}</Typography>
                     </Box>
                     
                     <Box flexBasis="100%">
