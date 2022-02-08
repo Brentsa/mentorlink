@@ -19,7 +19,7 @@ export default function MemberContactInfo({member, setMember}){
     const [bIsEditing, setIsEditing] = useState(false);
 
     //Define the mutation that will be called to add contact info to the member
-    const [addContactInfo, {loading, error}] = useMutation(ADD_CONTACT_INFO_TO_MEMBER);
+    const [addContactInfo, {error}] = useMutation(ADD_CONTACT_INFO_TO_MEMBER);
 
     //Called when the editing status of the form needs to be toggled
     function toggleEdit(){
@@ -47,7 +47,6 @@ export default function MemberContactInfo({member, setMember}){
         }
     }
 
-    if(loading) return <Box>Loading....</Box>
     if(error) return <Box>Error....</Box>
 
     return (
