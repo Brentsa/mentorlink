@@ -16,6 +16,7 @@ import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@ap
 import { setContext } from '@apollo/client/link/context';
 import AuthRoute from './components/wrappers/AuthRoute';
 import GuestRoute from './components/wrappers/GuestRoute';
+import BasicSnackbar from './components/misc/BasicSnackbar';
 
 const theme = createTheme({
   palette: {
@@ -74,6 +75,7 @@ function App(){
               </Box>
             </Container>
             <Footer/>
+            <BasicSnackbar/>
           </ContentContainer>
         </Router>
       </ThemeProvider>

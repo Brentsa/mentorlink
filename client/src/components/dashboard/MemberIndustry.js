@@ -5,9 +5,13 @@ import { QUERY_INDUSTRIES } from "../../utils/queries";
 import { ADD_INDUSTRY_TO_MEMBER } from "../../utils/mutations";
 import Auth from '../../utils/AuthService';
 import {capFirstLetter, isUserProfile} from '../../utils/helpers'
+import { useDispatch } from "react-redux";
+import { openSnackbar, setMessage } from "../../redux/slices/snackbarSlice";
 
 
 export default function MemberIndustry({member, setMember}){
+    const dispatch = useDispatch()
+
     const industryName = member?.industry?.name;
 
     //Query the database for all the industries available
@@ -53,7 +57,10 @@ export default function MemberIndustry({member, setMember}){
             addIndustryToMember({variables: {memberId: Auth.getProfile()._id, industryId: id}});
 
             //after the back end industry save, update the member state
-            return setMember({...member, industry: {_id: id, name: selectedIndustry}});
+            setMember({...member, industry: {_id: id, name: selectedIndustry}});
+
+            dispatch(setMessage("Industry Update Successful"))
+            dispatch(openSnackbar());
         }
         catch(err){
             //if the mutation doesnt work for whatever reason, notify the user of the error

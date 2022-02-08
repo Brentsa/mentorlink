@@ -8,8 +8,12 @@ import { useMutation } from '@apollo/client';
 import Auth from "../../utils/AuthService";
 import TextInput from "../forms/TextInput";
 import { isUserProfile } from "../../utils/helpers";
+import { useDispatch } from "react-redux";
+import { openSnackbar, setMessage } from "../../redux/slices/snackbarSlice";
 
 export default function MemberContactInfo({member, setMember}){
+
+    const dispatch = useDispatch();
 
     //Define a state to determine the editing status of the contact form
     const [bIsEditing, setIsEditing] = useState(false);
@@ -32,7 +36,10 @@ export default function MemberContactInfo({member, setMember}){
             addContactInfo({variables: {_id: Auth.getProfile()._id, contactInfo: values}})
 
             //change the state of the member
-            return setMember({...member, contactInfo: values})
+            setMember({...member, contactInfo: values})
+
+            dispatch(setMessage("Contact Info Update Successful"))
+            dispatch(openSnackbar());
         }
         else{
             // if we are not editing then toggle the editing status to change form to edit

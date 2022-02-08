@@ -8,9 +8,13 @@ import Auth from "../../utils/AuthService";
 import EditSaveButton from "../forms/EditSaveButton";
 import TextInput from "../forms/TextInput";
 import { isUserProfile } from "../../utils/helpers";
+import { useDispatch } from "react-redux";
+import { openSnackbar, setMessage } from "../../redux/slices/snackbarSlice";
 
 
 export default function MemberDescription({member, setMember}){
+
+    const dispatch = useDispatch();
 
     //set the editing state of the description field
     const [bIsEditing, setIsEditing] = useState(false);
@@ -40,7 +44,10 @@ export default function MemberDescription({member, setMember}){
         updateMember({variables: {id: Auth.getProfile()._id, member:{description: values.description}}});
 
         //update the state of the member in the profile to match
-        return setMember({...member, description: values.description});
+        setMember({...member, description: values.description});
+
+        dispatch(setMessage("Description Update Successful"))
+        dispatch(openSnackbar());
     }
 
     return (
