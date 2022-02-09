@@ -15,6 +15,13 @@ import { switchPage } from '../../redux/slices/pageSlice';
 import { logoutUser, setLoggedIn } from '../../redux/slices/memberSlice';
 import { useHistory } from 'react-router';
 
+import HomeIcon from '@mui/icons-material/Home';
+import PersonSearchIcon from '@mui/icons-material/PersonSearch';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
+import ChatIcon from '@mui/icons-material/Chat';
+import LoginIcon from '@mui/icons-material/Login';
+
 export default function Header() {
   //get the state of current page from Redux and define the dispatch method for state reduction
   const currentPage = useSelector(state => state.currentPage.value);
@@ -69,12 +76,12 @@ export default function Header() {
               indicatorColor="secondary"
               aria-label="app bar icons"
             >
-              <Tab value="home" label="Home" component={Link} to={'/'}/>
-              <Tab value="search" label="Search" component={Link} to={'/search'}/>
-              <Tab value="yourProfile" label="Your Profile" component={Link} disabled={!bIsUserLoggedIn} to={bIsUserLoggedIn ? `/dashboard/${Auth.getProfile().username}` : '/login'}/>
-              <Tab value="yourMentor" label="Your Mentor" component ={Link} disabled={disableYourMentorButton()} to={currentMemberUser?.mentorGroup ? `/dashboard/${usersMentorUsername}` : '/login'}/>
-              <Tab value="discussion" label="Discussion" component={Link} to={'/conversation'} disabled={disableDiscussionButton()}/>
-              <Tab value="login" label="Login/Register" component={Link} to={'/login'} disabled={bIsUserLoggedIn}/>
+              <Tab value="home" label="Home" icon={<HomeIcon/>} iconPosition='start' component={Link} to={'/'}/>
+              <Tab value="search" label="Search" icon={<PersonSearchIcon/>} iconPosition='start' component={Link} to={'/search'}/>
+              <Tab value="yourProfile" label="Your Profile" icon={<AccountBoxIcon/>} iconPosition='start' component={Link} disabled={!bIsUserLoggedIn} to={bIsUserLoggedIn ? `/dashboard/${Auth.getProfile().username}` : '/login'}/>
+              <Tab value="yourMentor" label="Your Mentor" icon={<EmojiPeopleIcon/>} iconPosition='start' component ={Link} disabled={disableYourMentorButton()} to={currentMemberUser?.mentorGroup ? `/dashboard/${usersMentorUsername}` : '/login'}/>
+              <Tab value="discussion" label="Discussion" icon={<ChatIcon/>} iconPosition='start' component={Link} to={'/conversation'} disabled={disableDiscussionButton()}/>
+              <Tab value="login" label="Login/Register" icon={<LoginIcon/>} iconPosition='start' component={Link} to={'/login'} disabled={bIsUserLoggedIn}/>
             </Tabs>
           </Box>
 
