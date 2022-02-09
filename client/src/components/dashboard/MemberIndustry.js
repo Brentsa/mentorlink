@@ -6,7 +6,7 @@ import { ADD_INDUSTRY_TO_MEMBER } from "../../utils/mutations";
 import Auth from '../../utils/AuthService';
 import {capFirstLetter, isUserProfile} from '../../utils/helpers'
 import { useDispatch } from "react-redux";
-import { openSnackbar, setMessage } from "../../redux/slices/snackbarSlice";
+import { openAndSetMessage } from "../../redux/slices/snackbarSlice";
 
 
 export default function MemberIndustry({member, setMember}){
@@ -59,8 +59,8 @@ export default function MemberIndustry({member, setMember}){
             //after the back end industry save, update the member state
             setMember({...member, industry: {_id: id, name: selectedIndustry}});
 
-            dispatch(setMessage("Industry Update Successful"))
-            dispatch(openSnackbar());
+            //Set snack bar success message and open it
+            dispatch(openAndSetMessage("Industry Update Successful"))
         }
         catch(err){
             //if the mutation doesnt work for whatever reason, notify the user of the error

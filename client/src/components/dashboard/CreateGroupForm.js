@@ -7,6 +7,7 @@ import { CREATE_MENTOR_GROUP } from "../../utils/mutations";
 import { QUERY_GROUP } from "../../utils/queries";
 import { useDispatch } from "react-redux";
 import { addMentorGroup } from "../../redux/slices/memberSlice";
+import { openAndSetMessage } from "../../redux/slices/snackbarSlice";
 
 export default function CreateGroupForm({member, setMember}){
 
@@ -38,6 +39,9 @@ export default function CreateGroupForm({member, setMember}){
 
         //update the current member's mentor group for conditional rendering
         dispatch(addMentorGroup(memberGroupData?.mentorGroup));
+
+        //Set snack bar success message and open it
+        dispatch(openAndSetMessage("Mentor Group Created!"))
     }
 
     return (

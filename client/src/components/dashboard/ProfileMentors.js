@@ -10,6 +10,7 @@ import CreateGroupForm from "./CreateGroupForm";
 import { useDispatch } from "react-redux";
 import { removeMentorGroup } from "../../redux/slices/memberSlice";
 import { isUserProfile } from "../../utils/helpers";
+import { openAndSetMessage } from "../../redux/slices/snackbarSlice";
 
 export default function ProfileMentor({member, setMember}){
 
@@ -33,9 +34,14 @@ export default function ProfileMentor({member, setMember}){
 
             //remove the mentor group from the current member state
             dispatch(removeMentorGroup());
+
+
+            //Set snack bar success message and open it
+            dispatch(openAndSetMessage("Mentor Group Deleted!"))
         }
         catch{
-            return console.log("Group not deleted");
+            //Set snack bar success message and open it
+            dispatch(openAndSetMessage("Mentor Group Was Not Deleted!"))
         }
         return;
     }

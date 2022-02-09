@@ -9,7 +9,7 @@ import EditSaveButton from "../forms/EditSaveButton";
 import TextInput from "../forms/TextInput";
 import { isUserProfile } from "../../utils/helpers";
 import { useDispatch } from "react-redux";
-import { openSnackbar, setMessage } from "../../redux/slices/snackbarSlice";
+import { openAndSetMessage } from "../../redux/slices/snackbarSlice";
 
 
 export default function MemberDescription({member, setMember}){
@@ -46,8 +46,8 @@ export default function MemberDescription({member, setMember}){
         //update the state of the member in the profile to match
         setMember({...member, description: values.description});
 
-        dispatch(setMessage("Description Update Successful"))
-        dispatch(openSnackbar());
+        //Set snack bar success message and open it
+        dispatch(openAndSetMessage("Description Update Successful"))
     }
 
     return (

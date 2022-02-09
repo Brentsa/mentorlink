@@ -9,7 +9,7 @@ import Auth from "../../utils/AuthService";
 import TextInput from "../forms/TextInput";
 import { isUserProfile } from "../../utils/helpers";
 import { useDispatch } from "react-redux";
-import { openSnackbar, setMessage } from "../../redux/slices/snackbarSlice";
+import { openAndSetMessage } from "../../redux/slices/snackbarSlice";
 
 export default function MemberContactInfo({member, setMember}){
 
@@ -38,8 +38,8 @@ export default function MemberContactInfo({member, setMember}){
             //change the state of the member
             setMember({...member, contactInfo: values})
 
-            dispatch(setMessage("Contact Info Update Successful"))
-            dispatch(openSnackbar());
+            //Set snack bar success message and open it
+            dispatch(openAndSetMessage("Contact Info Update Successful"))
         }
         else{
             // if we are not editing then toggle the editing status to change form to edit

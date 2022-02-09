@@ -7,9 +7,13 @@ import { CardActionArea } from '@mui/material';
 import { useHistory } from 'react-router-dom';
 import { capFirstLetter } from '../../utils/helpers';
 import Auth from '../../utils/AuthService';
+import { useDispatch } from 'react-redux';
+import { openAndSetMessage } from '../../redux/slices/snackbarSlice';
 
 
 export default function MiniMemberCard({mentorGroup, bIsUserProfile, removeMenteeMutation, setMember, member, mentor}) {
+  const dispatch = useDispatch();
+
   //const {username, _id} = mentee;
   const username = member?.username;
   const _id = member?._id;
@@ -30,6 +34,9 @@ export default function MiniMemberCard({mentorGroup, bIsUserProfile, removeMente
     //filter the removed mentee from the mentee list and update the state
     const newGroup = mentorGroup.mentees.filter(member => member.username !== username);
     setMember({...mentor, mentorGroup: {...mentorGroup, mentees: newGroup}});
+
+    //open the snack bar and set a message
+    dispatch(openAndSetMessage("Mentee Removed From Group!"))
   }
 
   return (

@@ -21,6 +21,7 @@ import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
 import ChatIcon from '@mui/icons-material/Chat';
 import LoginIcon from '@mui/icons-material/Login';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 export default function Header() {
   //get the state of current page from Redux and define the dispatch method for state reduction
@@ -103,7 +104,9 @@ export default function Header() {
               <Button color="inherit" component={Link} to={'/register'} onClick={() => dispatch(switchPage('login'))}>Register</Button>
             </>
           ) : (
-            <Button color="inherit" onClick={logout}>Logout</Button>
+            <IconButton color="inherit" onClick={logout}>
+              <LogoutIcon fontSize="large"/>
+            </IconButton>
           )}
           
         </Toolbar>
