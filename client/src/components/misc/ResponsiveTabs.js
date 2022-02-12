@@ -12,8 +12,13 @@ import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
 import ChatIcon from '@mui/icons-material/Chat';
 import LoginIcon from '@mui/icons-material/Login';
+import { useMediaQuery } from '@mui/material';
 
 export default function ResponsiveTabs(){
+
+    //returns true if the size of the screen is below lg
+    const isLgScreen = useMediaQuery(theme => theme.breakpoints.down("lg"));
+    const isMdScreen = useMediaQuery(theme => theme.breakpoints.down("md"));
 
     //get the state of current page from Redux and define the dispatch method for state reduction
     const currentPage = useSelector(state => state.currentPage.value);
@@ -41,62 +46,70 @@ export default function ResponsiveTabs(){
     };
 
     return (
-        <Box sx={{ width: '100%', display: {xs: 'none', lg: 'flex'}, justifyContent: 'center' }}>
-            <Tabs
-                value={currentPage}
-                onChange={handleChange}
-                textColor="secondary"
-                indicatorColor="secondary"
-                aria-label="app bar icons"
-            >
-                <Tab 
-                    value="home" 
-                    label="Home" 
-                    icon={<HomeIcon/>} 
-                    iconPosition='start' 
-                    component={Link} 
-                    to={'/'}
-                />
-                <Tab 
-                    value="search" 
-                    label="Search" 
-                    icon={<PersonSearchIcon/>} 
-                    iconPosition='start' 
-                    component={Link} 
-                    to={'/search'}/>
-                <Tab 
-                    value="yourProfile" 
-                    label="Your Profile" 
-                    icon={<AccountBoxIcon/>} 
-                    iconPosition='start' 
-                    component={Link} 
-                    disabled={!bIsUserLoggedIn} 
-                    to={bIsUserLoggedIn ? `/dashboard/${Auth.getProfile().username}` : '/login'}/>
-                <Tab 
-                    value="yourMentor" 
-                    label="Your Mentor" 
-                    icon={<EmojiPeopleIcon/>} 
-                    iconPosition='start' 
-                    component ={Link} 
-                    disabled={disableYourMentorButton()} 
-                    to={currentMemberUser?.mentorGroup ? `/dashboard/${usersMentorUsername}` : '/login'}/>
-                <Tab 
-                    value="discussion" 
-                    label="Discussion" 
-                    icon={<ChatIcon/>} 
-                    iconPosition='start' 
-                    component={Link} 
-                    to={'/conversation'} 
-                    disabled={disableDiscussionButton()}/>
-                <Tab 
-                    value="login" 
-                    label="Login/Register" 
-                    icon={<LoginIcon/>} 
-                    iconPosition='start' 
-                    component={Link} 
-                    to={'/login'} 
-                    disabled={bIsUserLoggedIn}/>
-            </Tabs>
-        </Box>
+        <Tabs
+            value={currentPage}
+            onChange={handleChange}
+            textColor="secondary"
+            indicatorColor="secondary"
+        >
+            <Tab 
+                value="home" 
+                label={!isLgScreen ? "Home" : null}
+                icon={<HomeIcon/>} 
+                iconPosition='start' 
+                component={Link} 
+                to={'/'}
+                sx={isMdScreen ? {minWidth: "15vw"} : null}
+            />
+            <Tab 
+                value="search" 
+                label={!isLgScreen ? "Search" : null}
+                icon={<PersonSearchIcon/>} 
+                iconPosition='start' 
+                component={Link} 
+                to={'/search'}
+                sx={isMdScreen ? {minWidth: "15vw"} : null}
+            />
+            <Tab 
+                value="yourProfile" 
+                label={!isLgScreen ? "Your Profile" : null}
+                icon={<AccountBoxIcon/>} 
+                iconPosition='start' 
+                component={Link} 
+                disabled={!bIsUserLoggedIn} 
+                to={bIsUserLoggedIn ? `/dashboard/${Auth.getProfile().username}` : '/login'}
+                sx={isMdScreen ? {minWidth: "15vw"} : null}
+            />
+            <Tab 
+                value="yourMentor"
+                label={!isLgScreen ? "Your Mentor" : null} 
+                icon={<EmojiPeopleIcon/>} 
+                iconPosition='start' 
+                component ={Link} 
+                disabled={disableYourMentorButton()} 
+                to={currentMemberUser?.mentorGroup ? `/dashboard/${usersMentorUsername}` : '/login'}
+                sx={isMdScreen ? {minWidth: "15vw"} : null}
+            />
+            <Tab 
+                value="discussion" 
+                label={!isLgScreen ? "Discussion" : null} 
+                icon={<ChatIcon/>} 
+                iconPosition='start' 
+                component={Link} 
+                to={'/conversation'} 
+                disabled={disableDiscussionButton()}
+                sx={isMdScreen ? {minWidth: "15vw"} : null}
+            />
+            <Tab 
+                value="login" 
+                label={!isLgScreen ? "Login/Register" : null} 
+                icon={<LoginIcon/>} 
+                iconPosition='start' 
+                component={Link} 
+                to={'/login'} 
+                disabled={bIsUserLoggedIn}
+                sx={isMdScreen ? {minWidth: "15vw"} : null}
+            />
+        </Tabs>
     );
 }

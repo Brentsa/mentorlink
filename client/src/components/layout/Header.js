@@ -33,23 +33,29 @@ export default function Header() {
   return (
     <Box sx={{ flex: '0 1 auto', marginBottom: 3 }}>
       <AppBar position="static">
-        <Toolbar>
+        <Toolbar sx={{display: "flex", flexWrap: {xs: "wrap", lg: "no-wrap"}, justifyContent: "center"}}>
           
-          <Typography variant="h4" color="inherit" sx={{textDecoration: 'none'}}>MentorLink</Typography>  
+          <Box sx={{display: "flex", justifyContent: "space-between", width: {xs: "100%", md: "20%"}, position: {xs: 'block', md: 'absolute'}, left: "30px"}}>
+            <Typography variant="h4" color="inherit">MentorLink</Typography> 
+            <IconButton color="inherit" onClick={logout} sx={{display:{xs: 'block', md: 'none'}}}>
+              <LogoutIcon/>
+            </IconButton> 
+          </Box>
+          
 
           <ResponsiveTabs/>
 
-          {!bIsUserLoggedIn ? (
-            <>
-              <Button color="inherit" component={Link} to={'/login'} onClick={() => dispatch(switchPage('login'))}>Login</Button>
-              <Button color="inherit" component={Link} to={'/register'} onClick={() => dispatch(switchPage('login'))}>Register</Button>
-            </>
-          ) : (
-            <IconButton color="inherit" onClick={logout}>
-              <LogoutIcon fontSize="large"/>
-            </IconButton>
-          )}
-          
+          {!bIsUserLoggedIn ? 
+              <Box sx={{display: {xs: "none", xl: "flex"}, position: 'absolute', right: "30px"}}>
+                <Button color="inherit" component={Link} to={'/login'} onClick={() => dispatch(switchPage('login'))}>Login</Button>
+                <Button color="inherit" component={Link} to={'/register'} onClick={() => dispatch(switchPage('login'))}>Register</Button>
+              </Box>
+            : 
+              <IconButton color="inherit" onClick={logout} sx={{position: 'absolute', right: "30px", display:{xs: 'none', md: 'block'}}}>
+                <LogoutIcon fontSize="large"/>
+              </IconButton>
+          }
+            
         </Toolbar>
       </AppBar>
     </Box>
