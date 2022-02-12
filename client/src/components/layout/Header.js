@@ -37,9 +37,11 @@ export default function Header() {
           
           <Box sx={{display: "flex", justifyContent: "space-between", width: {xs: "100%", md: "20%"}, position: {xs: 'block', md: 'absolute'}, left: "30px"}}>
             <Typography variant="h4" color="inherit">MentorLink</Typography> 
-            <IconButton color="inherit" onClick={logout} sx={{display:{xs: 'block', md: 'none'}}}>
-              <LogoutIcon/>
-            </IconButton> 
+            {bIsUserLoggedIn &&
+              <IconButton color="inherit" onClick={logout} sx={{display:{xs: 'block', md: 'none'}}}>
+                <LogoutIcon/>
+              </IconButton> 
+            }
           </Box>
           
 

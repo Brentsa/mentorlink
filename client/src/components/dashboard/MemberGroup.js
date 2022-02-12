@@ -18,6 +18,7 @@ export default function MemberGroup({mentees, mentorGroup, bIsUserProfile, setMe
                     setMember={setMember}
                     member={mentee}
                     mentor={member}
+                    key={i}
                 />
             )}
         </Box>
