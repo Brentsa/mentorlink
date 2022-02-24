@@ -67,6 +67,10 @@ export default function ImageUploader({member, setMember, modalClose, setCanClos
                 setProgress(prog);
             },
             error => {
+                //modal can close on error
+                setCanClose(true);
+
+                //set the error based on the firebase response
                 switch(error.code){
                     case 'storage/unauthorized':
                         setStatus('User Not Authorized');
