@@ -11,7 +11,7 @@ export default function Message({bIsUserMessage, message}){
             {bIsUserMessage ? 
                 <>
                     <Grid item xs></Grid>
-                    <Grid item xs='auto' maxWidth='45%' display="flex" flexDirection="column" alignItems="end">
+                    <Grid item xs='auto' maxWidth={{xs: '95%', md: '45%'}} display="flex" flexDirection="column" alignItems="end">
                         <Box sx={{bgcolor: 'tertiary.main', p:1, px:2, borderRadius: 4, borderBottomRightRadius: 0}}>
                             <Typography>{text}</Typography>
                         </Box>
@@ -20,7 +20,7 @@ export default function Message({bIsUserMessage, message}){
                 </>
                 : 
                 <>
-                    <Grid item xs='auto' maxWidth='45%'>
+                    <Grid item xs='auto' maxWidth={{xs: '95%', md: '45%'}}>
                         <Typography sx={{ml:2, fontSize: 12}} fontWeight="bold" variant='body2'>{creator.username}</Typography>
                         <Box sx={{bgcolor: 'primary.dark', p:1, px:2, borderRadius: 4, borderBottomLeftRadius: 0}}>
                             <Typography color='contrastText.main'>{text}</Typography>

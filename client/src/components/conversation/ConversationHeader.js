@@ -6,12 +6,12 @@ import { MemberChip } from '../cards/MemberChip';
 export function ConversationHeader({group}){
 
     return (
-        <Box display="flex">
-            <Box marginX={1}>
+        <Box display="flex" flexWrap="wrap">
+            <Box marginX={1} marginTop={2}>
                 <Typography variant="h5">Mentor:</Typography>
                 <MiniMemberCard member={group?.mentor} industry={group?.mentor?.industry?.name}/>
             </Box>
-            <Box marginX={1}>
+            <Box marginX={1} marginTop={2}>
                 <Typography variant="h5">Mentees:</Typography>
                 <Box display="flex" flexWrap="wrap" maxHeight="8rem" maxWidth="28rem">
                     {group &&

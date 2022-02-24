@@ -35,7 +35,7 @@ export default function EnterMessageBox({groupId}){
         <Box 
             component="form"
             sx={{
-                width: {xs: '90%', md: '60%'},
+                width: {xs: '100%', md: '45%'},
             }}>
             <TextField
                 id="user-message-textfield"

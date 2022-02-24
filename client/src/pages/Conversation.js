@@ -17,27 +17,30 @@ export default function Conversation(){
 
     //find the group id from the current user's state
     const groupId = useSelector(state => state.members.currentUser.mentorGroup?._id);
-    
-    //define a lazy query for the mentor group, poll for changes to the conversation every 5 seconds
-    const [getGroup, {data, loading}] = useLazyQuery(QUERY_MENTOR_GROUP_CONVO, {pollInterval: 5000});
 
     //initialize the state of the mentor group
     const [group, setGroup] = useState(null);
-
-    useEffect(()=>{
-        if(groupId){
-            getGroup({variables: {id: groupId}});
-        }
-        if(data){
+    
+    //define a lazy query for the mentor group, poll for changes to the conversation every 5 seconds
+    const [getGroup, {loading}] = useLazyQuery(QUERY_MENTOR_GROUP_CONVO, {
+        pollInterval: 5000, 
+        onCompleted: (data) => {
             setGroup(data.mentorGroup);
         }
-    }, [groupId, data, getGroup]);
+    });
+
+    //once the group id is set, find the group
+    useEffect(()=>{ 
+        if(groupId) getGroup({variables: {id: groupId}}); 
+    }, [groupId, getGroup]);
 
     //whenever the conversation is loaded, get the conversation box
-    var element = document.getElementById("conversation-screen");
-    //When the conversation box is set, set the top of the scroll screen to the bottom of the messages
-    if(element){ element.scrollTop = element.scrollHeight; }
+    var convoBox = document.getElementById("conversation-screen");
 
+    //When the conversation box is set, set the top of the scroll screen to the bottom of the messages
+    useEffect(() => { if(convoBox) convoBox.scrollTop = convoBox.scrollHeight; })
+
+    
     if(loading) return <Box>Loading...</Box>
 
     return (
@@ -47,13 +50,13 @@ export default function Conversation(){
                 id="conversation-screen"
                 container  
                 rowSpacing={1} 
-                width='80%'
+                width={{xs: '100%', md: '60%'}}
                 sx={{
                     mt: 4, 
                     mb: 2,
                     p: 2, 
                     minHeight: '20vh',
-                    maxHeight: '60vh', 
+                    maxHeight: '50vh', 
                     bgcolor:'primary.light', 
                     borderRadius: 2, 
                     borderBottom: 2,
@@ -71,7 +74,6 @@ export default function Conversation(){
                     :
                     <Typography variant='h5' color="lightBlue.main">Write a message below to start the conversation</Typography>
                 }
-
             </Grid>
             <EnterMessageBox setGroup={setGroup} groupId={groupId} group={group}/>
         </Box>

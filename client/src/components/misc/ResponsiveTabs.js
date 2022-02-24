@@ -1,6 +1,5 @@
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import Box from '@mui/material/Box';
 import { useSelector, useDispatch } from 'react-redux';
 import { switchPage } from '../../redux/slices/pageSlice';
 import {Link} from 'react-router-dom';
