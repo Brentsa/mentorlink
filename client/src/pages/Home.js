@@ -7,6 +7,7 @@ import { saveMemberQuery } from "../redux/slices/memberSlice";
 import { useEffect } from "react";
 import { switchPage } from "../redux/slices/pageSlice";
 import HomeHeader from "../components/layout/HomeHeader";
+import { randNumBetween } from "../utils/helpers";
 
 export default function Home(){
 
@@ -22,15 +23,20 @@ export default function Home(){
         dispatch(switchPage("home"));
     })
 
+    //return a random member
+    function randomMember(membersArr){
+        return membersArr[randNumBetween(0, membersArr.length-1)]
+    }
+
     if(loading) return <Box>Loading...</Box>;
 
     return (
         <>
             <HomeHeader/>
             <Box sx={{py:6, display: 'flex', justifyContent: 'center'}}>
-                <Box sx={{m:4, display: {xs: 'none', lg: 'block'}}}><MemberCard member={data.members[1]}/></Box>
-                <Box sx={{m:4, transform: 'scale(1.2)'}}><MemberCard member={data.members[0]}/></Box>
-                <Box sx={{m:4, display: {xs: 'none', lg: 'block'}}}><MemberCard member={data.members[2]}/></Box>
+                <Box sx={{m:4, display: {xs: 'none', lg: 'block'}}}><MemberCard member={randomMember(data.members)}/></Box>
+                <Box sx={{m:4, transform: 'scale(1.2)'}}><MemberCard member={randomMember(data.members)}/></Box>
+                <Box sx={{m:4, display: {xs: 'none', lg: 'block'}}}><MemberCard member={randomMember(data.members)}/></Box>
             </Box>
         </>
     )

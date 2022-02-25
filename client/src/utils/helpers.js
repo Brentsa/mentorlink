@@ -21,6 +21,12 @@ export function formatDateTime(date){
     return `${month}/${day}/${year} @ ${hours}:${minutes}${ampm}`;
 }
 
+//check if the supplied username or id are the current user
 export function isUserProfile(usernameOrId){
     return Auth.getProfile()?.username === usernameOrId || Auth.getProfile()?._id === usernameOrId;
+}
+
+//return a random number between a specified min and max
+export function randNumBetween(min, max){
+    return Math.floor(Math.random() * (max + 1 - min)) + min;
 }
