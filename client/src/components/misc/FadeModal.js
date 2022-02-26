@@ -6,6 +6,7 @@ import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import ImageUploader from '../forms/ImageUploader';
+import EditIcon from '@mui/icons-material/Edit';
 
 const style = {
   position: 'absolute',
@@ -29,8 +30,17 @@ export default function FadeModal({member, setMember}) {
 
 
   return (
-    <div>
-      <Button onClick={handleOpen} color='secondary'>Edit Profile Picture</Button>
+    <Box>
+      <Button 
+        onClick={handleOpen} 
+        color='secondary' 
+        variant='contained' 
+        startIcon={<EditIcon/>}
+        size='small'
+      >
+        Edit
+      </Button>
+      
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -51,6 +61,6 @@ export default function FadeModal({member, setMember}) {
           </Box>
         </Fade>
       </Modal>
-    </div>
+    </Box>
   );
 }

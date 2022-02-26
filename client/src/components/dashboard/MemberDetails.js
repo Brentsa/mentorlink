@@ -7,25 +7,18 @@ import MemberIndustry from "./MemberIndustry";
 export default function MemberDetails({member, setMember}){
 
     return (
-        <Box display='flex' alignContent='center' flexWrap="wrap">
-            <Box sx={{m:1}} flexBasis="100%">
-                <Typography variant="h4">{member.username}</Typography>
-            </Box>
+        <Box 
+            m={2}
+            display='flex'
+            flexDirection='column' 
+            justifyContent='space-evenly' 
+            alignItems={{xs: 'center', sm: 'flex-start'}}
+        >
+            <Typography marginY={0.5} variant="h4">{member.username}</Typography>
 
-            <Box sx={{m:1}} flexBasis="100%">
-                <Typography variant="h5">{isUserProfile(member.username) ? "Welcome, " : ''}{member.firstName} {member.lastName}</Typography>
-            </Box>
+            <Typography marginY={0.5} variant="h5">{isUserProfile(member.username) ? "Welcome, " : ''}{member.firstName} {member.lastName}</Typography>
             
-            <Box flexBasis="100%">
-                <MemberIndustry
-                    member={member} 
-                    setMember={setMember}
-                />
-            </Box>
-
-            {isUserProfile(member.username) && 
-                <FadeModal member={member} setMember={setMember}/>
-            }
+            <MemberIndustry marginY={0.5} member={member} setMember={setMember}/>
         </Box>
     )
 }

@@ -1,4 +1,4 @@
-import { Button, Box, Typography, MenuItem, TextField } from "@mui/material";
+import { IconButton, Box, Typography, MenuItem, TextField } from "@mui/material";
 import { useEffect, useMemo, useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import { QUERY_INDUSTRIES } from "../../utils/queries";
@@ -7,9 +7,11 @@ import Auth from '../../utils/AuthService';
 import {capFirstLetter, isUserProfile} from '../../utils/helpers'
 import { useDispatch } from "react-redux";
 import { openAndSetMessage } from "../../redux/slices/snackbarSlice";
+import EditIcon from '@mui/icons-material/Edit';
+import SaveIcon from '@mui/icons-material/Save';
 
 
-export default function MemberIndustry({member, setMember}){
+export default function MemberIndustry({member, setMember, ...props}){
     const dispatch = useDispatch()
 
     const industryName = member?.industry?.name;
@@ -78,7 +80,7 @@ export default function MemberIndustry({member, setMember}){
     if(loading) return <Box sx={{m:2}}><Typography variant="h4">Loading...</Typography></Box>
 
     return (
-        <Box sx={{m:1, display: 'flex'}}>
+        <Box display='flex' {...props}>
             {bIsEditing ? 
                 <TextField
                     id="industry-selector"
@@ -105,9 +107,9 @@ export default function MemberIndustry({member, setMember}){
             {isUserProfile(member.username) && Auth.UserLoggedIn() ? 
                 <>
                     {bIsEditing?
-                        <Button color="secondary" size="small" sx={{mx: 2}} onClick={handleIndustrySave}>save</Button> 
+                        <IconButton color="secondary" size="large" sx={{marginLeft: 1}} onClick={handleIndustrySave}><SaveIcon fontSize="large"/></IconButton> 
                         :
-                        <Button color="secondary" size="small" sx={{mx: 2}} onClick={toggleEdit}>edit</Button> 
+                        <IconButton color="secondary" size="small" sx={{marginLeft: 1}} onClick={toggleEdit}><EditIcon/></IconButton> 
                     }
                 </>
                 : 
