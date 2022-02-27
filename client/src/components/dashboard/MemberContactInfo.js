@@ -10,6 +10,7 @@ import TextInput from "../forms/TextInput";
 import { isUserProfile } from "../../utils/helpers";
 import { useDispatch } from "react-redux";
 import { openAndSetMessage } from "../../redux/slices/snackbarSlice";
+import { Paper } from "@mui/material";
 
 export default function MemberContactInfo({member, setMember}){
 
@@ -50,7 +51,13 @@ export default function MemberContactInfo({member, setMember}){
     if(error) return <Box>Error....</Box>
 
     return (
-        <Box sx={{m:2}}>
+        <Paper 
+            component={Box}
+            marginY={3}
+            padding={2}
+            elevation={2}
+            sx={{bgcolor: "tertiary.main"}}
+        >
             <Formik
                 initialValues={{
                     phoneNumber: member?.contactInfo?.phoneNumber || "",
@@ -83,23 +90,17 @@ export default function MemberContactInfo({member, setMember}){
                             e.preventDefault()
                             formik.handleSubmit();
                         }}
-                        sx={{'& .MuiTextField-root': { m: 1, width: '20ch' }}}
+                        sx={{'& .MuiTextField-root': { m: 1, width: {xs: '100%', sm: '45%', lg: '30%'}}}}
                     >
                         <EditSaveButton title="Contact Info" bIsEditing={bIsEditing} bIsUserProfile={isUserProfile(member.username)}/>
 
-                        <Box>
+                        <Box display="flex" flexWrap="wrap">
                             <TextInput label="Phone Number" name="phoneNumber" bIsEditing={bIsEditing}/>
                             <TextInput label="Email Address" name="email" type="email" bIsEditing={bIsEditing}/>
                             <TextInput label="Country" name="country" bIsEditing={bIsEditing}/>
-                        </Box>
-
-                        <Box>
                             <TextInput label="Street Number" name="streetNumber" bIsEditing={bIsEditing}/>
                             <TextInput label="Street Name" name="streetName" bIsEditing={bIsEditing}/>
                             <TextInput label="Suite Number" name="suiteNumber" bIsEditing={bIsEditing}/>
-                        </Box>
-
-                        <Box>
                             <TextInput label="City" name="city" bIsEditing={bIsEditing}/>
                             <TextInput label="Province" name="province" bIsEditing={bIsEditing}/>
                             <TextInput label="Postal Code" name="postalCode" bIsEditing={bIsEditing}/>
@@ -108,6 +109,6 @@ export default function MemberContactInfo({member, setMember}){
                     </Box>
                 )}
             </Formik>
-        </Box>
+        </Paper>
     )
 }

@@ -1,18 +1,16 @@
-import Typography from "@mui/material/Typography";
-import Box from "@mui/system/Box";
-import Button from '@mui/material/Button';
+import { IconButton, Box, Typography} from "@mui/material";
 import Auth from "../../utils/AuthService";
+import EditIcon from '@mui/icons-material/Edit';
+import SaveIcon from '@mui/icons-material/Save';
 
 export default function EditSaveButton({title, bIsEditing, bIsUserProfile}){
 
     return(
-        <Box sx={{display: 'flex', alignItems: 'center', mb: 1}}>
+        <Box display="flex" alignItems="center" justifyContent="space-between" marginBottom={1}>
             <Typography variant="h5">{title}</Typography>
             {bIsUserProfile && Auth.UserLoggedIn() 
                 ? 
-                <Button color="secondary" size="small" sx={{mx: 2}} type="submit">
-                    {!bIsEditing ? 'edit' : 'save'}
-                </Button> 
+                <IconButton color="secondary" size="small" sx={{marginLeft: 1}} type="submit">{!bIsEditing ? <EditIcon/> : <SaveIcon/>}</IconButton> 
                 : 
                 null
             }

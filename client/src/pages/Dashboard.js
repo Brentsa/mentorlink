@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { switchPage } from '../redux/slices/pageSlice';
 import { isUserProfile } from '../utils/helpers';
 import CircularProgress from '@mui/material/CircularProgress';
+import { Box } from '@mui/system';
 
 export default function Dashboard(){
 
@@ -44,10 +45,13 @@ export default function Dashboard(){
     //return loading while the query executes
     if(loading) return <CircularProgress color="secondary" />
 
+    //if member is not found, don't render the dashboard
+    if(!currentMember) return <Box>User not found....</Box>
+
     return (
         <Grid container spacing={4}>
             <Grid item xs={12} md={6}>
-                {currentMember ? <ProfileMember member={currentMember} setMember={setCurrentMember}/> : 'User not found'}
+                <ProfileMember member={currentMember} setMember={setCurrentMember}/>
             </Grid>
             <Grid item xs={12} md={6}>
                 <ProfileMentor member={currentMember} setMember={setCurrentMember}/>

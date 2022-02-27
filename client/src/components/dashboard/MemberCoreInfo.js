@@ -4,6 +4,7 @@ import CardMedia from '@mui/material/CardMedia';
 import MemberDetails from "./MemberDetails";
 import FadeModal from "../misc/FadeModal";
 import { isUserProfile } from "../../utils/helpers";
+import StarIcon from '@mui/icons-material/Star';
 
 export default function MemberCoreInfo({member, setMember}){
 
@@ -23,8 +24,8 @@ export default function MemberCoreInfo({member, setMember}){
             width={{ xs: '100%', sm: 'max-content'}}
         >
             <Box position='relative' sx={{ width: '200px', height: '200px', borderRadius: '50%', border: 1, m: 2}} flexShrink={0}>
-                {isUserMentor() && <Chip label="Mentor" variant="filled" color="primary" sx={{position: 'absolute', top: '0px'}}/>}
-                {isUserProfile(member.username) && <Box sx={{position: 'absolute', bottom: '0px'}}><FadeModal member={member} setMember={setMember}/></Box>}
+                {isUserMentor() && <Chip icon={<StarIcon/>} label="Mentor" variant="filled" color="primary" sx={{position: 'absolute', top: '4px'}}/>}
+                {isUserProfile(member.username) && <Box sx={{position: 'absolute', bottom: '4px'}}><FadeModal member={member} setMember={setMember}/></Box>}
                 <CardMedia
                     component="img"
                     image={member.profilePicture ?? `https://i.pravatar.cc/200?u=${member.username}`}

@@ -10,6 +10,7 @@ import TextInput from "../forms/TextInput";
 import { isUserProfile } from "../../utils/helpers";
 import { useDispatch } from "react-redux";
 import { openAndSetMessage } from "../../redux/slices/snackbarSlice";
+import { Paper } from "@mui/material";
 
 
 export default function MemberDescription({member, setMember}){
@@ -51,7 +52,13 @@ export default function MemberDescription({member, setMember}){
     }
 
     return (
-        <Box sx={{m:2}}>
+        <Paper
+            component={Box}
+            marginBottom={3}
+            padding={2}
+            elevation={2}
+            sx={{bgcolor: "tertiary.main"}}
+        >
             <Formik
                 initialValues={{description: member?.description ?? ''}}
                 validationSchema={Yup.object({description: Yup.string().max(200, "Description cannot be more than 200 characters")})}
@@ -79,6 +86,6 @@ export default function MemberDescription({member, setMember}){
                     </Box>
                 )}
             </Formik>
-        </Box>
+        </Paper>
     )
 }
