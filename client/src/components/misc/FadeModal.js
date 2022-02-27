@@ -6,7 +6,7 @@ import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import ImageUploader from '../forms/ImageUploader';
-import EditIcon from '@mui/icons-material/Edit';
+import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
 
 const style = {
   position: 'absolute',
@@ -35,12 +35,12 @@ export default function FadeModal({member, setMember}) {
         onClick={handleOpen} 
         color='secondary' 
         variant='contained' 
-        startIcon={<EditIcon/>}
+        startIcon={<PhotoCameraIcon/>}
         size='small'
       >
         Edit
       </Button>
-      
+
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"

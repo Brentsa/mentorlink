@@ -1,7 +1,6 @@
 import Box from "@mui/system/Box";
 import { isUserProfile } from "../../utils/helpers";
 import Typography from "@mui/material/Typography";
-import FadeModal from "../misc/FadeModal";
 import MemberIndustry from "./MemberIndustry";
 
 export default function MemberDetails({member, setMember}){
