@@ -9,7 +9,7 @@ export default function MemberGroup({mentees, mentorGroup, bIsUserProfile, setMe
     const [removeMenteeMutation] = useMutation(REMOVE_MENTEE_FROM_GROUP);
 
     return (
-        <Box sx={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center', padding: 2}}>
+        <Box sx={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center', py: 1}}>
             {mentees.map((mentee, i) => 
                 <MiniMemberCard
                     mentorGroup={mentorGroup} 

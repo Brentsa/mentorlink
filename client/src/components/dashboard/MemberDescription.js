@@ -54,7 +54,6 @@ export default function MemberDescription({member, setMember}){
     return (
         <Paper
             component={Box}
-            marginBottom={3}
             padding={2}
             elevation={2}
             sx={{bgcolor: "tertiary.main"}}
@@ -77,7 +76,8 @@ export default function MemberDescription({member, setMember}){
                         <TextInput
                             name="description"
                             id="description"
-                            variant="outlined"
+                            variant="filled"
+                            label="Description Text"
                             multiline
                             fullWidth
                             bIsEditing={bIsEditing}

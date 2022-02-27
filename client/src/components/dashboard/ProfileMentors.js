@@ -1,5 +1,5 @@
 import Box from "@mui/system/Box";
-import { Typography } from "@mui/material";
+import { Chip, Typography } from "@mui/material";
 import MemberCard from "../cards/MemberCard";
 import MemberGroup from "./MemberGroup";
 import Auth from "../../utils/AuthService";
@@ -11,6 +11,8 @@ import { useDispatch } from "react-redux";
 import { removeMentorGroup } from "../../redux/slices/memberSlice";
 import { isUserProfile } from "../../utils/helpers";
 import { openAndSetMessage } from "../../redux/slices/snackbarSlice";
+import StarIcon from '@mui/icons-material/Star';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 export default function ProfileMentor({member, setMember}){
 
@@ -62,33 +64,32 @@ export default function ProfileMentor({member, setMember}){
     }
 
     return (
-        <Box sx={{display: 'flex', flexWrap: 'wrap', flexDirection: 'column', alignItems: 'center'}}>
+        <Box 
+            display='flex' 
+            flexDirection='column' 
+            alignItems='center' 
+        >
             {group ? 
                 <>
                     {group.mentor.username === Auth.getProfile()?.username && group.mentor.username === member.username ? 
-                        <Button color="secondary" variant="contained" onClick={disbandGroup} sx={{my: 2}}>Disband Your Mentor Group</Button>
+                        <Button color="secondary" variant="contained" onClick={disbandGroup} sx={{my: 2}} endIcon={<DeleteIcon/>}>Disband Your Mentor Group</Button>
                         : 
-                        <Box sx={{m:3, display: 'flex', flexWrap: 'wrap', flexDirection: 'column', alignItems: 'center'}}>
-                            {Auth.getProfile()?.username === member.username ?
+                        <Box sx={{display: 'flex', flexWrap: 'wrap', flexDirection: 'column', alignItems: 'center'}}>
+                            {Auth.getProfile()?.username === member.username &&
                                 <Button color="secondary" variant="contained" onClick={leaveGroup} sx={{my: 2}}>Leave Mentor Group</Button>
-                                :
-                                null
                             }
                             {group.mentor.username !== member.username &&
-                                <>
-                                    <Typography variant="h5">Mentor</Typography>
-                                    <Box sx={{p:2}}>
-                                        <MemberCard member={group.mentor}/> 
-                                    </Box>
-                                </>
+                                <Box position="relative" marginBottom={3}>
+                                    <Chip icon={<StarIcon/>} label="Mentor" variant="filled" color="primary" sx={{position: 'absolute'}}/>
+                                    <MemberCard member={group.mentor}/> 
+                                </Box>
                             }
                         </Box>
                     }
-                    <Box sx={{m:3, display: 'flex', flexWrap: 'wrap', flexDirection: 'column', alignItems: 'center'}}>
+                    <Box sx={{display: 'flex', flexWrap: 'wrap', flexDirection: 'column', alignItems: 'center'}}>
                         <Typography variant="h5">Current Mentees - {group.menteeCount}/{group.numMentees} </Typography>
                         {group.menteeCount > 0 ? 
-                            <MemberGroup mentees={group.mentees} mentorGroup={group} bIsUserProfile={isUserProfile(member?.username)} member={member} setMember={setMember}/> 
-                            :
+                            <MemberGroup mentees={group.mentees} mentorGroup={group} bIsUserProfile={isUserProfile(member?.username)} member={member} setMember={setMember}/> :
                             <Box>Add mentees to your mentor group!</Box>
                         }
                     </Box> 
@@ -96,13 +97,11 @@ export default function ProfileMentor({member, setMember}){
             : 
                 <Box sx={{m:3, display:"flex", flexDirection:"column", alignItems:'center'}}>
                     <Typography variant="h5">No mentor group</Typography>
-                    {isUserProfile(member?.username) ?
+                    {isUserProfile(member?.username) &&
                         <>
                             <Typography>Start looking for a group or start one.</Typography>
                             <CreateGroupForm member={member} setMember={setMember}/>
                         </>
-                        :
-                        null
                     }
                 </Box>
             }

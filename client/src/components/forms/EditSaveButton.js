@@ -6,7 +6,7 @@ import SaveIcon from '@mui/icons-material/Save';
 export default function EditSaveButton({title, bIsEditing, bIsUserProfile}){
 
     return(
-        <Box display="flex" alignItems="center" justifyContent="space-between" marginBottom={1}>
+        <Box p={1} display="flex" alignItems="center" justifyContent="space-between" marginBottom={1} borderBottom={2} borderColor="primary.main">
             <Typography variant="h5">{title}</Typography>
             {bIsUserProfile && Auth.UserLoggedIn() 
                 ? 

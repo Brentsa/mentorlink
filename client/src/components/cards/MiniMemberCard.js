@@ -9,6 +9,7 @@ import { capFirstLetter } from '../../utils/helpers';
 import Auth from '../../utils/AuthService';
 import { useDispatch } from 'react-redux';
 import { openAndSetMessage } from '../../redux/slices/snackbarSlice';
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 
 
 export default function MiniMemberCard({mentorGroup, bIsUserProfile, removeMenteeMutation, setMember, member, mentor}) {
@@ -53,7 +54,7 @@ export default function MiniMemberCard({mentorGroup, bIsUserProfile, removeMente
       }
     }}>
       { Auth.getProfile()?.username === mentorGroup?.mentor?.username && bIsUserProfile &&
-        <Button color='secondary' variant='contained' disableElevation size='small' onClick={removeMentee}>remove</Button>
+        <Button color='secondary' variant='contained' disableElevation size='small' onClick={removeMentee} endIcon={<RemoveCircleIcon/>}>remove</Button>
       }
       <CardActionArea sx={{padding: 2, display: 'flex', justifyContent: 'center', alignItems: 'center' }} onClick={goToMemberProfile}>
         <Avatar alt="Profile Pic" src={profilePicture ?? `https://i.pravatar.cc/60?u=${username}`} sx={{ width: 60, height: 60 }}/>
