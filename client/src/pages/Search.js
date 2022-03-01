@@ -8,8 +8,9 @@ import { useSelector, useDispatch } from 'react-redux'
 import { saveMemberQuery } from "../redux/slices/memberSlice";
 import { useEffect } from "react";
 import { switchPage } from "../redux/slices/pageSlice";
-import { TextField } from '@mui/material';
+import { TextField, Typography } from '@mui/material';
 import Pagination from '@mui/material/Pagination';
+import Slider from '@mui/material/Slider';
 
 export default function Search(){
 
@@ -25,7 +26,7 @@ export default function Search(){
 
     //states for pagination
     const [currentPage, setCurrentPage] = useState(1);
-    const [membersPerPage] = useState(5);
+    const [membersPerPage, setMembersPerPage] = useState(6);
     const [pageCount, setPageCount] = useState(0)
 
     //when search loads, query members to display
@@ -34,6 +35,11 @@ export default function Search(){
     //handle search input change by setting the search input state
     function handleChange(e){
         return setSearchInput(e.target.value);
+    }
+
+    function perPageChange(e){
+        if(e.target.value < 4 || e.target.value > 20) return; 
+        return setMembersPerPage(e.target.value);
     }
 
     //called when the search input is submitted
@@ -74,8 +80,9 @@ export default function Search(){
         <Box display='flex' flexDirection='column' alignItems='center'>
             <Box 
                 component="form"
+                display='flex'
                 onSubmit={onSubmit}
-                width={{xs: "90vw", sm: "60vw", md:"30vw"}}
+                width={{xs: "94vw", sm: "60vw", md:"30vw"}}
                 my={1}
             >
                 <TextField 
@@ -88,8 +95,21 @@ export default function Search(){
                 />
             </Box>
 
+            <Box display="flex" flexDirection="column" alignItems="center" marginY={1.5}>
+                <Typography variant='body2'>Members Per Page: {membersPerPage}</Typography>
+                <Slider
+                    defaultValue={6}
+                    step={1}
+                    onChange={perPageChange}
+                    marks
+                    min={2}
+                    max={20}
+                    sx={{width: '300px'}}
+                />
+            </Box>
+            
             <Pagination count={pageCount} page={currentPage} color='secondary' onChange={paginationChange}/>
-
+            
             <Box sx={{display: "flex", flexWrap: "wrap", justifyContent: "center", mt: 2}}>
                 { filteredMembers.length > 0 ?
                     filteredMembers
