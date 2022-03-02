@@ -13,7 +13,6 @@ import Pagination from '@mui/material/Pagination';
 import Slider from '@mui/material/Slider';
 
 export default function Search(){
-
     const dispatch = useDispatch();
     const members = useSelector(state => state.members.members);
 
@@ -37,8 +36,12 @@ export default function Search(){
         return setSearchInput(e.target.value);
     }
 
+    //called when the user tries sets the members shown per page
     function perPageChange(e){
+        //Only change if the members per page is beltween 4 and 20
         if(e.target.value < 4 || e.target.value > 20) return; 
+
+        //update the members per page if valid value
         return setMembersPerPage(e.target.value);
     }
 

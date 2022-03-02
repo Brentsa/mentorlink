@@ -44,7 +44,6 @@ export default function Header() {
             }
           </Box>
           
-
           <ResponsiveTabs/>
 
           {!bIsUserLoggedIn ? 

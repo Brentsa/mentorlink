@@ -28,7 +28,6 @@ export default function FadeModal({member, setMember}) {
     canClose && setOpen(false);
   }
 
-
   return (
     <Box>
       <Button 

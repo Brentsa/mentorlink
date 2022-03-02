@@ -11,7 +11,7 @@ import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
 import ChatIcon from '@mui/icons-material/Chat';
 import LoginIcon from '@mui/icons-material/Login';
-import { useMediaQuery } from '@mui/material';
+import { Tooltip, useMediaQuery } from '@mui/material';
 
 export default function ResponsiveTabs(){
 
@@ -51,64 +51,76 @@ export default function ResponsiveTabs(){
             textColor="secondary"
             indicatorColor="secondary"
         >
-            <Tab 
-                value="home" 
-                label={!isLgScreen ? "Home" : null}
-                icon={<HomeIcon/>} 
-                iconPosition='start' 
-                component={Link} 
-                to={'/'}
-                sx={isMdScreen ? {minWidth: "15vw"} : null}
-            />
-            <Tab 
-                value="search" 
-                label={!isLgScreen ? "Search" : null}
-                icon={<PersonSearchIcon/>} 
-                iconPosition='start' 
-                component={Link} 
-                to={'/search'}
-                sx={isMdScreen ? {minWidth: "15vw"} : null}
-            />
-            <Tab 
-                value="yourProfile" 
-                label={!isLgScreen ? "Your Profile" : null}
-                icon={<AccountBoxIcon/>} 
-                iconPosition='start' 
-                component={Link} 
-                disabled={!bIsUserLoggedIn} 
-                to={bIsUserLoggedIn ? `/dashboard/${Auth.getProfile().username}` : '/login'}
-                sx={isMdScreen ? {minWidth: "15vw"} : null}
-            />
-            <Tab 
-                value="yourMentor"
-                label={!isLgScreen ? "Your Mentor" : null} 
-                icon={<EmojiPeopleIcon/>} 
-                iconPosition='start' 
-                component ={Link} 
-                disabled={disableYourMentorButton()} 
-                to={currentMemberUser?.mentorGroup ? `/dashboard/${usersMentorUsername}` : '/login'}
-                sx={isMdScreen ? {minWidth: "15vw"} : null}
-            />
-            <Tab 
-                value="discussion" 
-                label={!isLgScreen ? "Discussion" : null} 
-                icon={<ChatIcon/>} 
-                iconPosition='start' 
-                component={Link} 
-                to={'/conversation'} 
-                disabled={disableDiscussionButton()}
-                sx={isMdScreen ? {minWidth: "15vw"} : null}
-            />
-            <Tab 
-                value="login" 
-                label={!isLgScreen ? "Login/Register" : null} 
-                icon={<LoginIcon/>} 
-                iconPosition='start' 
-                component={Link} 
-                to={'/login'} 
-                disabled={bIsUserLoggedIn}
-                sx={isMdScreen ? {minWidth: "15vw"} : null}
-            />
+            <Tooltip title={isLgScreen ? "Home" : ""} value="home">
+                <Tab 
+                    label={!isLgScreen ? "Home" : null}
+                    icon={<HomeIcon/>} 
+                    iconPosition='start' 
+                    component={Link} 
+                    to={'/'}
+                    sx={isMdScreen ? {minWidth: "15vw"} : null}
+                />
+            </Tooltip>
+
+            <Tooltip title={isLgScreen ? "Search" : ""} value="search">
+                <Tab 
+                    label={!isLgScreen ? "Search" : null}
+                    icon={<PersonSearchIcon/>} 
+                    iconPosition='start' 
+                    component={Link} 
+                    to={'/search'}
+                    sx={isMdScreen ? {minWidth: "15vw"} : null}
+                />
+            </Tooltip>
+
+            <Tooltip title={isLgScreen ? "Your Profile" : ""} value="yourProfile" >
+                <Tab 
+                    label={!isLgScreen ? "Your Profile" : null}
+                    icon={<AccountBoxIcon/>} 
+                    iconPosition='start' 
+                    component={Link} 
+                    disabled={!bIsUserLoggedIn} 
+                    to={bIsUserLoggedIn ? `/dashboard/${Auth.getProfile().username}` : '/login'}
+                    sx={isMdScreen ? {minWidth: "15vw"} : null}
+                />
+            </Tooltip>
+
+            <Tooltip title={isLgScreen ? "Your Mentor" : ""} value="yourMentor">
+                <Tab 
+                    label={!isLgScreen ? "Your Mentor" : null} 
+                    icon={<EmojiPeopleIcon/>} 
+                    iconPosition='start' 
+                    component ={Link} 
+                    disabled={disableYourMentorButton()} 
+                    to={currentMemberUser?.mentorGroup ? `/dashboard/${usersMentorUsername}` : '/login'}
+                    sx={isMdScreen ? {minWidth: "15vw"} : null}
+                />
+            </Tooltip>
+
+            <Tooltip title={isLgScreen ? "Discussion" : ""} value="discussion">
+                <Tab 
+                    label={!isLgScreen ? "Discussion" : null} 
+                    icon={<ChatIcon/>} 
+                    iconPosition='start' 
+                    component={Link} 
+                    to={'/conversation'} 
+                    disabled={disableDiscussionButton()}
+                    sx={isMdScreen ? {minWidth: "15vw"} : null}
+                />
+            </Tooltip>
+
+            <Tooltip title={isLgScreen ? "Login" : ""} value="login" >
+                <Tab 
+                    label={!isLgScreen ? "Login/Register" : null} 
+                    icon={<LoginIcon/>} 
+                    iconPosition='start' 
+                    component={Link} 
+                    to={'/login'} 
+                    disabled={bIsUserLoggedIn}
+                    sx={isMdScreen ? {minWidth: "15vw"} : null}
+                />
+            </Tooltip>
+
         </Tabs>
     );
 }
