@@ -13,7 +13,7 @@ export default function Conversation(){
     dispatch(switchPage('discussion'));
 
     //find the group id from the current user's state
-    const groupId = useSelector(state => state.members.currentUser.mentorGroup._id);
+    const groupId = useSelector(state => state.members.currentUser.mentorGroup?._id);
 
     //initialize the state of the mentor group
     const [group, setGroup] = useState(null);
