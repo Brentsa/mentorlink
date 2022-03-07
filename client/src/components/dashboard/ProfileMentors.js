@@ -21,6 +21,8 @@ export default function ProfileMentor({member, setMember}){
     //Destructure mentor group from the member profile
     const group = member?.mentorGroup;
 
+    console.log(group);
+
     //Initialize a mutation to delete a mentor group
     const [deleteMentorGroup] = useMutation(DELETE_MENTOR_GROUP);
 
@@ -36,7 +38,6 @@ export default function ProfileMentor({member, setMember}){
 
             //remove the mentor group from the current member state
             dispatch(removeMentorGroup());
-
 
             //Set snack bar success message and open it
             dispatch(openAndSetMessage("Mentor Group Deleted!"))
@@ -87,7 +88,9 @@ export default function ProfileMentor({member, setMember}){
                         </Box>
                     }
                     <Box sx={{display: 'flex', flexWrap: 'wrap', flexDirection: 'column', alignItems: 'center'}}>
-                        <Typography variant="h5">Current Mentees - {group.menteeCount}/{group.numMentees} </Typography>
+                        <Box borderBottom={2} borderColor="primary.main" mt={3} mb={1} width="90%" display="flex" justifyContent="center">
+                            <Typography variant="h5">Current Mentees - {group.menteeCount}/{group.numMentees} </Typography>
+                        </Box>
                         {group.menteeCount > 0 ? 
                             <MemberGroup mentees={group.mentees} mentorGroup={group} bIsUserProfile={isUserProfile(member?.username)} member={member} setMember={setMember}/> :
                             <Box>Add mentees to your mentor group!</Box>

@@ -14,6 +14,7 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 
 export default function MiniMemberCard({mentorGroup, bIsUserProfile, removeMenteeMutation, setMember, member, mentor}) {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   //const {username, _id} = mentee;
   const username = member?.username;
@@ -21,8 +22,6 @@ export default function MiniMemberCard({mentorGroup, bIsUserProfile, removeMente
   const industry = member?.industry?.name;
   const profilePicture = member?.profilePicture
   
-  const history = useHistory();
-
   //redirect the user to the member's profile page
   function goToMemberProfile(){
     return history.push(`/dashboard/${username}`);
@@ -34,7 +33,7 @@ export default function MiniMemberCard({mentorGroup, bIsUserProfile, removeMente
 
     //filter the removed mentee from the mentee list and update the state
     const newGroup = mentorGroup.mentees.filter(member => member.username !== username);
-    setMember({...mentor, mentorGroup: {...mentorGroup, mentees: newGroup}});
+    setMember({...mentor, mentorGroup: {...mentorGroup, mentees: newGroup, menteeCount: newGroup.length}});
 
     //open the snack bar and set a message
     dispatch(openAndSetMessage("Mentee Removed From Group!"))
