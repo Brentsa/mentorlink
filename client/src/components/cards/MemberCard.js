@@ -14,9 +14,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addMenteeGroup} from '../../redux/slices/memberSlice';
 import { useEffect, useState, useCallback } from 'react';
 import StarIcon from '@mui/icons-material/Star';
+import GroupAddIcon from '@mui/icons-material/GroupAdd';
+import { Chip } from '@mui/material';
 
 export default function MemberCard({member}) {
   const dispatch = useDispatch();
+  console.log(member)
 
   //store current user from global state
   const currentUser = useSelector(state => state.members.currentUser);
@@ -104,8 +107,10 @@ export default function MemberCard({member}) {
         borderBottomRightRadius: '50%', 
         display: 'flex', 
         flexDirection: 'column', 
-        alignItems: 'center'
+        alignItems: 'center',
+        position: 'relative'
       }}>
+        {member?.mentorGroup && <Chip icon={<StarIcon/>} label="In Group" variant="filled" color='primary' sx={{position: 'absolute', top: '6px', left: '6px'}}/>}
         <CardMedia
           component="img"
           image={member.profilePicture ?? `https://i.pravatar.cc/200?u=${member.username}`}
@@ -129,8 +134,8 @@ export default function MemberCard({member}) {
         </CardContent>
         
         <CardActions sx={{width: "100%", display: "flex", flexWrap: "wrap", justifyContent: "space-evenly"}}>
-          <Button variant="contained" color="secondary" component={Link} to={`/dashboard/${member?.username}`}>Profile {member.mentorGroup && <StarIcon/>}</Button>
-          {shouldRender ? <Button variant="contained" color="secondary" onClick={addMenteeToGroup}>Add Mentee</Button> : null}
+          <Button variant="contained" color="secondary" component={Link} to={`/dashboard/${member?.username}`}>Profile</Button>
+          {shouldRender ? <Button variant="contained" color="secondary" onClick={addMenteeToGroup}><GroupAddIcon/></Button> : null}
         </CardActions>  
       </Box>
     </Card>

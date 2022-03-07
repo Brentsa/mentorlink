@@ -13,6 +13,7 @@ import { isUserProfile } from "../../utils/helpers";
 import { openAndSetMessage } from "../../redux/slices/snackbarSlice";
 import StarIcon from '@mui/icons-material/Star';
 import DeleteIcon from '@mui/icons-material/Delete';
+import GroupIcon from '@mui/icons-material/Group';
 
 export default function ProfileMentor({member, setMember}){
 
@@ -20,8 +21,6 @@ export default function ProfileMentor({member, setMember}){
 
     //Destructure mentor group from the member profile
     const group = member?.mentorGroup;
-
-    console.log(group);
 
     //Initialize a mutation to delete a mentor group
     const [deleteMentorGroup] = useMutation(DELETE_MENTOR_GROUP);
@@ -81,15 +80,15 @@ export default function ProfileMentor({member, setMember}){
                             }
                             {group.mentor.username !== member.username &&
                                 <Box position="relative" marginBottom={3}>
-                                    <Chip icon={<StarIcon/>} label="Mentor" variant="filled" color="primary" sx={{position: 'absolute'}}/>
+                                    <Chip icon={<StarIcon/>} label="Mentor" variant="filled" color="primary" sx={{position: 'absolute', zIndex: 10}}/>
                                     <MemberCard member={group.mentor}/> 
                                 </Box>
                             }
                         </Box>
                     }
                     <Box sx={{display: 'flex', flexWrap: 'wrap', flexDirection: 'column', alignItems: 'center'}}>
-                        <Box borderBottom={2} borderColor="primary.main" mt={3} mb={1} width="90%" display="flex" justifyContent="center">
-                            <Typography variant="h5">Current Mentees - {group.menteeCount}/{group.numMentees} </Typography>
+                        <Box borderBottom={2} borderColor="primary.main" mt={3} mb={1} pb={1} width="90%" display="flex" justifyContent="center">
+                            <Chip icon={<GroupIcon/>} label={`Current Mentees - ${group.menteeCount}/${group.numMentees}`} color="primary" variant="filled"/>
                         </Box>
                         {group.menteeCount > 0 ? 
                             <MemberGroup mentees={group.mentees} mentorGroup={group} bIsUserProfile={isUserProfile(member?.username)} member={member} setMember={setMember}/> :
