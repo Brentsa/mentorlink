@@ -6,7 +6,6 @@ import { useQuery } from "@apollo/client";
 import Auth from '../utils/AuthService';
 import { useSelector, useDispatch } from 'react-redux'
 import { saveMemberQuery } from "../redux/slices/memberSlice";
-import { useEffect } from "react";
 import { switchPage } from "../redux/slices/pageSlice";
 import { TextField, Typography } from '@mui/material';
 import Pagination from '@mui/material/Pagination';
@@ -21,7 +20,7 @@ export default function Search(){
     
     //search input state
     const [searchInput, setSearchInput] = useState('');
-    const [filteredMembers, setFilteredMembers] = useState(members);
+    const [filteredMembers, setFilteredMembers] = useState(null);
 
     //states for pagination
     const [currentPage, setCurrentPage] = useState(1);
@@ -29,7 +28,16 @@ export default function Search(){
     const [pageCount, setPageCount] = useState(0)
 
     //when search loads, query members to display
-    const {data, loading} = useQuery(QUERY_MEMBERS, {fetchPolicy: "network-only"});
+    const {loading} = useQuery(QUERY_MEMBERS, {
+        fetchPolicy: "network-only", 
+        onCompleted: data => {
+            dispatch(saveMemberQuery(data.members));
+            const filteredMembersData = data.members.filter(member => Auth.getProfile()?.username !== member.username)
+            setFilteredMembers(filteredMembersData);
+            setCurrentPage(1);
+            setPageCount(Math.ceil(filteredMembersData.length/membersPerPage));
+        }
+    });
 
     //handle search input change by setting the search input state
     function handleChange(e){
@@ -63,21 +71,8 @@ export default function Search(){
     function paginationChange(e, page){
         return setCurrentPage(page);
     }
-    
-    //update the members state once page completes render
-    useEffect(() => {
-        if(data){
-            dispatch(saveMemberQuery(data.members));
-            setFilteredMembers(data.members.filter(member => Auth.getProfile()?.username !== member.username));
-        }
-    }, [data, dispatch])
 
-    useEffect(()=>{
-        setCurrentPage(1);
-        setPageCount(Math.ceil(filteredMembers.length/membersPerPage));
-    }, [filteredMembers, membersPerPage])
-
-    if(loading) return <Box>Loading...</Box>;
+    if(loading || !filteredMembers) return <Box>Loading...</Box>;
 
     return (
         <Box display='flex' flexDirection='column' alignItems='center'>
@@ -114,7 +109,7 @@ export default function Search(){
             <Pagination count={pageCount} page={currentPage} color='secondary' onChange={paginationChange}/>
             
             <Box sx={{display: "flex", flexWrap: "wrap", justifyContent: "center", mt: 2}}>
-                { filteredMembers.length > 0 ?
+                { filteredMembers ?
                     filteredMembers
                         .slice((currentPage - 1) * membersPerPage, ((currentPage - 1) * membersPerPage) + membersPerPage)
                         .map((member, i) => <MemberCard member={member} key={i}/>)

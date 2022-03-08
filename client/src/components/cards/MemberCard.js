@@ -19,7 +19,6 @@ import { Chip } from '@mui/material';
 
 export default function MemberCard({member}) {
   const dispatch = useDispatch();
-  console.log(member)
 
   //store current user from global state
   const currentUser = useSelector(state => state.members.currentUser);
@@ -61,8 +60,9 @@ export default function MemberCard({member}) {
     return bIsUserLoggedIn && !isMenteeInGroup() && isRoomInGroupForMentee() && !userMatchesCard() && !member.mentorGroup && isUserMentor();
   }, [bIsUserLoggedIn, currentUser, member])
 
-  //state to determine if the add mentee button should render
+  //state to determine if the add mentee button should render and if the member is in a mentor group
   const [shouldRender, setShouldRender] = useState(() => shouldAddButtonRender());
+  const [inGroup, setInGroup] = useState(false);
 
   //define a mutation to add a mentee to a mentor group
   const [addMenteeMutation] = useMutation(ADD_MENTEE_TO_GROUP);
@@ -78,12 +78,18 @@ export default function MemberCard({member}) {
 
     //update the current member user global state to show the new mentees
     dispatch(addMenteeGroup(menteeData));
+    setInGroup(true);
   }
 
   //whenever the current user changes, member card checks if the add mentee button should be rendered or not
   useEffect(()=>{
     setShouldRender(shouldAddButtonRender());
   }, [currentUser, shouldAddButtonRender])
+
+  //whenever the member changes, check to see if they have a mentorgroup
+  useEffect(()=>{
+    setInGroup(member.mentorGroup ? true : false);
+  }, [member])
 
   return (
     <Card sx={{ 
@@ -110,7 +116,7 @@ export default function MemberCard({member}) {
         alignItems: 'center',
         position: 'relative'
       }}>
-        {member?.mentorGroup && <Chip icon={<StarIcon/>} label="In Group" variant="filled" color='primary' sx={{position: 'absolute', top: '6px', left: '6px'}}/>}
+        {inGroup && <Chip icon={<StarIcon/>} label="In Group" variant="filled" color='primary' sx={{position: 'absolute', top: '6px', left: '6px'}}/>}
         <CardMedia
           component="img"
           image={member.profilePicture ?? `https://i.pravatar.cc/200?u=${member.username}`}
