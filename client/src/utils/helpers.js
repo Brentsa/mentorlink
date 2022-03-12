@@ -30,3 +30,17 @@ export function isUserProfile(usernameOrId){
 export function randNumBetween(min, max){
     return Math.floor(Math.random() * (max + 1 - min)) + min;
 }
+
+//take an object array and return a shuffled copy of it
+export function shuffleObjArray(array){
+    var objArray = [...array];
+
+    for(let i = objArray.length - 1; i > 0; i--){
+        let j = Math.floor(Math.random() * i);
+        let k = objArray[i];
+        objArray[i] = objArray[j];
+        objArray[j] = k;
+    }
+
+    return objArray;
+}
