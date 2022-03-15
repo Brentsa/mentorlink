@@ -7,6 +7,8 @@ import { useEffect } from "react";
 import { switchPage } from "../redux/slices/pageSlice";
 import HomeHeader from "../components/layout/HomeHeader";
 import Carousel from "../components/misc/Carousel";
+import MemberCard from "../components/cards/MemberCard";
+import CarouselItem from "../components/misc/CarouselItem";
 
 export default function Home(){
     const dispatch = useDispatch();
@@ -26,7 +28,9 @@ export default function Home(){
     return (
         <>
             <HomeHeader/>
-            <Carousel members={data.members}/>
+            <Carousel>
+                {data.members.map((member, i) => <CarouselItem key={i}><MemberCard member={member}/></CarouselItem>)}
+            </Carousel>
         </>
     )
 }
