@@ -6,6 +6,7 @@ import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrow
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 import { shuffleObjArray } from "../../utils/helpers";
 import { useState } from "react";
+import CarouselItem from "./CarouselItem";
 
 export default function Carousel({members}){
 
@@ -48,10 +49,10 @@ export default function Carousel({members}){
             <Box><IconButton size="large" color="secondary" onClick={shiftLeft}><KeyboardDoubleArrowLeftIcon fontSize="large"/></IconButton></Box>
 
             <Box display='flex' justifyContent='center'>
-                <Box sx={{m:4, transform: 'scale(0.7)', display: {xs: 'none', lg: 'block'}}}><MemberCard member={randMember[shownMembers[0]]}/></Box>
-                <Box sx={{m:4}}><MemberCard member={randMember[shownMembers[1]]}/></Box>
-                <Box sx={{m:4, transform: 'scale(0.7)', display: {xs: 'none', lg: 'block'}}}><MemberCard member={randMember[shownMembers[2]]}/></Box>
-            </Box>   
+                <CarouselItem><MemberCard member={randMember[shownMembers[0]]} width="100%"/></CarouselItem>
+                <CarouselItem><MemberCard member={randMember[shownMembers[1]]} width="100%"/></CarouselItem>
+                <CarouselItem><MemberCard member={randMember[shownMembers[2]]} width="100%"/></CarouselItem>
+            </Box>
 
             <Box><IconButton size="large" color="secondary" onClick={shiftRight}><KeyboardDoubleArrowRightIcon fontSize="large"/></IconButton></Box>
         </Box>
