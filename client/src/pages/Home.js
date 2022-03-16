@@ -28,7 +28,7 @@ export default function Home(){
     return (
         <>
             <HomeHeader/>
-            <Carousel>
+            <Carousel numItemsShown={3}>
                 {data.members.map((member, i) => <CarouselItem key={i}><MemberCard member={member}/></CarouselItem>)}
             </Carousel>
         </>

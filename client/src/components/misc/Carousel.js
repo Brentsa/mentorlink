@@ -4,7 +4,7 @@ import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrow
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 import React, { useEffect, useState } from "react";
 
-export default function Carousel({children}){
+export default function Carousel({children, numItemsShown}){
 
     //create a state of random members
     //const [randMember] = useState(shuffleObjArray(members));
@@ -80,10 +80,10 @@ export default function Carousel({children}){
                 </IconButton>
             </Box>
 
-            <Box sx={{overflow: 'hidden'}} width="60vw">
-                <Box sx={{whiteSpace: 'nowrap', transition: 'transform 0.6s', transform: `translateX(-${itemIndex * 100}%)`}}>
+            <Box sx={{overflow: 'hidden'}} width={{xs: "90vw", sm: "80vw", xl: "60vw"}}>
+                <Box sx={{whiteSpace: 'nowrap', transition: 'transform 0.8s', transform: `translateX(-${itemIndex * (100/numItemsShown)}%)`}}>
                     {React.Children.map(children, (child, index) => {
-                        return React.cloneElement(child, {width: '100%'});
+                        return React.cloneElement(child, {width: `${100/numItemsShown}%`});
                     })}
                 </Box>
             </Box>
