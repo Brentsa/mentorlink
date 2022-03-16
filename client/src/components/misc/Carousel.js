@@ -1,14 +1,10 @@
-import MemberCard from "../cards/MemberCard";
 import Box from "@mui/system/Box";
-import { randNumBetween } from "../../utils/helpers";
 import { IconButton } from "@mui/material";
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
-import { shuffleObjArray } from "../../utils/helpers";
-import React, { Children, useState } from "react";
-import CarouselItem from "./CarouselItem";
+import React, { useEffect, useState } from "react";
 
-export default function Carousel({members, children}){
+export default function Carousel({children}){
 
     //create a state of random members
     //const [randMember] = useState(shuffleObjArray(members));
@@ -44,28 +40,59 @@ export default function Carousel({members, children}){
     //     setShownMembers(newPositions);
     // }
 
-    const [shownMember, setShownMember] = useState(0);
+    const [itemIndex, setShownMember] = useState(0);
+    const [lbActive, setLbActive] = useState(false);
+    const [rbActive, setRbActive] = useState(false);
 
     function shiftLeft(){
-        setShownMember(shownMember === 0 ? children.length - 1 : shownMember - 1);
+        //shift the shown member left if the index isn't the first member
+        setShownMember(itemIndex === 0 ? children.length - 1 : itemIndex - 1);
     }
 
     function shiftRight(){
-        setShownMember(shownMember === children.length -1 ? 0 : shownMember + 1);
+        //shift the shown member right if the index isn't the last member
+        setShownMember(itemIndex === children.length -1 ? 0 : itemIndex + 1);
     }
+
+    useEffect(() => {
+        //set the buttons' active states depending on current index
+        switch(itemIndex){
+            case 0:
+                setLbActive(false);
+                setRbActive(true);
+                break;
+            case children.length - 1:
+                setLbActive(true);
+                setRbActive(false);
+                break;
+            default:
+                setLbActive(true);
+                setRbActive(true);
+                break;
+        }
+    }, [itemIndex, children])
 
     return (
         <Box display="flex" justifyContent='center' alignItems='center'>
-            <Box><IconButton size="large" color="secondary" onClick={shiftLeft}><KeyboardDoubleArrowLeftIcon fontSize="large"/></IconButton></Box>
-            <Box sx={{overflow: 'hidden'}} width="60vw">
+            <Box>
+                <IconButton size="large" color="secondary" onClick={shiftLeft} disabled={!lbActive}>
+                    <KeyboardDoubleArrowLeftIcon fontSize="large"/>
+                </IconButton>
+            </Box>
 
-                <Box sx={{whiteSpace: 'nowrap', transition: 'transform 0.6s', transform: `translateX(-${shownMember * 100}%)`}}>
+            <Box sx={{overflow: 'hidden'}} width="60vw">
+                <Box sx={{whiteSpace: 'nowrap', transition: 'transform 0.6s', transform: `translateX(-${itemIndex * 100}%)`}}>
                     {React.Children.map(children, (child, index) => {
                         return React.cloneElement(child, {width: '100%'});
                     })}
                 </Box>
             </Box>
-            <Box><IconButton size="large" color="secondary" onClick={shiftRight}><KeyboardDoubleArrowRightIcon fontSize="large"/></IconButton></Box>
+
+            <Box>
+                <IconButton size="large" color="secondary" onClick={shiftRight} disabled={!rbActive}>
+                    <KeyboardDoubleArrowRightIcon fontSize="large"/>
+                </IconButton>
+            </Box>
         </Box>
     )
 }
