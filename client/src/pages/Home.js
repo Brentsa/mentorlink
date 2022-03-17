@@ -1,4 +1,3 @@
-import Box from "@mui/system/Box";
 import { QUERY_MEMBERS } from "../utils/queries"
 import { useQuery } from "@apollo/client";
 import { useDispatch } from 'react-redux'
@@ -9,12 +8,27 @@ import HomeHeader from "../components/layout/HomeHeader";
 import Carousel from "../components/misc/Carousel";
 import MemberCard from "../components/cards/MemberCard";
 import CarouselItem from "../components/misc/CarouselItem";
+import { CircularProgress, useMediaQuery } from "@mui/material";
 
 export default function Home(){
     const dispatch = useDispatch();
 
+    //determine the screen size for dependant components 
+    const isBelowMDScreen = useMediaQuery(theme => theme.breakpoints.down('md'));
+    const isBelowLGScreen = useMediaQuery(theme => theme.breakpoints.down('lg'));
+
+    function returnCarouselSize(){
+        //return number of items to show in the carousel based on screen size
+        if(isBelowMDScreen) 
+            return 1;
+        else if(isBelowLGScreen) 
+            return 2;
+        else 
+            return 3;
+    }
+
     //when search loads, query members to display
-    const {data, loading} = useQuery(QUERY_MEMBERS);
+    const {data} = useQuery(QUERY_MEMBERS);
 
     useEffect(() => {
         if(data) dispatch(saveMemberQuery(data.members))
@@ -23,14 +37,17 @@ export default function Home(){
         dispatch(switchPage("home"));
     })
 
-    if(loading) return <Box>Loading...</Box>;
-
     return (
         <>
             <HomeHeader/>
-            <Carousel numItemsShown={3}>
-                {data.members.map((member, i) => <CarouselItem key={i}><MemberCard member={member}/></CarouselItem>)}
-            </Carousel>
+            {data ?
+                <Carousel numItemsShown={returnCarouselSize()}>
+                    {data.members.map((member, i) => <CarouselItem key={i}><MemberCard member={member}/></CarouselItem>)}
+                </Carousel>
+                :
+                <CircularProgress color="primary"/>
+            }
+            
         </>
     )
 }
