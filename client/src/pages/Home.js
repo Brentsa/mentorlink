@@ -9,6 +9,7 @@ import Carousel from "../components/misc/Carousel";
 import MemberCard from "../components/cards/MemberCard";
 import CarouselItem from "../components/misc/CarouselItem";
 import { CircularProgress, useMediaQuery } from "@mui/material";
+import { shuffleObjArray } from "../utils/helpers";
 
 export default function Home(){
     const dispatch = useDispatch();
@@ -42,7 +43,9 @@ export default function Home(){
             <HomeHeader/>
             {data ?
                 <Carousel numItemsShown={returnCarouselSize()}>
-                    {data.members.map((member, i) => <CarouselItem key={i}><MemberCard member={member}/></CarouselItem>)}
+                    {   //shuffle the member array and then spread the members as carousel items 
+                        shuffleObjArray(data.members).map((member, i) => <CarouselItem key={i}><MemberCard member={member}/></CarouselItem>)
+                    }
                 </Carousel>
                 :
                 <CircularProgress color="primary"/>

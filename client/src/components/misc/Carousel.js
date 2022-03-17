@@ -6,40 +6,7 @@ import React, { useEffect, useState } from "react";
 
 export default function Carousel({children, numItemsShown}){
 
-    //create a state of random members
-    //const [randMember] = useState(shuffleObjArray(members));
-
-    //create a state that holds the position of the 3 shown members in the carousel
-    //const [shownMembers, setShownMembers] = useState([0, 1, 2]);
-
-    //shift the positions of the carousel members left
-    // function shiftLeft(){
-    //     //create a copy of the current shown member positions
-    //     let newPositions = [...shownMembers];
-
-    //     for(var i = 0; i < newPositions.length; i++){
-    //         //increase the position by 1 space and if the end of the array is reached set index to 0
-    //         newPositions[i] = newPositions[i] === randMember.length - 1 ? 0 : newPositions[i] + 1; 
-    //     }
-
-    //     //update the state that holds the member indexes
-    //     setShownMembers(newPositions);
-    // }
-
-    //shift the positions of the carousel members right
-    // function shiftRight(){
-    //     //create a copy of the current shown member positions
-    //     let newPositions = [...shownMembers];
-
-    //     for(var i = 0; i < newPositions.length; i++){
-    //         //decrease the position by 1 space and if the front of the array is reached change the index to the end
-    //         newPositions[i] = newPositions[i] === 0 ? randMember.length - 1 : newPositions[i] - 1; 
-    //     }
-
-    //     //update the state that holds the member indexes
-    //     setShownMembers(newPositions);
-    // }
-
+    //initialize states for the carousel item index, left button active state, and right button active state
     const [itemIndex, setShownMember] = useState(0);
     const [lbActive, setLbActive] = useState(false);
     const [rbActive, setRbActive] = useState(false);
@@ -73,22 +40,22 @@ export default function Carousel({children, numItemsShown}){
     }, [itemIndex, children])
 
     return (
-        <Box display="flex" justifyContent='center' alignItems='center'>
-            <Box>
+        <Box display="flex" justifyContent='center' alignItems='center' position='relative' mt={{xs: 8, sm: 2}}>
+            <Box position='absolute' left={{xs: '20%', sm: '-80px'}} top={{xs: '-60px', sm: '45%'}}>
                 <IconButton size="large" color="secondary" onClick={shiftLeft} disabled={!lbActive}>
                     <KeyboardDoubleArrowLeftIcon fontSize="large"/>
                 </IconButton>
             </Box>
 
-            <Box sx={{overflow: 'hidden'}} width={{xs: "90vw", sm: "80vw", xl: "60vw"}}>
+            <Box sx={{overflow: 'hidden'}} width={{xs: "90vw", sm: "70vw", xl: "60vw"}}>
                 <Box sx={{whiteSpace: 'nowrap', transition: 'transform 0.8s', transform: `translateX(-${itemIndex * (100/numItemsShown)}%)`}}>
-                    {React.Children.map(children, (child, index) => {
+                    {React.Children.map(children, child => {
                         return React.cloneElement(child, {width: `${100/numItemsShown}%`});
                     })}
                 </Box>
             </Box>
 
-            <Box>
+            <Box position='absolute' right={{xs: '20%', sm: '-80px'}} top={{xs: '-60px', sm: '45%'}}>
                 <IconButton size="large" color="secondary" onClick={shiftRight} disabled={!rbActive}>
                     <KeyboardDoubleArrowRightIcon fontSize="large"/>
                 </IconButton>
