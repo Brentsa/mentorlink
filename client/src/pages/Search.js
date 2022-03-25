@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Box } from "@mui/system"
 import MemberCard from "../components/cards/MemberCard"
 import { QUERY_MEMBERS } from "../utils/queries"
@@ -7,7 +7,7 @@ import Auth from '../utils/AuthService';
 import { useSelector, useDispatch } from 'react-redux'
 import { saveMemberQuery } from "../redux/slices/memberSlice";
 import { switchPage } from "../redux/slices/pageSlice";
-import { TextField, Typography } from '@mui/material';
+import { CircularProgress, TextField, Typography } from '@mui/material';
 import Pagination from '@mui/material/Pagination';
 import Slider from '@mui/material/Slider';
 
@@ -25,7 +25,7 @@ export default function Search(){
     //states for pagination
     const [currentPage, setCurrentPage] = useState(1);
     const [membersPerPage, setMembersPerPage] = useState(6);
-    const [pageCount, setPageCount] = useState(0)
+    const [pageCount, setPageCount] = useState(1)
 
     //when search loads, query members to display
     const {loading} = useQuery(QUERY_MEMBERS, {
@@ -35,7 +35,8 @@ export default function Search(){
             const filteredMembersData = data.members.filter(member => Auth.getProfile()?.username !== member.username)
             setFilteredMembers(filteredMembersData);
             setCurrentPage(1);
-            setPageCount(Math.ceil(filteredMembersData.length/membersPerPage));
+            const calculatedPageNumber = Math.ceil(filteredMembersData.length/membersPerPage)
+            setPageCount(calculatedPageNumber);
         }
     });
 
@@ -72,7 +73,14 @@ export default function Search(){
         return setCurrentPage(page);
     }
 
-    if(loading || !filteredMembers) return <Box>Loading...</Box>;
+    //whenever members per page is updated, update the page count
+    useEffect(()=> {
+        const newPageCount = Math.ceil(filteredMembers?.length / membersPerPage)
+        setPageCount(newPageCount || 1)
+        setCurrentPage(1)
+    }, [membersPerPage, filteredMembers])
+
+    if(loading) return <CircularProgress color="primary"/>;
 
     return (
         <Box display='flex' flexDirection='column' alignItems='center'>
@@ -109,12 +117,12 @@ export default function Search(){
             <Pagination count={pageCount} page={currentPage} color='secondary' onChange={paginationChange}/>
             
             <Box sx={{display: "flex", flexWrap: "wrap", justifyContent: "center", mt: 2}}>
-                { filteredMembers ?
+                { filteredMembers?.length > 0 ?
                     filteredMembers
                         .slice((currentPage - 1) * membersPerPage, ((currentPage - 1) * membersPerPage) + membersPerPage)
                         .map((member, i) => <MemberCard member={member} key={i}/>)
                     :
-                    "No members found"
+                    "No members found!"
                 }
             </Box>
         </Box>

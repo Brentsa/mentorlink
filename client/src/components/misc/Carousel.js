@@ -18,7 +18,7 @@ export default function Carousel({children, numItemsShown}){
 
     function shiftRight(){
         //shift the shown member right if the index isn't the last member
-        setShownMember(itemIndex === children.length -1 ? 0 : itemIndex + 1);
+        setShownMember(itemIndex === children.length - numItemsShown ? 0 : itemIndex + 1);
     }
 
     useEffect(() => {
@@ -28,7 +28,7 @@ export default function Carousel({children, numItemsShown}){
                 setLbActive(false);
                 setRbActive(true);
                 break;
-            case children.length - 1:
+            case children.length - numItemsShown:
                 setLbActive(true);
                 setRbActive(false);
                 break;
@@ -37,7 +37,7 @@ export default function Carousel({children, numItemsShown}){
                 setRbActive(true);
                 break;
         }
-    }, [itemIndex, children])
+    }, [itemIndex, children, numItemsShown])
 
     return (
         <Box display="flex" justifyContent='center' alignItems='center' position='relative' mt={{xs: 8, sm: 2}}>
