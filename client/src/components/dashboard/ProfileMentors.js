@@ -90,7 +90,7 @@ export default function ProfileMentor({member, setMember}){
                         >
                             Disband Your Mentor Group
                         </Button>
-                        : 
+                    : 
                         //options for the user if they are not the mentor of the group
                         <Box 
                             display="flex" 
@@ -109,7 +109,7 @@ export default function ProfileMentor({member, setMember}){
                                     Leave Mentor Group
                                 </Button>
                             }
-                            {group.menteeCount < group.numMentees && !isMenteeInGroup(Auth.getProfile().username, group.mentees) && 
+                            { Auth.getProfile() && group.menteeCount < group.numMentees && !isMenteeInGroup(Auth.getProfile()?.username, group.mentees) && 
                                 <Button 
                                     color="secondary" 
                                     variant="contained" 
@@ -166,7 +166,7 @@ export default function ProfileMentor({member, setMember}){
                                 member={member} 
                                 setMember={setMember}
                             /> 
-                            :
+                        :
                             <Box>{isUserProfile(member?.username) ? "Add mentees to your mentor group!" : "No mentees currently in the group."}</Box>
                         }
                     </Box> 
