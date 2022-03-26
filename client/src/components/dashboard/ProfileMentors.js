@@ -9,7 +9,7 @@ import { DELETE_MENTOR_GROUP, REMOVE_MENTEE_FROM_GROUP } from "../../utils/mutat
 import CreateGroupForm from "./CreateGroupForm";
 import { useDispatch } from "react-redux";
 import { removeMentorGroup } from "../../redux/slices/memberSlice";
-import { isUserProfile } from "../../utils/helpers";
+import { isMenteeInGroup, isUserProfile } from "../../utils/helpers";
 import { openAndSetMessage } from "../../redux/slices/snackbarSlice";
 import StarIcon from '@mui/icons-material/Star';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -63,6 +63,14 @@ export default function ProfileMentor({member, setMember}){
         }
     }
 
+    //called if the user clicks the button to join the mentor group
+    function joinGroup(){
+        //TODO: add mutation call to add the user to the mentor group
+        console.log('clicked');
+    }
+
+    console.log(Auth.getProfile(), group)
+
     return (
         <Box 
             display='flex' 
@@ -72,32 +80,104 @@ export default function ProfileMentor({member, setMember}){
             {group ? 
                 <>
                     {group.mentor.username === Auth.getProfile()?.username && group.mentor.username === member.username ? 
-                        <Button color="secondary" variant="contained" onClick={disbandGroup} sx={{my: 2}} endIcon={<DeleteIcon/>}>Disband Your Mentor Group</Button>
+                        //show button to disband the mentor group if the user is the mentor of the group
+                        <Button 
+                            color="secondary" 
+                            variant="contained" 
+                            onClick={disbandGroup} 
+                            sx={{my: 2}} 
+                            endIcon={<DeleteIcon/>}
+                        >
+                            Disband Your Mentor Group
+                        </Button>
                         : 
-                        <Box sx={{display: 'flex', flexWrap: 'wrap', flexDirection: 'column', alignItems: 'center'}}>
+                        //options for the user if they are not the mentor of the group
+                        <Box 
+                            display="flex" 
+                            flexWrap="wrap"
+                            flexDirection="column"
+                            alignItems="center"
+                        >
                             {Auth.getProfile()?.username === member.username &&
-                                <Button color="secondary" variant="contained" onClick={leaveGroup} sx={{my: 2}}>Leave Mentor Group</Button>
+                                //if this is the member's page they can leave the group
+                                <Button 
+                                    color="secondary" 
+                                    variant="contained" 
+                                    onClick={leaveGroup} 
+                                    sx={{my: 2}}
+                                >
+                                    Leave Mentor Group
+                                </Button>
+                            }
+                            {group.menteeCount < group.numMentees && !isMenteeInGroup(Auth.getProfile().username, group.mentees) && 
+                                <Button 
+                                    color="secondary" 
+                                    variant="contained" 
+                                    onClick={joinGroup}
+                                    sx={{my: 2}}
+                                >
+                                    Join Mentor Group
+                                </Button>
                             }
                             {group.mentor.username !== member.username &&
+                                //if the mentor is not the user, show the mentor's member card
                                 <Box position="relative" marginBottom={3}>
-                                    <Chip icon={<StarIcon/>} label="Mentor" variant="filled" color="primary" sx={{position: 'absolute', zIndex: 10}}/>
+                                    <Chip 
+                                        icon={<StarIcon/>} 
+                                        label="Mentor" 
+                                        variant="filled" 
+                                        color="primary" 
+                                        sx={{position: 'absolute', zIndex: 10}}
+                                    />
                                     <MemberCard member={group.mentor}/> 
                                 </Box>
                             }
                         </Box>
                     }
-                    <Box sx={{display: 'flex', flexWrap: 'wrap', flexDirection: 'column', alignItems: 'center'}}>
-                        <Box borderBottom={2} borderColor="primary.main" mt={3} mb={1} pb={1} width="90%" display="flex" justifyContent="center">
-                            <Chip icon={<GroupIcon/>} label={`Current Mentees - ${group.menteeCount}/${group.numMentees}`} color="primary" variant="filled"/>
+                    <Box 
+                        display="flex" 
+                        flexWrap="wrap"
+                        flexDirection="column"
+                        alignItems="center"
+                    >
+                        <Box 
+                            borderBottom={2} 
+                            borderColor="primary.main" 
+                            mt={3} 
+                            mb={1} 
+                            pb={1} 
+                            width="90%" 
+                            display="flex" 
+                            justifyContent="center"
+                        >
+                            <Chip 
+                                icon={<GroupIcon/>} 
+                                label={`Current Mentees - ${group.menteeCount}/${group.numMentees}`} 
+                                color="primary" 
+                                variant="filled"
+                                sx={{p: 2}}
+                            />
                         </Box>
                         {group.menteeCount > 0 ? 
-                            <MemberGroup mentees={group.mentees} mentorGroup={group} bIsUserProfile={isUserProfile(member?.username)} member={member} setMember={setMember}/> :
-                            <Box>Add mentees to your mentor group!</Box>
+                            <MemberGroup 
+                                mentees={group.mentees} 
+                                mentorGroup={group} 
+                                bIsUserProfile={isUserProfile(member?.username)} 
+                                member={member} 
+                                setMember={setMember}
+                            /> 
+                            :
+                            <Box>{isUserProfile(member?.username) ? "Add mentees to your mentor group!" : "No mentees currently in the group."}</Box>
                         }
                     </Box> 
                 </>
             : 
-                <Box sx={{m:3, display:"flex", flexDirection:"column", alignItems:'center'}}>
+                <Box 
+                    margin={3}
+                    display="flex"
+                    flexDirection="column"
+                    alignItems="center"
+                >
                     <Typography variant="h5">No mentor group</Typography>
                     {isUserProfile(member?.username) &&
                         <>
