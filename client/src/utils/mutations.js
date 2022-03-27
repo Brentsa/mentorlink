@@ -121,13 +121,18 @@ export const ADD_MENTEE_TO_GROUP = gql`
                 _id
                 mentor {
                     _id
+                    firstName
+                    lastName
+                    username
+                    description
+                    profilePicture
+                    industry {
+                        _id
+                    }
                 }
                 numMentees
-                industry {
-                    _id
-                    name
-                }
-                mentees{
+                menteeCount
+                mentees {
                     _id
                 }
             }

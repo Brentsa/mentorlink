@@ -4,16 +4,17 @@ import MemberCard from "../cards/MemberCard";
 import MemberGroup from "./MemberGroup";
 import Auth from "../../utils/AuthService";
 import { Button } from "@mui/material";
-import { useMutation } from "@apollo/client";
-import { DELETE_MENTOR_GROUP, REMOVE_MENTEE_FROM_GROUP } from "../../utils/mutations";
+import { useLazyQuery, useMutation } from "@apollo/client";
+import { ADD_MENTEE_TO_GROUP, DELETE_MENTOR_GROUP, REMOVE_MENTEE_FROM_GROUP } from "../../utils/mutations";
 import CreateGroupForm from "./CreateGroupForm";
 import { useDispatch } from "react-redux";
-import { removeMentorGroup } from "../../redux/slices/memberSlice";
+import { addMentorGroup, removeMentorGroup } from "../../redux/slices/memberSlice";
 import { isMenteeInGroup, isUserProfile } from "../../utils/helpers";
 import { openAndSetMessage } from "../../redux/slices/snackbarSlice";
 import StarIcon from '@mui/icons-material/Star';
 import DeleteIcon from '@mui/icons-material/Delete';
 import GroupIcon from '@mui/icons-material/Group';
+import { QUERY_MEMBER } from "../../utils/queries";
 
 export default function ProfileMentor({member, setMember}){
 
@@ -27,6 +28,12 @@ export default function ProfileMentor({member, setMember}){
 
     //Initialize a mutation to remove a mentee from a mentor group
     const [removeMenteeFromGroup] = useMutation(REMOVE_MENTEE_FROM_GROUP);
+
+    //Initialize a mutation to add a mentee to the group
+    const [addMenteeToGroup] = useMutation(ADD_MENTEE_TO_GROUP);
+
+    //define a lazy query that querys the member again, and sets the dashboard's member state
+    const [getAndSetMember] = useLazyQuery( QUERY_MEMBER, {variables: {username: member.username}, onCompleted: data => setMember(data.member)});
 
     //called when the user clicks the disband group button
     function disbandGroup(){
@@ -64,12 +71,19 @@ export default function ProfileMentor({member, setMember}){
     }
 
     //called if the user clicks the button to join the mentor group
-    function joinGroup(){
-        //TODO: add mutation call to add the user to the mentor group
-        console.log('clicked');
-    }
+    async function joinGroup(){
+        //Define the group ID and the mentee to join ID
+        const groupId = group._id; 
+        const menteeId = Auth.getProfile()._id;   
 
-    console.log(Auth.getProfile(), group)
+        //Call the add mentee mutation
+        const response = await addMenteeToGroup({variables: {groupId, menteeId}});
+
+        //once the mentee has been added, query the updated member and set the state to trigger re-render
+        getAndSetMember();
+
+        dispatch(addMentorGroup({...response.data.addMenteeToGroup.mentorGroup}));
+    }
 
     return (
         <Box 

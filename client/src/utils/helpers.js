@@ -47,6 +47,8 @@ export function shuffleObjArray(array){
 
 //return true if the supplied username is in an array of mentees (in the mentor group)
 export function isMenteeInGroup(username, menteeArray){
+    if(!username || !menteeArray) return false;
+
     for(var i = 0; i < menteeArray.length; i++){
         if(menteeArray[i].username === username){
             return true;
