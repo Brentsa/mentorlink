@@ -31,7 +31,7 @@ export default function MemberCard({member}) {
       //if the current user has a mentor group
       if(currentUser?.mentorGroup){
         //check if the member card's member is in the mentor group of the current user
-        for(var i = 0; i < currentUser.mentorGroup.mentees.length; i++){
+        for(var i = 0; i < currentUser.mentorGroup.mentees?.length; i++){
           if(currentUser.mentorGroup.mentees[i]._id === member._id) return true
         }
       }

@@ -33,7 +33,17 @@ export default function ProfileMentor({member, setMember}){
     const [addMenteeToGroup] = useMutation(ADD_MENTEE_TO_GROUP);
 
     //define a lazy query that querys the member again, and sets the dashboard's member state
-    const [getAndSetMember] = useLazyQuery( QUERY_MEMBER, {variables: {username: member.username}, onCompleted: data => setMember(data.member)});
+    const [getAndSetMember] = useLazyQuery( QUERY_MEMBER, {
+        variables: {username: member.username}, 
+        onCompleted: data => {
+            //set the state in the dashboard and update the global current user with new mentor group data
+            setMember(data.member);
+            dispatch(addMentorGroup({...data.member.mentorGroup}));
+
+            //Send a snackbar message to the user to confirm complete
+            dispatch(openAndSetMessage(`Joined ${data.member.username}'s Mentor Group, have fun!`))
+        }
+    });
 
     //called when the user clicks the disband group button
     function disbandGroup(){
@@ -63,7 +73,10 @@ export default function ProfileMentor({member, setMember}){
             setMember({...member, mentorGroup: null});
 
             //remove the mentor group from the current member state
-            return dispatch(removeMentorGroup());
+            dispatch(removeMentorGroup());
+
+            //Set snack bar success message and open it
+            dispatch(openAndSetMessage("You have left the Mentor Group."))
         }
         catch{
             return console.log("Mentee not removed from group");
@@ -77,12 +90,10 @@ export default function ProfileMentor({member, setMember}){
         const menteeId = Auth.getProfile()._id;   
 
         //Call the add mentee mutation
-        const response = await addMenteeToGroup({variables: {groupId, menteeId}});
+        await addMenteeToGroup({variables: {groupId, menteeId}});
 
         //once the mentee has been added, query the updated member and set the state to trigger re-render
         getAndSetMember();
-
-        dispatch(addMentorGroup({...response.data.addMenteeToGroup.mentorGroup}));
     }
 
     return (
