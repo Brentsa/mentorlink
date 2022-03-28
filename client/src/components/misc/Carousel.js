@@ -11,14 +11,18 @@ export default function Carousel({children, numItemsShown}){
     const [lbActive, setLbActive] = useState(false);
     const [rbActive, setRbActive] = useState(false);
 
+    //init states for carousel auto shifting, reverse the direction and pause the auto shifting
+    const [reverse, setReverse] = useState(false);
+    const [paused, setPaused] = useState(false)
+
     function shiftLeft(){
         //shift the shown member left if the index isn't the first member
-        setShownMember(itemIndex === 0 ? children.length - 1 : itemIndex - 1);
+        setShownMember(itemIndex === 0 ? itemIndex : itemIndex - 1);
     }
 
     function shiftRight(){
         //shift the shown member right if the index isn't the last member
-        setShownMember(itemIndex === children.length - numItemsShown ? 0 : itemIndex + 1);
+        setShownMember(itemIndex === children.length - numItemsShown ? itemIndex : itemIndex + 1);
     }
 
     useEffect(() => {
@@ -39,8 +43,35 @@ export default function Carousel({children, numItemsShown}){
         }
     }, [itemIndex, children, numItemsShown])
 
+    useEffect(() => {
+        //auto shift the carousel every 3 seconds when the component mounts
+        const interval = setInterval(() => {
+            //auto shift the carousel if it isn't paused
+            if(!paused){
+                //reverse the direction of the carousel auto movement if it hits either end 
+                itemIndex >= children.length - numItemsShown && setReverse(true);
+                itemIndex <= 0 && setReverse(false);
+
+                //shift the carousel in a left or right direction
+                !reverse ? shiftRight() : shiftLeft();
+            }
+        }, 3000)
+        
+        //clear the interval when the component unmounts
+        return () => interval && clearInterval(interval);
+    })
+
     return (
-        <Box display="flex" justifyContent='center' alignItems='center' position='relative' mt={{xs: 8, sm: 2}}>
+        <Box 
+            component='div'
+            display="flex" 
+            justifyContent='center' 
+            alignItems='center' 
+            position='relative' 
+            mt={{xs: 8, sm: 2}}
+            onMouseEnter={() => setPaused(true)}
+            onMouseLeave={() => setPaused(false)}
+        >
             <Box position='absolute' left={{xs: '20%', sm: '-80px'}} top={{xs: '-60px', sm: '45%'}}>
                 <IconButton size="large" color="secondary" onClick={shiftLeft} disabled={!lbActive}>
                     <KeyboardDoubleArrowLeftIcon fontSize="large"/>
